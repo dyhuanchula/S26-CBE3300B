@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preliminary Design — Adaptive Water Purifier</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">Preliminary Design</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
+    <h1>Preliminary Design</h1>
+    <p>Physical/chemical principles, preliminary calculations, and proposed prototyping approach.</p>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <h2>1) Problem Statement + Design Specs</h2>
+      <table>
+        <thead><tr><th>Spec</th><th>Target</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Target contaminants</td><td>TBD</td><td>e.g., turbidity, microbes, dissolved solids</td></tr>
+          <tr><td>Flow rate</td><td>TBD</td><td>e.g., L/min</td></tr>
+          <tr><td>Output quality metric</td><td>TBD</td><td>turbidity NTU, TDS ppm, pH range</td></tr>
+          <tr><td>Power</td><td>TBD</td><td>USB / battery / wall</td></tr>
+          <tr><td>Cost</td><td>TBD</td><td>BOM estimate</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>2) System Concept + Block Diagram</h2>
+      <p>Describe the flow path and control loop. Add a diagram image in <code>docs/assets/images/</code>.</p>
+      <p class="small">Example embed:</p>
+      <pre><code>&lt;img src="assets/images/block-diagram.png" alt="Block diagram" /&gt;</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>3) ChemE Principles</h2>
+      <ul>
+        <li><strong>Transport / separation:</strong> filtration, adsorption, membrane flux limits, pressure drop.</li>
+        <li><strong>Mass balance + capacity:</strong> breakthrough / bed life estimates for carbon/resin media.</li>
+        <li><strong>Energy:</strong> pumping work vs flow and ΔP; power budget.</li>
+        <li><strong>Sensing:</strong> sensor response, calibration, noise, drift.</li>
+      </ul>
+      <p class="small">Keep this section tight; link out to longer derivations if needed.</p>
+    </div>
+
+    <div class="card">
+      <h2>4) Preliminary Calculations (Feasibility)</h2>
+      <p>Put your most important “sanity checks” here.</p>
+      <table>
+        <thead><tr><th>Calculation</th><th>Inputs</th><th>Result</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>ΔP estimate</td><td>Q, geometry, media</td><td>TBD</td><td>pump selection</td></tr>
+          <tr><td>Media capacity</td><td>loading, capacity</td><td>TBD</td><td>replacement interval</td></tr>
+          <tr><td>Energy per liter</td><td>P, Q</td><td>TBD</td><td>battery feasibility</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>5) Prototyping Plan + Needed Items</h2>
+      <h3>Demo 1 focus</h3>
+      <ul>
+        <li>Basic purification stage (choose: filter + carbon + UV, etc.)</li>
+        <li>Sensor readings + logging</li>
+        <li>Simple adaptive rule (e.g., if turbidity high → reduce flow / enable stage)</li>
+      </ul>
+
+      <h3>Initial BOM</h3>
+      <table>
+        <thead><tr><th>Item</th><th>Purpose</th><th>Qty</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Turbidity sensor</td><td>Feedback signal</td><td>1</td><td>TBD</td></tr>
+          <tr><td>Conductivity/TDS</td><td>Dissolved solids proxy</td><td>1</td><td>TBD</td></tr>
+          <tr><td>pH</td><td>Acidity/alkalinity</td><td>1</td><td>TBD</td></tr>
+          <tr><td>Pump + valve</td><td>Actuation</td><td>1</td><td>TBD</td></tr>
+          <tr><td>Filter/carbon/etc.</td><td>Separation</td><td>1</td><td>TBD</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>6) Testing Plan (Initial)</h2>
+      <ul>
+        <li>Influent vs effluent measurements (NTU, TDS, pH)</li>
+        <li>Repeatability + calibration against known standards</li>
+        <li>Step-change tests (sudden turbidity increase) to validate “adaptive” control response</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>References</h2>
+      <ol>
+        <li>Source — title — year.</li>
+        <li>Source — title — year.</li>
+      </ol>
+    </div>
+
+    <div class="footer wrap">
+      <hr />
+      <div>© <span id="year"></span></div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
