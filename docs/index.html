@@ -1,15 +1,86 @@
-# Adaptive Water Purifier
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive Water Purifier</title>
+  <meta name="description" content="Project website for an adaptive water purifier (design, market, timeline, demos, final report)." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">S26-CBE3300B</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
 
-## Quick links
-- [Preliminary Design](./preliminary.html)
-- [Initial Design (Market + Gantt)](./initial-design.html)
-- [Demos](./demos.html)
-- [Final Report](./final.html)
+    <section class="hero">
+      <h1>Adaptive Water Purifier</h1>
+      <p>
+        A purifier that adapts operating settings based on real-time sensor feedback
+        (e.g., turbidity, conductivity/TDS, pH, flow/pressure) to hit target water quality efficiently.
+      </p>
+      <div class="kpi">
+        <span class="pill">Sensors: turbidity / TDS / pH</span>
+        <span class="pill">Stages: (define yours)</span>
+        <span class="pill warn">Specs: TBD</span>
+        <span class="pill good">Website = official report</span>
+      </div>
 
-## What we’re building
-An adaptive water purifier that adjusts purification settings based on sensor feedback (e.g., turbidity, conductivity/TDS, pH) to meet target water quality with minimal energy/cost.
+      <div class="btnrow">
+        <a class="btn" href="preliminary.html">Preliminary Design</a>
+        <a class="btn secondary" href="initial-design.html">Market + Gantt</a>
+      </div>
+    </section>
+  </header>
 
-## Team
-- Name — role
-- Name — role
-- Name — role
+  <main class="wrap">
+    <section class="grid">
+      <div class="card">
+        <strong>Preliminary Design</strong>
+        <p class="small">ChemE principles, key calculations, prototyping plan, needed items.</p>
+        <a class="btn secondary" href="preliminary.html">Open</a>
+      </div>
+      <div class="card">
+        <strong>Initial Design</strong>
+        <p class="small">Market overview + SWOT + competitor/cost notes + Gantt timeline.</p>
+        <a class="btn secondary" href="initial-design.html">Open</a>
+      </div>
+      <div class="card">
+        <strong>Demos + Final</strong>
+        <p class="small">Demo 1 → Demo 3 progress pages + final report.</p>
+        <a class="btn secondary" href="demos.html">Open</a>
+      </div>
+    </section>
+
+    <div class="card">
+      <h2>Team</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Role</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Member 1</td><td>Controls / sensors</td><td>Calibration + data pipeline</td></tr>
+          <tr><td>Member 2</td><td>Process design</td><td>Stages + sizing + performance</td></tr>
+          <tr><td>Member 3</td><td>Build / integration</td><td>Assembly, enclosure, testing rig</td></tr>
+        </tbody>
+      </table>
+      <p class="small">Update roles as your scope changes.</p>
+    </div>
+
+    <div class="footer">
+      <hr />
+      <div>© <span id="year"></span> • Adaptive Water Purifier • GitHub Pages</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
