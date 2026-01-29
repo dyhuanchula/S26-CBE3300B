@@ -5,53 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Initial Design — Market + Gantt</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Mermaid.js for Gantt chart -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({ 
       startOnLoad: true,
-      theme: 'dark',
-      gantt: {
-        titleTopMargin: 25,
-        barHeight: 25,
-        barGap: 4,
-        topPadding: 50,
-        leftPadding: 200,
-        gridLineStartPadding: 35,
-        fontSize: 12,
-        sectionFontSize: 14,
-        numberSectionStyles: 6,
-        axisFormat: '%b %d'
-      },
-      themeVariables: {
-        darkMode: true,
-        background: '#1a1a2e',
-        primaryColor: '#4a90d9',
-        primaryTextColor: '#fff',
-        primaryBorderColor: '#4a90d9',
-        secondaryColor: '#6c5ce7',
-        tertiaryColor: '#2d2d44',
-        lineColor: '#555',
-        textColor: '#e0e0e0',
-        mainBkg: '#1a1a2e',
-        sectionBkgColor: '#2d2d44',
-        altSectionBkgColor: '#252540',
-        sectionBkgColor2: '#3d3d5c',
-        gridColor: '#444',
-        todayLineColor: '#ff6b6b',
-        doneTaskBkgColor: '#6c5ce7',
-        doneTaskBorderColor: '#8b7cf7',
-        activeTaskBkgColor: '#4a90d9',
-        activeTaskBorderColor: '#6ba3e0',
-        critBkgColor: '#e74c3c',
-        critBorderColor: '#ff6b6b',
-        taskBkgColor: '#4a5568',
-        taskBorderColor: '#718096',
-        taskTextColor: '#fff',
-        taskTextLightColor: '#fff',
-        taskTextDarkColor: '#fff',
-        taskTextOutsideColor: '#e0e0e0'
-      }
+      theme: 'dark'
     });
   </script>
   <style>
@@ -60,30 +18,12 @@
       border-radius: 8px;
       padding: 20px;
       overflow-x: auto;
-      min-width: 900px;
     }
     .gantt-container {
       overflow-x: auto;
       width: 100%;
       background: #1a1a2e;
       border-radius: 8px;
-    }
-    .mermaid text {
-      fill: #e0e0e0 !important;
-    }
-    .mermaid .titleText {
-      fill: #fff !important;
-      font-weight: bold;
-    }
-    .mermaid .sectionTitle {
-      fill: #b8c5d6 !important;
-    }
-    .mermaid .grid .tick text {
-      fill: #a0a0a0 !important;
-    }
-    .mermaid .todayMarker {
-      stroke: #ff6b6b !important;
-      stroke-width: 2px;
     }
   </style>
 </head>
@@ -168,42 +108,42 @@
       <p class="small">Updated weekly to track progress. Legend: <span style="color:#6c5ce7">■</span> Done &nbsp; <span style="color:#4a90d9">■</span> Active &nbsp; <span style="color:#e74c3c">■</span> Critical</p>
       
       <div class="gantt-container">
-        <pre class="mermaid">
+<pre class="mermaid">
 gantt
-    title Water Purifier Project - Spring 2026
-    dateFormat YYYY-MM-DD
-    axisFormat %b %d
-    section Preliminary
-    Research principles           :done, p1, 2026-01-20, 14d
-    Calculations                  :done, p2, 2026-01-20, 14d
-    Prototyping approach          :done, p3, 2026-01-20, 14d
-    GitHub Page Wiki              :done, p4, 2026-01-20, 14d
-    section Initial Design
-    Market research SWOT          :active, i1, 2026-02-03, 14d
-    Competitor analysis           :active, i2, 2026-02-03, 14d
-    Value proposition             :i3, 2026-02-10, 14d
-    GANTT chart                   :done, i4, 2026-02-03, 7d
-    section Demo 1
-    Core purification design      :d1a, 2026-02-17, 14d
-    Source materials              :d1b, 2026-02-17, 14d
-    Breadboard prototype          :d1c, 2026-03-03, 14d
-    Testing proof of concept      :crit, d1d, 2026-03-10, 14d
-    section Demo 2
-    Improve prototype             :d2a, 2026-03-17, 14d
-    Data handling                 :d2b, 2026-03-24, 14d
-    Serial communication          :d2c, 2026-03-24, 14d
-    Performance testing           :crit, d2d, 2026-03-31, 14d
-    section Demo 3
-    Finalize components           :d3a, 2026-04-14, 14d
-    Enclosure build               :d3b, 2026-04-21, 14d
-    Signal processing             :d3c, 2026-04-21, 14d
-    System integration            :crit, d3d, 2026-04-28, 14d
-    section Final
-    Document process              :f1, 2026-05-05, 14d
-    Challenges outcomes           :f2, 2026-05-12, 7d
-    Finalize GitHub               :f3, 2026-05-19, 7d
-    Final demo prep               :crit, f4, 2026-05-19, 14d
-        </pre>
+title Water Purifier Project Spring 2026
+dateFormat YYYY-MM-DD
+axisFormat %b %d
+section Preliminary
+Research principles :done, p1, 2026-01-20, 14d
+Calculations :done, p2, 2026-01-20, 14d
+Prototyping approach :done, p3, 2026-01-20, 14d
+GitHub Page Wiki :done, p4, 2026-01-20, 14d
+section Initial Design
+Market research SWOT :active, i1, 2026-02-03, 14d
+Competitor analysis :active, i2, 2026-02-03, 14d
+Value proposition :i3, 2026-02-10, 14d
+GANTT chart :done, i4, 2026-02-03, 7d
+section Demo 1
+Core purification design :d1a, 2026-02-17, 14d
+Source materials :d1b, 2026-02-17, 14d
+Breadboard prototype :d1c, 2026-03-03, 14d
+Testing proof of concept :crit, d1d, 2026-03-10, 14d
+section Demo 2
+Improve prototype :d2a, 2026-03-17, 14d
+Data handling :d2b, 2026-03-24, 14d
+Serial communication :d2c, 2026-03-24, 14d
+Performance testing :crit, d2d, 2026-03-31, 14d
+section Demo 3
+Finalize components :d3a, 2026-04-14, 14d
+Enclosure build :d3b, 2026-04-21, 14d
+Signal processing :d3c, 2026-04-21, 14d
+System integration :crit, d3d, 2026-04-28, 14d
+section Final
+Document process :f1, 2026-05-05, 14d
+Challenges outcomes :f2, 2026-05-12, 7d
+Finalize GitHub :f3, 2026-05-19, 7d
+Final demo prep :crit, f4, 2026-05-19, 14d
+</pre>
       </div>
     </div>
 
