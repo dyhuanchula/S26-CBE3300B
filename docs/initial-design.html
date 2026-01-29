@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Initial Design — Market + Gantt</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Mermaid.js for Gantt chart -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'default',
+      gantt: {
+        titleTopMargin: 25,
+        barHeight: 30,
+        barGap: 4,
+        topPadding: 50,
+        leftPadding: 75,
+        gridLineStartPadding: 35,
+        fontSize: 14,
+        sectionFontSize: 16,
+        numberSectionStyles: 6
+      }
+    });
+  </script>
+  <style>
+    /* Optional: Style the Mermaid container */
+    .mermaid {
+      background: #fafafa;
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+  </style>
 </head>
 <body>
   <header class="wrap">
@@ -24,7 +52,6 @@
     <h1>Initial Design: Market + Timeline</h1>
     <p>Market nature (size/trend/fragmentation), SWOT, plus at least 2 extra elements, and an updated Gantt.</p>
   </header>
-
   <main class="wrap">
     <div class="card">
       <h2>Market Overview</h2>
@@ -37,7 +64,6 @@
         </tbody>
       </table>
     </div>
-
     <div class="card">
       <h2>SWOT</h2>
       <table>
@@ -52,7 +78,6 @@
         </tbody>
       </table>
     </div>
-
     <div class="grid">
       <div class="card">
         <strong>Competitors (extra element)</strong>
@@ -78,21 +103,76 @@
       </div>
       <div class="card">
         <strong>Value proposition / positioning (optional)</strong>
-        <p class="small">What gap do you fill? What makes it “adaptive” and why buyers care?</p>
+        <p class="small">What gap do you fill? What makes it "adaptive" and why buyers care?</p>
         <ul>
           <li>TBD</li>
         </ul>
       </div>
     </div>
+    
+    <div class="card">
+      <h2>Gantt Chart</h2>
+      <p class="small">Updated weekly to track progress. Legend: <span style="color:#2ecc71">■</span> Done &nbsp; <span style="color:#3498db">■</span> Active &nbsp; <span style="color:#e74c3c">■</span> Critical</p>
+      
+      <div class="mermaid">
+gantt
+    title Water Purifier Project - Spring 2026
+    dateFormat YYYY-MM-DD
+    
+    section Preliminary Design
+    Research physical/chemical principles    :done, prelim1, 2026-01-20, 14d
+    Preliminary calculations                 :done, prelim2, 2026-01-20, 14d
+    Proposed prototyping approach            :done, prelim3, 2026-01-20, 14d
+    Create GitHub Page/Wiki                  :done, prelim4, 2026-01-20, 14d
+    
+    section Initial Design
+    Market research & SWOT analysis          :active, init1, 2026-02-03, 14d
+    Competitor analysis                      :active, init2, 2026-02-03, 14d
+    Value proposition development            :init3, 2026-02-10, 14d
+    Create GANTT chart                       :done, init4, 2026-02-03, 7d
+    
+    section Demo 1 - Initial Prototype
+    Design core purification mechanism       :demo1a, 2026-02-17, 14d
+    Source materials/components              :demo1b, 2026-02-17, 14d
+    Build breadboard prototype               :demo1c, 2026-03-03, 14d
+    Initial testing & proof of concept       :crit, demo1d, 2026-03-10, 14d
+    
+    section Demo 2 - Intermediate Prototype
+    Improve on initial prototype             :demo2a, 2026-03-17, 14d
+    Implement data handling/processing       :demo2b, 2026-03-24, 14d
+    Serial communication setup               :demo2c, 2026-03-24, 14d
+    Performance testing vs specs             :crit, demo2d, 2026-03-31, 14d
+    
+    section Demo 3 - MVP
+    Finalize all components                  :demo3a, 2026-04-14, 14d
+    Enclosure design & build                 :demo3b, 2026-04-21, 14d
+    Signal processing implementation         :demo3c, 2026-04-21, 14d
+    Full system integration                  :crit, demo3d, 2026-04-28, 14d
+    
+    section Final Report & Demo
+    Document design process                  :final1, 2026-05-05, 14d
+    Compile challenges & outcomes            :final2, 2026-05-12, 7d
+    Finalize GitHub Page & Wiki              :final3, 2026-05-19, 7d
+    Final demonstration prep                 :crit, final4, 2026-05-19, 14d
+      </div>
+    </div>
 
     <div class="card">
-      <h2>Gantt Chart (Update weekly)</h2>
-      <p>Quick version: use a table now; optionally upload a PNG later to <code>docs/assets/plots/</code>.</p>
-
+      <h2>Milestone Summary</h2>
       <table>
-        <thead><tr><th>Week</th><th>Task</th><th>Deliverable</th><th>Owner</th><th>Status</th></tr></thead>
+        <thead><tr><th>Milestone</th><th>Due Date</th><th>Points</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Define specs + architecture</td><td>Prelim design page</td><td>Team</td><td class="small">planned</td></tr>
-          <tr><td>2</td><td>Sensor bring-up + logging</td><td>Demo 1 readiness</td><td>TBD</td><td class="small">planned</td></tr>
-          <tr><td>3</td><td>Purification stage test</td><td>Initial data</td><td>TBD</td><td class="small">planned</td></tr>
-        </t
+          <tr><td>Preliminary Design Report</td><td>Week 2</td><td>100 pts (10%)</td><td class="small">✅ Complete</td></tr>
+          <tr><td>Initial Design Presentation</td><td>Week 4</td><td>100 pts (10%)</td><td class="small">🔄 In Progress</td></tr>
+          <tr><td>Demo 1: Initial Prototype</td><td>Week 7</td><td>125 pts (12.5%)</td><td class="small">⏳ Planned</td></tr>
+          <tr><td>Demo 2: Intermediate Prototype</td><td>Week 10</td><td>125 pts (12.5%)</td><td class="small">⏳ Planned</td></tr>
+          <tr><td>Demo 3: MVP</td><td>Week 13</td><td>150 pts (15%)</td><td class="small">⏳ Planned</td></tr>
+          <tr><td>Final Report</td><td>Week 17</td><td>225 pts (22.5%)</td><td class="small">⏳ Planned</td></tr>
+          <tr><td>Final Demonstration</td><td>Week 17</td><td>125 pts (12.5%)</td><td class="small">⏳ Planned</td></tr>
+          <tr><td><strong>Total</strong></td><td></td><td><strong>1000 pts</strong></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
