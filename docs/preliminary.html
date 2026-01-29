@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preliminary Design — Adaptive Water Purifier</title>
+  <meta name="description" content="Preliminary design: principles, feasibility, parts list, and prototype plan for an adaptive water purifier." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -21,98 +22,204 @@
         <a data-nav href="final.html">Final</a>
       </div>
     </nav>
+
     <h1>Preliminary Design</h1>
-    <p>Physical/chemical principles, preliminary calculations, and proposed prototyping approach.</p>
+    <p>Initial design documentation: market context, overall concept, core principles, parts list, and prototype plan.</p>
   </header>
 
   <main class="wrap">
+
+    <!-- 1) Introduction -->
     <div class="card">
-      <h2>1) Problem Statement + Design Specs</h2>
+      <h2>1) Introduction (Market Context)</h2>
+      <p>
+        Our goal is to build an “adaptive Brita”-style purifier that continuously recirculates water through a particulate
+        filter and an adsorbent bed until quality metrics meet a threshold, then dispenses treated water. The device targets
+        low-cost, user-friendly purification for everyday use where customers care about clarity, taste/odor, and basic
+        quality feedback.
+      </p>
+      <ul>
+        <li><strong>Who is this for?</strong> (e.g., dorms, renters, office kitchens, emergency backup)</li>
+        <li><strong>What problem?</strong> (e.g., inconsistent taste/odor, particulate/turbidity, user confidence)</li>
+        <li><strong>Why adaptive?</strong> Real-time sensing enables automatic “keep cycling until clean” behavior and maintenance alerts.</li>
+      </ul>
+      <p class="small">
+        (Keep this short here. The deeper market research + SWOT + competitors belong on the “Initial Design” page.)
+      </p>
+    </div>
+
+    <!-- 2) Overall Design -->
+    <div class="card">
+      <h2>2) Overall Design</h2>
+      <p>
+        The system uses a recirculation loop with a filter + adsorbent module, sensors to estimate “cleanliness,” and a valve to
+        switch between recirculation and dispensing. A refill mechanism maintains continuous operation.
+      </p>
+
+      <h3>Flow Path</h3>
+      <ul>
+        <li><strong>Fill:</strong> reservoir → treatment chamber (auto-refill based on level sensing)</li>
+        <li><strong>Recirculate:</strong> chamber → pump → filter → adsorbent → sensors → chamber</li>
+        <li><strong>Dispense:</strong> when metrics pass threshold → valve opens outlet → user container</li>
+      </ul>
+
+      <h3>Control Loop (High-Level)</h3>
+      <ul>
+        <li>If turbidity is high → keep recirculating (and/or reduce flow if needed)</li>
+        <li>If turbidity is stable + below threshold for a hold time → allow dispense</li>
+        <li>If chamber level low → refill and resume cycle</li>
+        <li>Log and display pH (informational readout)</li>
+      </ul>
+
+      <p class="small">Optional: Add a diagram in <code>docs/assets/images/</code> and embed it below.</p>
+      <pre><code>&lt;img src="assets/images/block-diagram.png" alt="System block diagram" /&gt;</code></pre>
+    </div>
+
+    <!-- 3) Chemical/Physical Principles -->
+    <div class="card">
+      <h2>3) Chemical / Physical Principles</h2>
+
+      <h3>Filtration (Particles)</h3>
+      <ul>
+        <li>Particle removal depends on pore/mesh size, loading, and flow rate.</li>
+        <li>Pressure drop increases as the filter loads (important for continuous use).</li>
+      </ul>
+
+      <h3>Adsorption (Taste/Odor + Organics)</h3>
+      <ul>
+        <li>Adsorbent performance depends on surface area, contact time, and bed geometry.</li>
+        <li>Breakthrough occurs when adsorption sites saturate; media then needs replacement.</li>
+      </ul>
+
+      <h3>Transport + Hydraulics</h3>
+      <ul>
+        <li>Flow rate and pressure drop determine pump requirements and energy use.</li>
+        <li>Recirculation improves mixing and speeds convergence to a “steady” clarity reading.</li>
+      </ul>
+
+      <h3>Sensing & Control</h3>
+      <ul>
+        <li>Sensor response time, drift, and noise affect thresholds and the “hold time” rule.</li>
+        <li>Hysteresis prevents valve chatter (separate “clean” and “dirty” thresholds).</li>
+      </ul>
+    </div>
+
+    <!-- 4) General Materials and Parts List -->
+    <div class="card">
+      <h2>4) General Materials and Parts List</h2>
+
+      <h3>Core Hardware</h3>
+      <ul>
+        <li>Reservoir + treatment chamber (food-safe container)</li>
+        <li>Silicone tubing + barbed fittings + clamps</li>
+        <li>Pump (recirculation)</li>
+        <li>Valve/actuator (switch recirculate vs dispense)</li>
+        <li>Filter housing/module</li>
+        <li>Adsorbent bed housing (DIY packed bed)</li>
+        <li>Microcontroller (Arduino/ESP32) + power supply</li>
+      </ul>
+
+      <h3>Sensors</h3>
+      <ul>
+        <li>Turbidity/optical clarity sensor (inline)</li>
+        <li>pH probe + interface board</li>
+        <li>Ultrasonic level sensor (or float switch alternative)</li>
+      </ul>
+
+      <p class="small">
+        Add a more detailed BOM with links/costs once selections are finalized (you can keep it simple for preliminary).
+      </p>
+    </div>
+
+    <!-- 5) In depth on: Turbidity -->
+    <div class="card">
+      <h2>5) In Depth: Turbidity (Optical Clarity)</h2>
+      <p>
+        Turbidity is our primary “adaptive” signal because particle filtration directly changes optical clarity in real time.
+        We can implement an inline LED + photodiode/phototransistor sensor or a turbidity module.
+      </p>
+      <ul>
+        <li><strong>Placement:</strong> after filter/adsorbent in the recirculation loop to measure improvement.</li>
+        <li><strong>Algorithm:</strong> recirculate until clarity &gt; threshold for N seconds (hold time) + hysteresis.</li>
+        <li><strong>Calibration:</strong> define clean baseline vs intentionally cloudy baseline (e.g., fine silt test).</li>
+      </ul>
+      <p class="small">Include a simple plot later: sensor reading vs time during a cleaning cycle.</p>
+    </div>
+
+    <!-- 6) In depth on: pH -->
+    <div class="card">
+      <h2>6) In Depth: pH</h2>
+      <p>
+        The pH sensor provides a real-time readout for user awareness and logging. In this design, pH is not used as the main
+        “clean/not clean” gate, but it is useful for diagnostics and reporting.
+      </p>
+      <ul>
+        <li><strong>Response time target:</strong> stable reading within ~30–60 seconds in a well-mixed chamber.</li>
+        <li><strong>Placement:</strong> in the chamber or in a flowing side-stream to avoid stagnant readings.</li>
+        <li><strong>Calibration:</strong> 2-point calibration (pH 4 and pH 7 buffers; optionally pH 10).</li>
+      </ul>
+    </div>
+
+    <!-- 7) In depth on: Adsorbent -->
+    <div class="card">
+      <h2>7) In Depth: Adsorbent</h2>
+      <p>
+        We plan to use a DIY packed-bed adsorbent module to reduce chlorine/taste/odor and some organic compounds (depending on
+        adsorbent selection). The bed will be held between mesh + filter pads to retain granules and block fines.
+      </p>
+      <ul>
+        <li><strong>Candidate media:</strong> activated carbon (or catalytic carbon if chloramine is a focus).</li>
+        <li><strong>Design variables:</strong> bed length/diameter, packing density, flow rate (contact time).</li>
+        <li><strong>Feasibility calc:</strong> estimate contact time = (bed volume / flow) and expected media life (later).</li>
+      </ul>
+      <p class="small">Add a photo/diagram of the packed-bed module once built.</p>
+    </div>
+
+    <!-- 8) In depth on: Ultrasound sensor -->
+    <div class="card">
+      <h2>8) In Depth: Ultrasound Sensor (Water Level)</h2>
+      <p>
+        The ultrasonic sensor measures the distance to the water surface to estimate chamber or reservoir level. This enables
+        auto-refill behavior and prevents dry-running the pump.
+      </p>
+      <ul>
+        <li><strong>Mounting:</strong> above the water, pointed downward; shield from splashing.</li>
+        <li><strong>Noise sources:</strong> bubbles, turbulence, angled surfaces → use averaging/median filtering.</li>
+        <li><strong>Fallback option:</strong> float switch for simple low/high water detection.</li>
+      </ul>
+    </div>
+
+    <!-- 9) Timeline -->
+    <div class="card">
+      <h2>9) Timeline</h2>
+      <p>High-level plan for the first build and validation milestones (to be expanded into a Gantt chart on the Initial Design page).</p>
       <table>
-        <thead><tr><th>Spec</th><th>Target</th><th>Notes</th></tr></thead>
+        <thead><tr><th>Week</th><th>Goal</th><th>Deliverable</th></tr></thead>
         <tbody>
-          <tr><td>Target contaminants</td><td>TBD</td><td>e.g., turbidity, microbes, dissolved solids</td></tr>
-          <tr><td>Flow rate</td><td>TBD</td><td>e.g., L/min</td></tr>
-          <tr><td>Output quality metric</td><td>TBD</td><td>turbidity NTU, TDS ppm, pH range</td></tr>
-          <tr><td>Power</td><td>TBD</td><td>USB / battery / wall</td></tr>
-          <tr><td>Cost</td><td>TBD</td><td>BOM estimate</td></tr>
+          <tr><td>1</td><td>Finalize architecture + parts</td><td>BOM + block diagram</td></tr>
+          <tr><td>2</td><td>Build recirculation loop + valve control</td><td>Basic flow control working</td></tr>
+          <tr><td>3</td><td>Add turbidity + pH sensing</td><td>Live sensor logging</td></tr>
+          <tr><td>4</td><td>Integrate adsorbent module + testing</td><td>Before/after plots</td></tr>
+          <tr><td>5</td><td>Demo 1 prototype</td><td>Proof-of-concept demo</td></tr>
         </tbody>
       </table>
     </div>
 
+    <!-- 10) Future Considerations -->
     <div class="card">
-      <h2>2) System Concept + Block Diagram</h2>
-      <p>Describe the flow path and control loop. Add a diagram image in <code>docs/assets/images/</code>.</p>
-      <p class="small">Example embed:</p>
-      <pre><code>&lt;img src="assets/images/block-diagram.png" alt="Block diagram" /&gt;</code></pre>
-    </div>
-
-    <div class="card">
-      <h2>3) ChemE Principles</h2>
+      <h2>10) Future Considerations + Additions (If Time)</h2>
       <ul>
-        <li><strong>Transport / separation:</strong> filtration, adsorption, membrane flux limits, pressure drop.</li>
-        <li><strong>Mass balance + capacity:</strong> breakthrough / bed life estimates for carbon/resin media.</li>
-        <li><strong>Energy:</strong> pumping work vs flow and ΔP; power budget.</li>
-        <li><strong>Sensing:</strong> sensor response, calibration, noise, drift.</li>
+        <li><strong>Cartridge health metric:</strong> add pressure sensors to estimate clogging (ΔP) and trigger maintenance alerts.</li>
+        <li><strong>Disinfection:</strong> UV stage for a stronger “drinkable” safety story.</li>
+        <li><strong>Better chemistry validation:</strong> chlorine testing workflow and/or ORP proxy trend logging.</li>
+        <li><strong>Enclosure + UX:</strong> display, status LEDs, and clean/refill indicators.</li>
+        <li><strong>Data:</strong> export logs to CSV, simple dashboard.</li>
       </ul>
-      <p class="small">Keep this section tight; link out to longer derivations if needed.</p>
-    </div>
-
-    <div class="card">
-      <h2>4) Preliminary Calculations (Feasibility)</h2>
-      <p>Put your most important “sanity checks” here.</p>
-      <table>
-        <thead><tr><th>Calculation</th><th>Inputs</th><th>Result</th><th>Interpretation</th></tr></thead>
-        <tbody>
-          <tr><td>ΔP estimate</td><td>Q, geometry, media</td><td>TBD</td><td>pump selection</td></tr>
-          <tr><td>Media capacity</td><td>loading, capacity</td><td>TBD</td><td>replacement interval</td></tr>
-          <tr><td>Energy per liter</td><td>P, Q</td><td>TBD</td><td>battery feasibility</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <h2>5) Prototyping Plan + Needed Items</h2>
-      <h3>Demo 1 focus</h3>
-      <ul>
-        <li>Basic purification stage (choose: filter + carbon + UV, etc.)</li>
-        <li>Sensor readings + logging</li>
-        <li>Simple adaptive rule (e.g., if turbidity high → reduce flow / enable stage)</li>
-      </ul>
-
-      <h3>Initial BOM</h3>
-      <table>
-        <thead><tr><th>Item</th><th>Purpose</th><th>Qty</th><th>Est. Cost</th></tr></thead>
-        <tbody>
-          <tr><td>Turbidity sensor</td><td>Feedback signal</td><td>1</td><td>TBD</td></tr>
-          <tr><td>Conductivity/TDS</td><td>Dissolved solids proxy</td><td>1</td><td>TBD</td></tr>
-          <tr><td>pH</td><td>Acidity/alkalinity</td><td>1</td><td>TBD</td></tr>
-          <tr><td>Pump + valve</td><td>Actuation</td><td>1</td><td>TBD</td></tr>
-          <tr><td>Filter/carbon/etc.</td><td>Separation</td><td>1</td><td>TBD</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <h2>6) Testing Plan (Initial)</h2>
-      <ul>
-        <li>Influent vs effluent measurements (NTU, TDS, pH)</li>
-        <li>Repeatability + calibration against known standards</li>
-        <li>Step-change tests (sudden turbidity increase) to validate “adaptive” control response</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>References</h2>
-      <ol>
-        <li>Source — title — year.</li>
-        <li>Source — title — year.</li>
-      </ol>
     </div>
 
     <div class="footer wrap">
       <hr />
-      <div>© <span id="year"></span></div>
+      <div>© <span id="year"></span> • Adaptive Water Purifier</div>
     </div>
   </main>
 
