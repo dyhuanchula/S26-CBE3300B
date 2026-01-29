@@ -5,6 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Initial Design — Market + Gantt</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .gantt-chart {
+      overflow-x: auto;
+      background: #1a1a2e;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .gantt-table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .gantt-table th,
+    .gantt-table td {
+      padding: 8px 4px;
+      text-align: center;
+      border: 1px solid #2d2d44;
+    }
+    .gantt-table th {
+      background: #2d2d44;
+      color: #fff;
+      font-weight: 600;
+    }
+    .gantt-table td:first-child {
+      text-align: left;
+      padding-left: 10px;
+      white-space: nowrap;
+      background: #252540;
+      color: #e0e0e0;
+      min-width: 200px;
+    }
+    .gantt-table .section-row td {
+      background: #3d3d5c;
+      color: #fff;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 10px;
+    }
+    .bar-done {
+      background: #6c5ce7;
+      border-radius: 3px;
+      height: 20px;
+    }
+    .bar-active {
+      background: #4a90d9;
+      border-radius: 3px;
+      height: 20px;
+    }
+    .bar-planned {
+      background: #4a5568;
+      border-radius: 3px;
+      height: 20px;
+    }
+    .bar-crit {
+      background: #e74c3c;
+      border-radius: 3px;
+      height: 20px;
+    }
+    .gantt-legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .gantt-legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #b0b0b0;
+      font-size: 13px;
+    }
+    .legend-box {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+    }
+  </style>
 </head>
 <body>
   <header class="wrap">
@@ -84,8 +162,212 @@
     
     <div class="card">
       <h2>Gantt Chart</h2>
-      <p class="small">Updated weekly to track progress.</p>
-      <img src="https://mermaid.ink/img/pako:eNqNVMtu2zAQ_BWCpwSwHdtJ7EMPBdIWSFOgSIMi9YXgYiWuLDIkKdtu4H_vUnLiR4EcBGi5M7OzS-4rtK2mYgbfhFrjQvKCDx-5EJOBXs7w4ZF0dEUWy56_5OPRuBdEfh_mX7c7ukN78NVYVhN0TlguNRNSj0Fn0hRacj9Dk88pJNlB8DdCGZ6JrLKuRgMa5oSSaL1f4_EKb5l2LBe0wAq5JhK8R_lCVh7IaQrHU_y7WDsH6bUqwW7OhJKCXe6c1aB9rSUzJVfk4g7R7IIz8w0cCUX5c2FVTqTAB_JeEJnCAqkj6OLPmOgpuJ52jjjmOz5pUKF_kJzJFzJM0sNk8Bvi3pJcXAhJFZnnZjQKcuJp9e0CxGcTu-H5mq7BVCQoMkMgNzL5W7DJEMQEUVbQYhqxXHPvvqIzUKQXqJXLxjrLUXi9Vj8mJCfpDL5m5D7_QKYW_Fk25MYxjZWpPKaKpqTIwODdYnHCHu6krsM6bIRNkzqm2eoNabjMJrOwSr3SuWsLFxWZwwkJWilXVBaVXDBZBGXDwqGUGCOFDBb8XGlHJdmK6zCvNPrJPBPa5T7r7RlWyMRMk3Smp6-dMkXO7RRxYcBZJbLlONgmlBZBqxBOSnYs_IBMWEK_B5CuqX8j55p4qXzpAz7NcmZ95B2HFsz0i5lKoefXYB8XFuAqnD-sLCnBK0MqciE_khW0oiZx2aIm5yqC6v90EGbxhRykC2Fywt7bIPJSh49CKn1Ysy8dnT6SBd6ikM8yjXXCv3tD-kIunf8B0yDDAg?type=png" alt="Gantt Chart" style="width:100%; border-radius:8px; background:#1e1e2e;">
+      <div class="gantt-legend">
+        <span><div class="legend-box" style="background:#6c5ce7"></div> Done</span>
+        <span><div class="legend-box" style="background:#4a90d9"></div> Active</span>
+        <span><div class="legend-box" style="background:#4a5568"></div> Planned</span>
+        <span><div class="legend-box" style="background:#e74c3c"></div> Critical</span>
+      </div>
+      <div class="gantt-chart">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>W1</th><th>W2</th><th>W3</th><th>W4</th>
+              <th>W5</th><th>W6</th><th>W7</th><th>W8</th>
+              <th>W9</th><th>W10</th><th>W11</th><th>W12</th>
+              <th>W13</th><th>W14</th><th>W15</th><th>W16</th><th>W17</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Preliminary -->
+            <tr class="section-row"><td colspan="18">Preliminary Design (100 pts)</td></tr>
+            <tr>
+              <td>Research principles</td>
+              <td><div class="bar-done"></div></td>
+              <td><div class="bar-done"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Calculations</td>
+              <td><div class="bar-done"></div></td>
+              <td><div class="bar-done"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Prototyping approach</td>
+              <td><div class="bar-done"></div></td>
+              <td><div class="bar-done"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>GitHub Page/Wiki</td>
+              <td><div class="bar-done"></div></td>
+              <td><div class="bar-done"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            
+            <!-- Initial Design -->
+            <tr class="section-row"><td colspan="18">Initial Design (100 pts)</td></tr>
+            <tr>
+              <td>Market research / SWOT</td>
+              <td></td><td></td>
+              <td><div class="bar-active"></div></td>
+              <td><div class="bar-active"></div></td>
+              <td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Competitor analysis</td>
+              <td></td><td></td>
+              <td><div class="bar-active"></div></td>
+              <td><div class="bar-active"></div></td>
+              <td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Value proposition</td>
+              <td></td><td></td><td></td>
+              <td><div class="bar-active"></div></td>
+              <td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Gantt chart</td>
+              <td></td><td></td>
+              <td><div class="bar-done"></div></td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            
+            <!-- Demo 1 -->
+            <tr class="section-row"><td colspan="18">Demo 1: Initial Prototype (125 pts)</td></tr>
+            <tr>
+              <td>Core purification design</td>
+              <td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Source materials</td>
+              <td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Breadboard prototype</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Testing / proof of concept</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-crit"></div></td>
+              <td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            
+            <!-- Demo 2 -->
+            <tr class="section-row"><td colspan="18">Demo 2: Intermediate Prototype (125 pts)</td></tr>
+            <tr>
+              <td>Improve prototype</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Data handling</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Serial communication</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Performance testing</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-crit"></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            
+            <!-- Demo 3 -->
+            <tr class="section-row"><td colspan="18">Demo 3: MVP (150 pts)</td></tr>
+            <tr>
+              <td>Finalize components</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Enclosure build</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Signal processing</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>System integration</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-crit"></div></td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+            
+            <!-- Final -->
+            <tr class="section-row"><td colspan="18">Final Report and Demo (350 pts)</td></tr>
+            <tr>
+              <td>Document process</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>Challenges / outcomes</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>Finalize GitHub</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-planned"></div></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Final demo prep</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td><div class="bar-crit"></div></td>
+              <td><div class="bar-crit"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="card">
