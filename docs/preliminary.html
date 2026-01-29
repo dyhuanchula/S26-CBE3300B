@@ -43,9 +43,6 @@
         <li><strong>What problem?</strong> (e.g., inconsistent taste/odor, particulate/turbidity, user confidence)</li>
         <li><strong>Why adaptive?</strong> Real-time sensing enables automatic “keep cycling until clean” behavior and maintenance alerts.</li>
       </ul>
-      <p class="small">
-        (Keep this short here. The deeper market research + SWOT + competitors belong on the “Initial Design” page.)
-      </p>
     </div>
 
     <!-- 2) Overall Design -->
@@ -71,37 +68,14 @@
         <li>Log and display pH (informational readout)</li>
       </ul>
 
-      <p class="small">Optional: Add a diagram in <code>docs/assets/images/</code> and embed it below.</p>
+      <h3>Embed Image Here</h3>
+
       <pre><code>&lt;img src="assets/images/block-diagram.png" alt="System block diagram" /&gt;</code></pre>
     </div>
 
     <!-- 3) Chemical/Physical Principles -->
     <div class="card">
       <h2>3) Chemical / Physical Principles</h2>
-
-      <h3>Filtration (Particles)</h3>
-      <ul>
-        <li>Particle removal depends on pore/mesh size, loading, and flow rate.</li>
-        <li>Pressure drop increases as the filter loads (important for continuous use).</li>
-      </ul>
-
-      <h3>Adsorption (Taste/Odor + Organics)</h3>
-      <ul>
-        <li>Adsorbent performance depends on surface area, contact time, and bed geometry.</li>
-        <li>Breakthrough occurs when adsorption sites saturate; media then needs replacement.</li>
-      </ul>
-
-      <h3>Transport + Hydraulics</h3>
-      <ul>
-        <li>Flow rate and pressure drop determine pump requirements and energy use.</li>
-        <li>Recirculation improves mixing and speeds convergence to a “steady” clarity reading.</li>
-      </ul>
-
-      <h3>Sensing & Control</h3>
-      <ul>
-        <li>Sensor response time, drift, and noise affect thresholds and the “hold time” rule.</li>
-        <li>Hysteresis prevents valve chatter (separate “clean” and “dirty” thresholds).</li>
-      </ul>
     </div>
 
     <!-- 4) General Materials and Parts List -->
@@ -127,7 +101,7 @@
       </ul>
 
       <p class="small">
-        Add a more detailed BOM with links/costs once selections are finalized (you can keep it simple for preliminary).
+        Work in progress
       </p>
     </div>
 
@@ -192,29 +166,11 @@
     <!-- 9) Timeline -->
     <div class="card">
       <h2>9) Timeline</h2>
-      <p>High-level plan for the first build and validation milestones (to be expanded into a Gantt chart on the Initial Design page).</p>
-      <table>
-        <thead><tr><th>Week</th><th>Goal</th><th>Deliverable</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Finalize architecture + parts</td><td>BOM + block diagram</td></tr>
-          <tr><td>2</td><td>Build recirculation loop + valve control</td><td>Basic flow control working</td></tr>
-          <tr><td>3</td><td>Add turbidity + pH sensing</td><td>Live sensor logging</td></tr>
-          <tr><td>4</td><td>Integrate adsorbent module + testing</td><td>Before/after plots</td></tr>
-          <tr><td>5</td><td>Demo 1 prototype</td><td>Proof-of-concept demo</td></tr>
-        </tbody>
-      </table>
     </div>
 
     <!-- 10) Future Considerations -->
     <div class="card">
       <h2>10) Future Considerations + Additions (If Time)</h2>
-      <ul>
-        <li><strong>Cartridge health metric:</strong> add pressure sensors to estimate clogging (ΔP) and trigger maintenance alerts.</li>
-        <li><strong>Disinfection:</strong> UV stage for a stronger “drinkable” safety story.</li>
-        <li><strong>Better chemistry validation:</strong> chlorine testing workflow and/or ORP proxy trend logging.</li>
-        <li><strong>Enclosure + UX:</strong> display, status LEDs, and clean/refill indicators.</li>
-        <li><strong>Data:</strong> export logs to CSV, simple dashboard.</li>
-      </ul>
     </div>
 
     <div class="footer wrap">
