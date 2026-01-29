@@ -5,27 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Initial Design — Market + Gantt</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ 
-      startOnLoad: true,
-      theme: 'dark'
-    });
-  </script>
-  <style>
-    .mermaid {
-      background: #1a1a2e;
-      border-radius: 8px;
-      padding: 20px;
-      overflow-x: auto;
-    }
-    .gantt-container {
-      overflow-x: auto;
-      width: 100%;
-      background: #1a1a2e;
-      border-radius: 8px;
-    }
-  </style>
 </head>
 <body>
   <header class="wrap">
@@ -105,46 +84,8 @@
     
     <div class="card">
       <h2>Gantt Chart</h2>
-      <p class="small">Updated weekly to track progress. Legend: <span style="color:#6c5ce7">■</span> Done &nbsp; <span style="color:#4a90d9">■</span> Active &nbsp; <span style="color:#e74c3c">■</span> Critical</p>
-      
-      <div class="gantt-container">
-<pre class="mermaid">
-gantt
-title Water Purifier Project Spring 2026
-dateFormat YYYY-MM-DD
-axisFormat %b %d
-section Preliminary
-Research principles :done, p1, 2026-01-20, 14d
-Calculations :done, p2, 2026-01-20, 14d
-Prototyping approach :done, p3, 2026-01-20, 14d
-GitHub Page Wiki :done, p4, 2026-01-20, 14d
-section Initial Design
-Market research SWOT :active, i1, 2026-02-03, 14d
-Competitor analysis :active, i2, 2026-02-03, 14d
-Value proposition :i3, 2026-02-10, 14d
-GANTT chart :done, i4, 2026-02-03, 7d
-section Demo 1
-Core purification design :d1a, 2026-02-17, 14d
-Source materials :d1b, 2026-02-17, 14d
-Breadboard prototype :d1c, 2026-03-03, 14d
-Testing proof of concept :crit, d1d, 2026-03-10, 14d
-section Demo 2
-Improve prototype :d2a, 2026-03-17, 14d
-Data handling :d2b, 2026-03-24, 14d
-Serial communication :d2c, 2026-03-24, 14d
-Performance testing :crit, d2d, 2026-03-31, 14d
-section Demo 3
-Finalize components :d3a, 2026-04-14, 14d
-Enclosure build :d3b, 2026-04-21, 14d
-Signal processing :d3c, 2026-04-21, 14d
-System integration :crit, d3d, 2026-04-28, 14d
-section Final
-Document process :f1, 2026-05-05, 14d
-Challenges outcomes :f2, 2026-05-12, 7d
-Finalize GitHub :f3, 2026-05-19, 7d
-Final demo prep :crit, f4, 2026-05-19, 14d
-</pre>
-      </div>
+      <p class="small">Updated weekly to track progress.</p>
+      <img src="https://mermaid.ink/img/pako:eNqNVMtu2zAQ_BWCpwSwHdtJ7EMPBdIWSFOgSIMi9YXgYiWuLDIkKdtu4H_vUnLiR4EcBGi5M7OzS-4rtK2mYgbfhFrjQvKCDx-5EJOBXs7w4ZF0dEUWy56_5OPRuBdEfh_mX7c7ukN78NVYVhN0TlguNRNSj0Fn0hRacj9Dk88pJNlB8DdCGZ6JrLKuRgMa5oSSaL1f4_EKb5l2LBe0wAq5JhK8R_lCVh7IaQrHU_y7WDsH6bUqwW7OhJKCXe6c1aB9rSUzJVfk4g7R7IIz8w0cCUX5c2FVTqTAB_JeEJnCAqkj6OLPmOgpuJ52jjjmOz5pUKF_kJzJFzJM0sNk8Bvi3pJcXAhJFZnnZjQKcuJp9e0CxGcTu-H5mq7BVCQoMkMgNzL5W7DJEMQEUVbQYhqxXHPvvqIzUKQXqJXLxjrLUXi9Vj8mJCfpDL5m5D7_QKYW_Fk25MYxjZWpPKaKpqTIwODdYnHCHu6krsM6bIRNkzqm2eoNabjMJrOwSr3SuWsLFxWZwwkJWilXVBaVXDBZBGXDwqGUGCOFDBb8XGlHJdmK6zCvNPrJPBPa5T7r7RlWyMRMk3Smp6-dMkXO7RRxYcBZJbLlONgmlBZBqxBOSnYs_IBMWEK_B5CuqX8j55p4qXzpAz7NcmZ95B2HFsz0i5lKoefXYB8XFuAqnD-sLCnBK0MqciE_khW0oiZx2aIm5yqC6v90EGbxhRykC2Fywt7bIPJSh49CKn1Ysy8dnT6SBd6ikM8yjXXCv3tD-kIunf8B0yDDAg?type=png" alt="Gantt Chart" style="width:100%; border-radius:8px; background:#1e1e2e;">
     </div>
 
     <div class="card">
