@@ -33,15 +33,39 @@
     <div class="card">
       <h2>1) Introduction (Market Context)</h2>
       <p>
-        Our goal is to build an “adaptive Brita”-style purifier that continuously recirculates water through a particulate
+        Our goal is to build an "adaptive Brita"-style purifier that continuously recirculates water through a particulate
         filter and an adsorbent bed until quality metrics meet a threshold, then dispenses treated water. The device targets
         low-cost, user-friendly purification for everyday use where customers care about clarity, taste/odor, and basic
         quality feedback.
       </p>
+      
+      <h3>Who is this for?</h3>
+      <p>
+        Our adaptive water purifier is designed for <strong>renters, dorm residents, small offices, and anyone without access to built-in filtration systems</strong>. It's ideal for people who want cleaner, better-tasting water without the complexity of under-sink installations or the hassle of constantly replacing pitcher filters on a fixed schedule. It also serves as a reliable <strong>emergency backup</strong> for situations where tap water quality may be temporarily compromised.
+      </p>
+      
+      <h3>What problem does it solve?</h3>
+      <p>
+        Standard pitcher filters operate on a "pour and wait" basis with no feedback—you never really know if the water is actually clean or if the filter is exhausted. This leads to:
+      </p>
       <ul>
-        <li><strong>Who is this for?</strong> (e.g., dorms, renters, office kitchens, emergency backup)</li>
-        <li><strong>What problem?</strong> (e.g., inconsistent taste/odor, particulate/turbidity, user confidence)</li>
-        <li><strong>Why adaptive?</strong> Real-time sensing enables automatic “keep cycling until clean” behavior and maintenance alerts.</li>
+        <li><strong>Inconsistent taste and odor</strong> (chlorine, organics, musty flavors)</li>
+        <li><strong>Visible cloudiness or particulates</strong> that reduce confidence in water quality</li>
+        <li><strong>Guesswork on filter replacement</strong>—most people either change filters too early (wasting money) or too late (drinking inadequately treated water)</li>
+      </ul>
+      <p>
+        Our system eliminates this uncertainty by combining mechanical filtration (for particles/turbidity) with activated carbon treatment (for taste/odor), then <strong>verifying the results in real time</strong> before dispensing.
+      </p>
+      
+      <h3>Why adaptive?</h3>
+      <p>
+        Traditional filters are passive—water passes through once and you hope for the best. Our system uses <strong>real-time optical turbidity sensing</strong> to continuously monitor water clarity during treatment. This enables:
+      </p>
+      <ul>
+        <li><strong>"Keep cycling until clean" behavior:</strong> The system automatically recirculates water through the filter and adsorbent stages until sensor readings confirm the water meets quality thresholds</li>
+        <li><strong>Automatic adaptation to varying source quality:</strong> Dirtier input water simply triggers more filtration passes—no manual adjustment needed</li>
+        <li><strong>User confidence through feedback:</strong> A pH display provides visible confirmation of water chemistry, and the sensor-gated approach means treated water is released only when it's actually ready</li>
+        <li><strong>Smarter maintenance alerts:</strong> Instead of arbitrary replacement schedules, the system can detect declining filter performance over time</li>
       </ul>
     </div>
 
@@ -95,7 +119,7 @@
         particles larger than the pore openings are physically retained, which reduces cloudiness and improves clarity. Second, an activated carbon
         stage improves taste and odor by adsorption. Activated carbon has a highly porous structure and large internal surface area, allowing it to
         capture dissolved organic compounds and chlorine-related species that are not removed by mesh filtration alone. Together, these stages target
-        both visible turbidity and common “off-taste” chemical contributors.
+        both visible turbidity and common "off-taste" chemical contributors.
       </p>
       <ul>
         <li>Fine mesh / filter pad: primarily removes particulates (silt, debris, and other suspended solids) by size exclusion and interception.</li>
@@ -107,12 +131,12 @@
       <p>
         The adaptive decision variable is turbidity/clarity measured optically. A low-cost implementation uses an LED light source and a photoresistor
         (LDR) placed across a small inline chamber (or a transparent segment of tubing). Suspended particles scatter and absorb light, so cloudy water
-        reduces the amount of light reaching the photoresistor. As the water becomes clearer, more light reaches the sensor and the LDR’s resistance
+        reduces the amount of light reaching the photoresistor. As the water becomes clearer, more light reaches the sensor and the LDR's resistance
         changes in a repeatable way.
       </p>
       <ul>
         <li>Measurement approach: the microcontroller reads a voltage divider output from the LDR, which correlates with transmitted light intensity.</li>
-        <li>Why it is sufficient here: even without absolute NTU calibration, it provides a consistent relative signal to detect “getting clearer” and “clear enough.”</li>
+        <li>Why it is sufficient here: even without absolute NTU calibration, it provides a consistent relative signal to detect "getting clearer" and "clear enough."</li>
         <li>Practical notes: use a light-shielded housing to block ambient light, keep geometry fixed, and apply averaging/median filtering to reduce noise.</li>
         <li>Calibration plan: record a clean baseline (clear water) and a dirty baseline (intentional turbidity, such as a small amount of fine silt),
           then set thresholds with hysteresis to avoid valve chatter near the cutoff.</li>
@@ -152,7 +176,7 @@
     
       <p>
         Our system combines mechanical filtration and activated carbon treatment, then uses sensor feedback to decide when the
-        water is “clean enough” to transfer into the final reservoir. In general, contaminants fall into two categories that
+        water is "clean enough" to transfer into the final reservoir. In general, contaminants fall into two categories that
         matter for this prototype: suspended particles (which drive cloudiness) and dissolved compounds (which drive taste/odor).
       </p>
     
@@ -160,7 +184,7 @@
       <p>
         The treatment module is a two-stage approach in one integrated path. First, a fine mesh or filter pad removes suspended
         solids primarily through size exclusion and interception (particles are physically retained by pores or collide with
-        fibers). Second, activated carbon improves taste and odor by adsorption: dissolved molecules adhere to the carbon’s
+        fibers). Second, activated carbon improves taste and odor by adsorption: dissolved molecules adhere to the carbon's
         internal pore surfaces due to its high surface area. Recirculation increases the total number of passes and total
         contact time with both stages, which improves performance when the starting water quality is worse.
       </p>
@@ -192,7 +216,7 @@
         <li>Design mitigation: use a light-shielded housing, fixed geometry, and filtering (moving average/median) on the sensor signal.</li>
         <li>Decision logic: use a turbidity threshold plus a hold time, and add hysteresis to prevent rapid switching near the cutoff.</li>
         <li>Calibration approach: measure a clean baseline (clear water) and a dirty baseline (intentional turbidity like fine silt),
-          then select thresholds that reliably separate “still cloudy” from “consistently clear.”</li>
+          then select thresholds that reliably separate "still cloudy" from "consistently clear."</li>
       </ul>
     
       <h3>pH</h3>
@@ -250,7 +274,7 @@
     <div class="card">
       <h2>5) In Depth: Turbidity (Optical Clarity)</h2>
       <p>
-        Turbidity is our primary “adaptive” signal because particle filtration directly changes optical clarity in real time.
+        Turbidity is our primary "adaptive" signal because particle filtration directly changes optical clarity in real time.
         We can implement an inline LED + photodiode/phototransistor sensor or a turbidity module.
       </p>
       <ul>
@@ -266,7 +290,7 @@
       <h2>6) In Depth: pH</h2>
       <p>
         The pH sensor provides a real-time readout for user awareness and logging. In this design, pH is not used as the main
-        “clean/not clean” gate, but it is useful for diagnostics and reporting.
+        "clean/not clean" gate, but it is useful for diagnostics and reporting.
       </p>
       <ul>
         <li><strong>Response time target:</strong> stable reading within ~30–60 seconds in a well-mixed chamber.</li>
@@ -309,48 +333,4 @@
       <h2>9) Timeline</h2>
     </div>
 
-    <!-- 10) Future Considerations -->
-    <div class="card">
-      <h2>10) Future Considerations + Additions (If Time)</h2>
-  <p>
-    While the current system focuses on turbidity-based control, activated carbon adsorption, and pH monitoring, several
-    upgrades could improve accuracy, automation, and real-world usability.
-  </p>
-
-  <h3>Expanded water quality sensing</h3>
-  <p>
-    Adding a conductivity or total dissolved solids (TDS) sensor would allow the system to quantify dissolved
-    contaminants that are not detected by turbidity alone. This would provide a second chemical check after carbon
-    filtration and improve confidence in water quality.
-  </p>
-
-  <h3>Automatic pH control</h3>
-  <p>
-    The pH sensor could be paired with small dosing pumps to automatically adjust acidity, keeping the water in a range
-    that is optimal for adsorption and safe for consumption. This would reduce manual intervention and improve
-    consistency across different water sources.
-  </p>
-
-  <h3>Data logging and user interface</h3>
-  <p>
-    Future versions could include wireless data logging or SD card storage to track turbidity, pH, and filtration
-    cycles over time. This would allow users to monitor filter performance and know when maintenance or replacement is
-    needed.
-  </p>
-
-  <h3>Scalability and cartridge design</h3>
-  <p>
-    The activated carbon bed could be redesigned as a replaceable cartridge, making the system easier to maintain and
-    scale for household or portable applications.
-  </p>
-</div>
-
-    <div class="footer wrap">
-      <hr />
-      <div>© <span id="year"></span> • Adaptive Water Purifier</div>
-    </div>
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <!-- 10) Future Considerati
