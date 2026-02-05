@@ -157,7 +157,7 @@
 
     <h3>Why adaptive?</h3>
     <p>
-    Traditional filters are passive—water passes through once and the user hopes sufficient treatment has occurred. In
+    Traditional filters are passive, water passes through once and the user hopes sufficient treatment has occurred. In
     contrast, our system uses real-time optical turbidity sensing as its primary control variable to continuously monitor water
     clarity during treatment.
     </p>
@@ -376,8 +376,8 @@
     <ul>
       <li>Arduino UNO R3</li>
       <li>5 V USB power supply</li>
-      <li>940 nm IR LED</li>
-      <li>940 nm IR photoresistor</li>
+      <li>500-600 nm IR LED</li>
+      <li>GL5528 nm photoresistor</li>
       <li>100–220 Ω resistor (IR LED current limiting)</li>
       <li>100 kΩ resistor (photoresistor voltage divider)</li>
       <li>Breadboard and jumper wires</li>
@@ -389,13 +389,12 @@
       <li>The IR wavelength minimizes sensitivity to ambient visible light.</li>
       <li>The photoresistor output is read as an analog voltage and used to detect relative clarity changes.</li>
       <li>Light shielding reduces noise from room lighting and reflections.</li>
-      <li>Signal averaging and hysteresis are applied in software to reduce false triggering from bubbles or turbulence.</li>
     </ul>
 
     <h3>pH Sensing</h3>
     <p>
     The pH sensor provides chemical context and user-facing feedback but does not directly control filtration.
-    pH is measured in the clean reservoir and displayed to the user.
+    pH is measured before the clean reservoir and displayed to the user.
     </p>
 
     <h4>Electrical Components</h4>
