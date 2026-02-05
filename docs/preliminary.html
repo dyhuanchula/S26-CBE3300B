@@ -365,7 +365,7 @@
     consistent with the overall system design.
     </p>
 
-    <h3>4.1 Turbidity Sensing</h3>
+    <h3>Turbidity Sensing</h3>
     <p>
     The turbidity sensor provides the primary control signal for adaptive filtration. It uses an optical
     transmission setup in which an infrared LED shines through flowing water and a photosensitive element
@@ -392,7 +392,7 @@
       <li>Signal averaging and hysteresis are applied in software to reduce false triggering from bubbles or turbulence.</li>
     </ul>
 
-    <h3>4.2 pH Sensing</h3>
+    <h3>pH Sensing</h3>
     <p>
     The pH sensor provides chemical context and user-facing feedback but does not directly control filtration.
     pH is measured in the clean reservoir and displayed to the user.
@@ -417,7 +417,7 @@
       <li>The display provides real-time pH feedback to improve user confidence and transparency.</li>
     </ul>
 
-    <h3>4.3 Filtration and Adsorbent Module</h3>
+    <h3>Filtration and Adsorbent Module</h3>
     <p>
     The filtration module combines mechanical particle removal and chemical adsorption to address both
     turbidity and dissolved contaminants.
@@ -436,7 +436,7 @@
       <li>Flow rate and packing density affect pressure drop and contact time and will be optimized during testing.</li>
     </ul>
 
-    <h3>4.4 Valve and Flow Routing (Adaptive Control)</h3>
+    <h3>Valve and Flow Routing (Adaptive Control)</h3>
     <p>
     Pinch valves control whether water is recirculated for further treatment or transferred to the clean
     reservoir once turbidity criteria are met.
@@ -459,7 +459,7 @@
       <li>This enables clean switching between recirculation and transfer modes based on sensor input.</li>
     </ul>
 
-    <h3>4.5 Pump, Tubing, and General Fluid Handling</h3>
+    <h3>Pump, Tubing, and General Fluid Handling</h3>
     <p>
     These components support water movement through the sensing and filtration loop.
     </p>
@@ -483,7 +483,7 @@
       <li>Sealing and fittings reduce leaks and improve long-term reliability.</li>
     </ul>
 
-    <h3>4.6 Water Level Sensing (Ultrasonic Sensor)</h3>
+    <h3>Water Level Sensing (Ultrasonic Sensor)</h3>
     <p>
     Water level sensing enables semi-batch operation and prevents overflow or dry-running.
     </p>
@@ -500,7 +500,7 @@
       <li>Triggers batch start when the clean reservoir is low and stops filling when full.</li>
     </ul>
 
-    <h3>4.7 Tools and Fabrication Equipment</h3>
+    <h3>Tools and Fabrication Equipment</h3>
     <ul>
       <li>Soldering iron</li>
       <li>Wire cutter / stripper</li>
@@ -513,9 +513,9 @@
   </div>
 
 
-    <!-- 9) Timeline -->
+    <!-- 5) Timeline -->
     <div class="card">
-      <h2>9) Timeline</h2>
+      <h2>5) Timeline</h2>
       <p>Key milestones with target dates and success metrics for tracking progress.</p>
       
       <div class="timeline">
@@ -591,48 +591,60 @@
       </div>
     </div>
 
-    <!-- 10) Future Considerations -->
+    <!-- 6) Future Considerations -->
     <div class="card">
-      <h2>10) Future Considerations + Additions (If Time)</h2>
-      <p>
-        While the current system focuses on turbidity-based control, activated carbon adsorption, and pH monitoring, several
-        upgrades could improve accuracy, automation, and real-world usability.
-      </p>
+      <div class="card">
+  <h2>6) Future Considerations</h2>
 
-      <h3>Expanded water quality sensing</h3>
-      <p>
-        Adding a conductivity or total dissolved solids (TDS) sensor would allow the system to quantify dissolved
-        contaminants that are not detected by turbidity alone. This would provide a second chemical check after carbon
-        filtration and improve confidence in water quality.
-      </p>
+  <p>
+    While the current adaptive water purification system demonstrates filtration using turbidity feedback
+    and post-treatment pH monitoring, several extensions could improve performance, usability, and
+    applicability for real-world deployment.
+  </p>
 
-      <h3>Automatic pH control</h3>
-      <p>
-        The pH sensor could be paired with small dosing pumps to automatically adjust acidity, keeping the water in a range
-        that is optimal for adsorption and safe for consumption. This would reduce manual intervention and improve
-        consistency across different water sources.
-      </p>
+  <h3>Expanded Water Quality Sensing</h3>
+  <p>
+    At present, turbidity serves as the primary control variable, while pH provides diagnostic information.
+    Future versions of the system could incorporate additional sensors to capture aspects of water quality
+    not detected optically.
+  </p>
+  <p>
+    One potential addition is a conductivity or Total Dissolved Solids (TDS) sensor, which would quantify
+    dissolved ions that remain invisible to turbidity sensing. This would provide a secondary chemical
+    check after activated carbon filtration and increase confidence that dissolved contaminants have been
+    adequately reduced.
+  </p>
 
-      <h3>Data logging and user interface</h3>
-      <p>
-        Future versions could include wireless data logging or SD card storage to track turbidity, pH, and filtration
-        cycles over time. This would allow users to monitor filter performance and know when maintenance or replacement is
-        needed.
-      </p>
+  <h3>Automatic pH Control</h3>
+  <p>
+    Currently, pH is measured and displayed but not actively adjusted. A future enhancement could pair the
+    pH sensor with small dosing pumps to automatically correct water chemistry. If the water is too acidic
+    or too basic, the system could add controlled amounts of buffering solution to bring pH into a safe and
+    optimal range for both consumption and adsorption performance.
+  </p>
 
-      <h3>Scalability and cartridge design</h3>
-      <p>
-        The activated carbon bed could be redesigned as a replaceable cartridge, making the system easier to maintain and
-        scale for household or portable applications.
-      </p>
-    </div>
+  <h3>Data Logging and User Interface Improvements</h3>
+  <p>
+    Future iterations could include data logging via an SD card or wireless communication to record
+    turbidity, pH, and filtration cycle duration over time. This information would allow users to track
+    filter performance, identify long-term trends, and receive clearer guidance on when maintenance or
+    replacement is required.
+  </p>
 
-    <div class="footer wrap">
-      <hr />
-      <div>© <span id="year"></span> • Adaptive Water Purifier</div>
-    </div>
-  </main>
+  <h3>Scalability and Cartridge-Based Design</h3>
+  <p>
+    The activated carbon bed could be redesigned as a replaceable cartridge, simplifying maintenance and
+    making the system easier to scale for household or portable use. Cartridge-based filtration would also
+    allow different media to be swapped in depending on application, such as catalytic carbon for
+    chloramine removal or alternative adsorbents for specific contaminants.
+  </p>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <h3>Integrated and Enclosed System Design</h3>
+  <p>
+    Another potential improvement is housing the entire system within a single enclosed casing, with an
+    integrated display and concealed tubing. This would improve safety, reduce contamination risk, and
+    give the device a more polished, consumer-friendly appearance similar to a water cooler or countertop
+    purifier. A closed enclosure would also protect sensors and electronics from splashing and handling
+    damage, improving reliability over time.
+  </p>
+</div>
