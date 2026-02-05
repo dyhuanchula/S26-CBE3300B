@@ -112,3 +112,32 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
   h1{font-size:34px}
   .grid{grid-template-columns:1fr}
 }
+
+/* Images / diagrams */
+.card img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:12px auto;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background: rgba(0,0,0,.18);
+}
+
+/* Optional: caption style under images */
+.figcap{
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:-6px;
+  margin-bottom:10px;
+}
+
+/* Optional: if you wrap image in a link to open full-size */
+.figure-link{
+  display:block;
+  border-radius:14px;
+}
+.figure-link:hover img{
+  border-color: rgba(122,162,255,.55);
+}
