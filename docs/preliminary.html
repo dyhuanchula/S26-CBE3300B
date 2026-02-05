@@ -357,88 +357,162 @@
 
     <!-- 4) General Materials and Parts List -->
     <div class="card">
-      <h2>4) General Materials and Parts List</h2>
+     <div class="card">
+    <h2>4) General Materials and Parts List</h2>
 
-      <h3>Core Hardware</h3>
-      <ul>
-        <li>Reservoir + treatment chamber (food-safe container)</li>
-        <li>Silicone tubing + barbed fittings + clamps</li>
-        <li>Pump (recirculation)</li>
-        <li>Valve/actuator (switch recirculate vs dispense)</li>
-        <li>Filter housing/module</li>
-        <li>Adsorbent bed housing (DIY packed bed)</li>
-        <li>Microcontroller (Arduino/ESP32) + power supply</li>
-      </ul>
+    <p>
+    This section outlines the major components required to build the adaptive water purification system.
+    Components are selected to support real-time sensing, adaptive control, and low-cost prototyping
+    consistent with the overall system design.
+    </p>
 
-      <h3>Sensors</h3>
-      <ul>
-        <li>Turbidity/optical clarity sensor (inline)</li>
-        <li>pH probe + interface board</li>
-        <li>Ultrasonic level sensor (or float switch alternative)</li>
-      </ul>
+    <h3>4.1 Turbidity Sensing</h3>
+    <p>
+    The turbidity sensor provides the primary control signal for adaptive filtration. It uses an optical
+    transmission setup in which an infrared LED shines through flowing water and a photosensitive element
+    measures transmitted light intensity. Changes in turbidity directly affect the received signal.
+    </p>
 
-      <p class="small">
-        Work in progress
-      </p>
-    </div>
+    <h4>Electrical Components</h4>
+    <ul>
+      <li>Arduino UNO R3</li>
+      <li>5 V USB power supply</li>
+      <li>940 nm IR LED</li>
+      <li>940 nm IR photoresistor</li>
+      <li>100–220 Ω resistor (IR LED current limiting)</li>
+      <li>100 kΩ resistor (photoresistor voltage divider)</li>
+      <li>Breadboard and jumper wires</li>
+      <li>Opaque sensor housing or black heat-shrink tubing</li>
+    </ul>
 
-    <!-- 5) In depth on: Turbidity -->
-    <div class="card">
-      <h2>5) In Depth: Turbidity (Optical Clarity)</h2>
-      <p>
-        Turbidity is our primary "adaptive" signal because particle filtration directly changes optical clarity in real time.
-        We can implement an inline LED + photodiode/phototransistor sensor or a turbidity module.
-      </p>
-      <ul>
-        <li><strong>Placement:</strong> after filter/adsorbent in the recirculation loop to measure improvement.</li>
-        <li><strong>Algorithm:</strong> recirculate until clarity &gt; threshold for N seconds (hold time) + hysteresis.</li>
-        <li><strong>Calibration:</strong> define clean baseline vs intentionally cloudy baseline (e.g., fine silt test).</li>
-      </ul>
-      <p class="small">Include a simple plot later: sensor reading vs time during a cleaning cycle.</p>
-    </div>
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>The IR wavelength minimizes sensitivity to ambient visible light.</li>
+      <li>The photoresistor output is read as an analog voltage and used to detect relative clarity changes.</li>
+      <li>Light shielding reduces noise from room lighting and reflections.</li>
+      <li>Signal averaging and hysteresis are applied in software to reduce false triggering from bubbles or turbulence.</li>
+    </ul>
 
-    <!-- 6) In depth on: pH -->
-    <div class="card">
-      <h2>6) In Depth: pH</h2>
-      <p>
-        The pH sensor provides a real-time readout for user awareness and logging. In this design, pH is not used as the main
-        "clean/not clean" gate, but it is useful for diagnostics and reporting.
-      </p>
-      <ul>
-        <li><strong>Response time target:</strong> stable reading within ~30–60 seconds in a well-mixed chamber.</li>
-        <li><strong>Placement:</strong> in the chamber or in a flowing side-stream to avoid stagnant readings.</li>
-        <li><strong>Calibration:</strong> 2-point calibration (pH 4 and pH 7 buffers; optionally pH 10).</li>
-      </ul>
-    </div>
+    <h3>4.2 pH Sensing</h3>
+    <p>
+    The pH sensor provides chemical context and user-facing feedback but does not directly control filtration.
+    pH is measured in the clean reservoir and displayed to the user.
+    </p>
 
-    <!-- 7) In depth on: Adsorbent -->
-    <div class="card">
-      <h2>7) In Depth: Adsorbent</h2>
-      <p>
-        We plan to use a DIY packed-bed adsorbent module to reduce chlorine/taste/odor and some organic compounds (depending on
-        adsorbent selection). The bed will be held between mesh + filter pads to retain granules and block fines.
-      </p>
-      <ul>
-        <li><strong>Candidate media:</strong> activated carbon (or catalytic carbon if chloramine is a focus).</li>
-        <li><strong>Design variables:</strong> bed length/diameter, packing density, flow rate (contact time).</li>
-        <li><strong>Feasibility calc:</strong> estimate contact time = (bed volume / flow) and expected media life (later).</li>
-      </ul>
-      <p class="small">Add a photo/diagram of the packed-bed module once built.</p>
-    </div>
+    <h4>Electrical Components</h4>
+    <ul>
+      <li>Arduino UNO R3</li>
+      <li><a href="https://www.amazon.com/Teyleten-Robot-Acquisition-Alkalinity-Monitoring/dp/B09H1MJS4S/ref=sr_1_3?crid=3JBPQSB7K8SL1&dib=eyJ2IjoiMSJ9.92kxRRlRGlVRvkC_LcBb3s9qQbhQL09k881bM1lJtyUvrhiMOehEGa8522W8V7OFBErscD4W_iWvVq3uaft9Nku55gGn85uCtRfXzwWQ3b04lNPKWsqpG2DKWRXp9lJ4gqlPUqDFKRWzKAHafVFh63RBjjxYx3NLEOQPvvBIW1N6Ukx6tV8qC_f5Hyo00omLZy65Cc9rhTCEtLp9OywFvQ0DKi_eEbyAYX7z9N4P0mc.ARLscNlV5-O1sHKNWARklk3fRQh3A3FryugpcuH8__I&dib_tag=se&keywords=ph+sensor&qid=1769719943&sprefix=ph+sensor%2Caps%2C117&sr=8-3" target="_blank">pH sensor module</a></li>
+      <li>5 V USB power supply</li>
+      <li>TLC4502 operational amplifier</li>
+      <li>TL431 regulator diode</li>
+      <li>3 × 100 Ω resistors</li>
+      <li>100 Ω potentiometer (calibration adjustment)</li>
+      <li><a href="https://www.adafruit.com/product/292" target="_blank">Display screen</a></li>
+    </ul>
 
-    <!-- 8) In depth on: Ultrasound sensor -->
-    <div class="card">
-      <h2>8) In Depth: Ultrasound Sensor (Water Level)</h2>
-      <p>
-        The ultrasonic sensor measures the distance to the water surface to estimate chamber or reservoir level. This enables
-        auto-refill behavior and prevents dry-running the pump.
-      </p>
-      <ul>
-        <li><strong>Mounting:</strong> above the water, pointed downward; shield from splashing.</li>
-        <li><strong>Noise sources:</strong> bubbles, turbulence, angled surfaces → use averaging/median filtering.</li>
-        <li><strong>Fallback option:</strong> float switch for simple low/high water detection.</li>
-      </ul>
-    </div>
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>pH is measured after treatment to verify water chemistry remains within an acceptable range.</li>
+      <li>The op-amp conditions the high-impedance pH probe signal for stable microcontroller readings.</li>
+      <li>The display provides real-time pH feedback to improve user confidence and transparency.</li>
+    </ul>
+
+    <h3>4.3 Filtration and Adsorbent Module</h3>
+    <p>
+    The filtration module combines mechanical particle removal and chemical adsorption to address both
+    turbidity and dissolved contaminants.
+    </p>
+
+    <h4>Components</h4>
+    <ul>
+      <li><a href="https://www.amazon.com/dp/B0C9MM4CSM?th=1" target="_blank">Activated carbon</a></li>
+      <li><a href="https://www.amazon.com/dp/B0CYT5XLXX?th=1" target="_blank">Micron-scale nylon mesh</a></li>
+    </ul>
+
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>The mesh removes suspended solids through size exclusion and interception.</li>
+      <li>Activated carbon adsorbs dissolved organic compounds and chlorine-related species affecting taste and odor.</li>
+      <li>Flow rate and packing density affect pressure drop and contact time and will be optimized during testing.</li>
+    </ul>
+
+    <h3>4.4 Valve and Flow Routing (Adaptive Control)</h3>
+    <p>
+    Pinch valves control whether water is recirculated for further treatment or transferred to the clean
+    reservoir once turbidity criteria are met.
+    </p>
+
+    <h4>Components</h4>
+    <ul>
+      <li>Arduino UNO R3</li>
+      <li><a href="https://www.amazon.com/Micro-Servos-Helicopter-Airplane-Controls/dp/B07MLR1498/ref=sr_1_5?crid=3BYLYLDDKUS7I&dib=eyJ2IjoiMSJ9.FzLtM3rlM268xUasVGOK5NteVREtfDkctisKpQeS0d3xggXsDM30C0ZZpTZh-xcFgsX1-hHhbQzY7MwB1WsCNXmEWTYaYMrSU_wFedrTOc1tovIuuo9g5ZDHVSbm-x6QX7NEFhU8L_ipPlo5-DHRx0YjkBmdO6AoYvYZ8QTAXJaiVSnPTlz_pzZyRV2wjzKuw2fHrdHQHM7jqR45MCLpn1VZx7ODL1AompORVMuKwNnQyL9j4Zpw2gblVRzFTSl75L7c7qlXkbOyRrwQpOtMed6NFqXyIRkdiF_uTtDrbDs.uuWL4TDZ_ZagEqqaMKjD7lz905LFvrM6MAZRpAidNtc&dib_tag=se&keywords=servo&qid=1769720412&sprefix=servo%2Caps%2C110&sr=8-5&th=1" target="_blank">2 × micro servo motors</a></li>
+      <li><a href="https://www.printables.com/model/247744-pinch-valve-powered-by-servo" target="_blank">2 × pinch valve housings</a></li>
+      <li>Mounting screws and hardware</li>
+      <li>External 5–6 V power supply for servos</li>
+      <li>Common ground wiring between Arduino and servo supply</li>
+    </ul>
+
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>Servos actuate pinch valves to redirect flow without contacting the water.</li>
+      <li>An external servo supply prevents voltage drops and unintended Arduino resets.</li>
+      <li>This enables clean switching between recirculation and transfer modes based on sensor input.</li>
+    </ul>
+
+    <h3>4.5 Pump, Tubing, and General Fluid Handling</h3>
+    <p>
+    These components support water movement through the sensing and filtration loop.
+    </p>
+
+    <h4>Components</h4>
+    <ul>
+      <li><a href="https://www.adafruit.com/product/1150" target="_blank">Pump</a></li>
+      <li><a href="https://www.adafruit.com/product/3659" target="_blank">Flexible tubing</a></li>
+      <li>Hook-up wires</li>
+      <li>Disposable cups (reservoirs for prototyping)</li>
+      <li><a href="https://www.amazon.com/LBSC-Converter-Cigarette-Lighter-Adapter/dp/B0F1SZGMMF/ref=sr_1_16?dib=eyJ2IjoiMSJ9.u2C8JkEDeWx6wOMT5cw7bpQGjsS2vpEDLCKvlmkAqMKVl1RL4D9Leqfsl2nckRQe3VW9QgU27QPfdqyT7NfBBNO52RbriiMbcP8EWkxaEcXbYecg3SE1ua-wKkIFoZfWAVyGqsgb5NeNKEHizjLZdHu0Wnc0JVL7M7BmaOdykEwR9d39HD0HvzHf9C-XhB9-W1Vsc8uDwVaF_R3xEcvb2FhGsB2Oah3ANSMrDcGMyGE.nl4A93c1p4XE7Q9G8eIsQDr3pslcU_4dyLLqXPIRnsk&dib_tag=se&keywords=12%2Bvolt%2Badapter%2Bplug&qid=1769725173&sr=8-16&th=1" target="_blank">AC to DC power converter</a></li>
+      <li>Barbed hose fittings</li>
+      <li>Hose clamps or zip ties</li>
+      <li>Silicone sealant</li>
+    </ul>
+
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>The pump enables repeated recirculation through the treatment loop.</li>
+      <li>Tubing and modular containers allow rapid reconfiguration during prototyping.</li>
+      <li>Sealing and fittings reduce leaks and improve long-term reliability.</li>
+    </ul>
+
+    <h3>4.6 Water Level Sensing (Ultrasonic Sensor)</h3>
+    <p>
+    Water level sensing enables semi-batch operation and prevents overflow or dry-running.
+    </p>
+
+    <h4>Components</h4>
+    <ul>
+      <li>Ultrasonic distance sensor</li>
+      <li>Arduino UNO R3</li>
+    </ul>
+
+    <h4>Purpose and Notes</h4>
+    <ul>
+      <li>Measures distance to the water surface to estimate reservoir level.</li>
+      <li>Triggers batch start when the clean reservoir is low and stops filling when full.</li>
+    </ul>
+
+    <h3>4.7 Tools and Fabrication Equipment</h3>
+    <ul>
+      <li>Soldering iron</li>
+      <li>Wire cutter / stripper</li>
+      <li>Multimeter</li>
+      <li>Glassware</li>
+      <li>Glue gun</li>
+      <li>Electrical tape</li>
+      <li>Bambu Lab P1S 3D printer</li>
+    </ul>
+  </div>
+
 
     <!-- 9) Timeline -->
     <div class="card">
