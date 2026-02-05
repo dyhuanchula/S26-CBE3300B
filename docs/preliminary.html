@@ -114,74 +114,72 @@
 
     <!-- 1) Introduction -->
     <div class="card">
-      <h2>1) Introduction</h2>
-<p>
-  Despite major advances in water treatment technology, safe drinking water remains inaccessible for roughly one in four
-  people worldwide. Even in the United States, water quality issues persist and contribute to illness each year. As a result,
-  there is a large and growing market for household water purification systems, with a majority of Americans now using some
-  form of home water filter and increasingly viewing filtered water as safer than untreated tap water.
-</p>
+    <h2>1) Introduction</h2>
 
-<p>
-  Our goal is to build an <strong>“adaptive Brita”-style water purifier</strong> that automatically circulates water through a
-  particulate filter and an activated carbon bed until sensor feedback indicates that the water has reached an acceptable
-  quality threshold, at which point treated water is dispensed. The system is designed to be
-  <strong>low-cost, user-friendly, and installation-free</strong>, targeting users who care about clarity, taste and odor,
-  and basic real-time feedback from their device. Rather than filtering continuously, the purifier operates in a
-  <strong>semi-batch mode</strong>, producing clean water only when the clean reservoir is low. This reduces unnecessary
-  pumping and highlights the system’s adaptive behavior.
-</p>
+    <p>
+    Despite major advances in water treatment technology, safe drinking water remains inaccessible for roughly one in four
+    people worldwide. Even in the United States, water quality issues persist and contribute to illness each year. As a result,
+    there is a large and growing market for household water purification systems, with a majority of Americans now using some
+    form of home water filter and increasingly viewing filtered water as safer than untreated tap water.
+    </p>
 
-<h3>Who is this for?</h3>
-<p>
-  Our adaptive water purifier is designed to work effectively while remaining simple to implement. It is intended for
-  people who want cleaner, better-tasting water without the hassle of
-  <strong>under-the-sink installations</strong> or the inconvenience of
-  <strong>constantly refilling and waiting</strong>, as with standard pitcher filters. Potential use cases include
-  <strong>college dorms</strong>, <strong>rental housing</strong>, <strong>office kitchens</strong>, and
-  <strong>emergency backup situations</strong> where tap water quality may be temporarily compromised.
-</p>
+    <p>
+    Our goal is to build an adaptive “Brita”-style water purifier that automatically circulates water through a particulate
+    filter and an activated carbon bed until sensor feedback indicates that the water has reached an acceptable quality
+    threshold, at which point treated water is dispensed. The system is designed to be low-cost, user-friendly, and
+    installation-free, targeting users who care about clarity, taste and odor, and basic real-time feedback from their device.
+    Rather than filtering continuously, the purifier operates in a semi-batch mode, producing clean water only when the clean
+    reservoir is low. This reduces unnecessary pumping and highlights the system’s adaptive behavior.
+    </p>
 
-<h3>What problem does it solve?</h3>
-<p>
-  Standard pitcher filters operate on a “pour and wait” basis with little to no feedback. Users often do not know whether
-  the water is actually clean or whether the filter media is exhausted, which can lead to:
-</p>
-<ul>
-  <li><strong>Inconsistent taste and odor</strong></li>
-  <li><strong>Visible cloudiness or particulates</strong></li>
-  <li><strong>Guesswork around filter replacement</strong></li>
-</ul>
-<p>
-  Our system reduces this uncertainty by combining mechanical filtration with activated carbon treatment and using
-  <strong>sensor feedback</strong> to determine when water is ready before dispensing.
-</p>
+    <h3>Who is this for?</h3>
+    <p>
+    Our adaptive water purifier is designed to work effectively while remaining simple to implement. It is intended for
+    people who want cleaner, better-tasting water without the hassle of under-the-sink installations or the inconvenience of
+    constantly refilling and waiting, as with standard pitcher filters. Potential use cases include college dorms, rental
+    housing, office kitchens, and emergency backup situations where tap water quality may be temporarily compromised.
+    </p>
 
-<h3>Why adaptive?</h3>
-<p>
-  Traditional filters are passive—water passes through once and the user hopes sufficient treatment has occurred. In
-  contrast, our system uses <strong>real-time optical turbidity sensing</strong> as its primary control variable to
-  continuously monitor water clarity during treatment. This enables:
-</p>
-<ul>
-  <li>
-    <strong>“Keep cycling until clean” behavior:</strong> water is automatically recirculated through the filter and
-    adsorbent stages until turbidity stabilizes below a defined threshold
-  </li>
-  <li>
-    <strong>Automatic adaptation to varying source quality:</strong> dirtier input water triggers additional filtration
-    passes with no manual adjustment
-  </li>
-  <li>
-    <strong>User confidence through feedback:</strong> a pH display provides visible confirmation of water chemistry, and
-    treated water is released only when it is actually ready
-  </li>
-</ul>
-<p>
-  While pH is not actively adjusted or used as the main pass/fail trigger, it serves as a secondary diagnostic metric that
-  provides valuable context about water safety and quality. Together, the sensor-gated approach and real-time feedback
-  improve reliability and transparency compared to passive filtration systems.
-</p>
+    <h3>What problem does it solve?</h3>
+    <p>
+    Standard pitcher filters operate on a “pour and wait” basis with little to no feedback. Users often do not know whether
+    the water is actually clean or whether the filter media is exhausted, which can lead to:
+    </p>
+    <ul>
+      <li>Inconsistent taste and odor</li>
+      <li>Visible cloudiness or particulates</li>
+      <li>Guesswork around filter replacement</li>
+      </ul>
+    <p>
+    Our system reduces this uncertainty by combining mechanical filtration with activated carbon treatment and using sensor
+    feedback to determine when water is ready before dispensing.
+    </p>
+
+    <h3>Why adaptive?</h3>
+    <p>
+    Traditional filters are passive—water passes through once and the user hopes sufficient treatment has occurred. In
+    contrast, our system uses real-time optical turbidity sensing as its primary control variable to continuously monitor water
+    clarity during treatment.
+    </p>
+    <ul>
+      <li>
+      The system automatically recirculates water through the filter and adsorbent stages until turbidity stabilizes below a
+      defined threshold.
+      </li>
+      <li>
+      Dirtier input water naturally triggers additional filtration passes, requiring no manual adjustment by the user.
+      </li>
+      <li>
+      Treated water is only released once sensor criteria are met, improving reliability and user confidence.
+      </li>
+    </ul>
+    <p>
+    A pH sensor serves as a secondary diagnostic metric and displays water chemistry information to the user. While pH is not
+    actively adjusted or used as the main pass/fail trigger, it provides valuable context about water safety and quality and
+    increases transparency compared to passive filtration systems.
+    </p>
+  </div>
+
 
 
     <!-- 2) Overall Design -->
