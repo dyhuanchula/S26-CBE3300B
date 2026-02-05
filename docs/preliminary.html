@@ -170,19 +170,18 @@
         <li>Key tradeoff: tighter filtration and longer carbon contact time improve quality but increase pressure drop and cycle time.</li>
       </ul>
     
-      <h3>Turbidity and optics (primary adaptive signal)</h3>
+      <h3>Turbidity and optics</h3>
       <p>
         Turbidity is a measure of how much suspended material is present in the water. These particles scatter and absorb light,
-        which makes water appear cloudy and reduces light transmission through the fluid. Because our first filtration stage
-        directly removes suspended particles, turbidity tends to improve continuously during a cycle. This makes turbidity a
+        which makes water appear cloudy and reduces light transmission through the fluid. Our filtration stage removes suspended particles so turbidity tends to improve continuously during a cycle. This makes turbidity a
         practical real-time variable for closed-loop control: the system can keep filtering until the turbidity signal stabilizes
         below a target threshold.
       </p>
     
       <p>
         Our turbidity sensor uses a simple optical transmission setup. An LED shines across a small inline chamber (or a clear
-        tubing segment), and a photoresistor (LDR) measures the received light intensity. Cloudier water reduces the received
-        intensity; clearer water increases it. The microcontroller reads the LDR through a voltage divider, giving a repeatable
+        tubing segment), and a photoresistor measures the received light intensity. Cloudier water reduces the received
+        intensity; clearer water increases it. The microcontroller reads the photoresistor through a voltage divider, giving a repeatable
         signal that correlates with clarity even if it is not calibrated to lab-grade NTU units.
       </p>
     
@@ -196,7 +195,7 @@
           then select thresholds that reliably separate “still cloudy” from “consistently clear.”</li>
       </ul>
     
-      <h3>pH (diagnostic chemical indicator)</h3>
+      <h3>pH</h3>
       <p>
         pH provides context about water chemistry and is displayed to the user as an informational metric. Typical drinking water
         is often considered acceptable around pH 6.5–8.5. In this prototype, pH is not used as the main pass/fail trigger because
@@ -204,7 +203,7 @@
         source conditions and verifying the system is behaving consistently across runs.
       </p>
     
-      <h3>Flow, mixing, and contact time (why hydraulics matter)</h3>
+      <h3>Flow, mixing, and contact time</h3>
       <p>
         Pump flow rate affects both pressure drop across the filter and contact time in the carbon stage. Higher flow can shorten
         cycle time but reduces per-pass contact time; lower flow increases adsorption effectiveness but can slow overall throughput.
@@ -214,7 +213,7 @@
     
       <h3>Extensions (if time allows)</h3>
       <p>
-        If time allows, additional sensors such as conductivity/TDS, temperature, or flow could improve performance monitoring,
+        If time allows, additional sensors such as conductivity/TDS or flow could improve performance monitoring,
         detect clogs, and give better insight into dissolved contaminants not captured by turbidity alone.
       </p>
     </div>
