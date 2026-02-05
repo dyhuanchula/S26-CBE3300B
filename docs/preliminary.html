@@ -47,118 +47,137 @@
 
     <!-- 2) Overall Design -->
     <div class="card">
-    <h2>2) Overall Design</h2>
+      <h2>2) Overall Design</h2>
+    
+      <p>
+        Our purifier is designed to connect to a continuous water source (for example, a faucet adapter or a feed line from a larger
+        container). The system runs in a semi-batch cycle: it produces a batch of clean water when the clean reservoir is low, rather
+        than filtering nonstop. This makes the system simpler, reduces unnecessary pumping, and makes the adaptive behavior clear:
+        keep cycling the water until the sensor indicates it is clean enough to transfer.
+      </p>
+    
+      <h3>System Concept (Semi-Batch, Sensor-Gated)</h3>
+      <ul>
+        <li>Source connection: a feed line supplies raw water when the inlet valve is opened.</li>
+        <li>Raw batch chamber: a dedicated container is filled to a set level at the start of each cycle.</li>
+        <li>Recirculation loop: a pump repeatedly drives water through sensing and filtration stages.</li>
+        <li>Clean reservoir: once water meets the turbidity threshold, it is routed into a final reservoir where pH is measured and displayed.</li>
+        <li>User interaction: the user empties the clean reservoir when desired; the system detects low/empty and starts the next batch.</li>
+      </ul>
+    
+      <h3>Flow Path (Detailed)</h3>
+      <ul>
+        <li>
+          1) Fill: when the clean reservoir is detected as low, the controller opens the inlet valve and fills the raw batch chamber to
+          a target level (measured using an ultrasonic sensor or a float switch).
+        </li>
+        <li>
+          2) Recirculate + treat: the pump circulates water through (i) an optical turbidity sensing section and (ii) the filtration module,
+          then returns the stream to the raw batch chamber. This repeats until turbidity indicates sufficient clarity.
+        </li>
+        <li>
+          3) Pass condition: once turbidity stays below a threshold for a hold time (with hysteresis to prevent rapid toggling), the controller
+          switches the plumbing from recirculation mode to transfer mode.
+        </li>
+        <li>
+          4) Transfer to clean reservoir: two pinch valves close the recirculation return path and open the path into the clean reservoir,
+          sending the treated batch to storage.
+        </li>
+        <li>
+          5) Display + ready state: the clean reservoir includes a pH sensor whose reading is shown on a display. The system idles until the clean
+          reservoir is emptied or drops below a low threshold, at which point a new batch is triggered.
+        </li>
+      </ul>
+    
+      <h3>Filtration Module (Mesh + Activated Carbon)</h3>
+      <p>
+        The filtration module uses two complementary mechanisms. First, a fine mesh or filter pad removes suspended solids through size exclusion:
+        particles larger than the pore openings are physically retained, which reduces cloudiness and improves clarity. Second, an activated carbon
+        stage improves taste and odor by adsorption. Activated carbon has a highly porous structure and large internal surface area, allowing it to
+        capture dissolved organic compounds and chlorine-related species that are not removed by mesh filtration alone. Together, these stages target
+        both visible turbidity and common “off-taste” chemical contributors.
+      </p>
+      <ul>
+        <li>Fine mesh / filter pad: primarily removes particulates (silt, debris, and other suspended solids) by size exclusion and interception.</li>
+        <li>Activated carbon bed: adsorbs dissolved molecules in its pores, improving taste/odor and reducing certain organic contaminants.</li>
+        <li>Design considerations: flow rate affects contact time in carbon and pressure drop across the mesh; both influence performance and pump requirements.</li>
+      </ul>
+    
+      <h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+      <p>
+        The adaptive decision variable is turbidity/clarity measured optically. A low-cost implementation uses an LED light source and a photoresistor
+        (LDR) placed across a small inline chamber (or a transparent segment of tubing). Suspended particles scatter and absorb light, so cloudy water
+        reduces the amount of light reaching the photoresistor. As the water becomes clearer, more light reaches the sensor and the LDR’s resistance
+        changes in a repeatable way.
+      </p>
+      <ul>
+        <li>Measurement approach: the microcontroller reads a voltage divider output from the LDR, which correlates with transmitted light intensity.</li>
+        <li>Why it is sufficient here: even without absolute NTU calibration, it provides a consistent relative signal to detect “getting clearer” and “clear enough.”</li>
+        <li>Practical notes: use a light-shielded housing to block ambient light, keep geometry fixed, and apply averaging/median filtering to reduce noise.</li>
+        <li>Calibration plan: record a clean baseline (clear water) and a dirty baseline (intentional turbidity, such as a small amount of fine silt),
+          then set thresholds with hysteresis to avoid valve chatter near the cutoff.</li>
+      </ul>
+    
+      <h3>Control Logic (High-Level)</h3>
+      <ul>
+        <li>Trigger: if the clean reservoir level is low, start a new batch.</li>
+        <li>Fill: open the inlet valve until the raw batch chamber reaches the target level.</li>
+        <li>Filter loop: turn the pump on and recirculate while monitoring turbidity; continue cycling while readings indicate the water is still too cloudy.</li>
+        <li>Pass + transfer: if turbidity remains below threshold for a set hold time, switch pinch valves to route flow to the clean reservoir.</li>
+        <li>Stop: stop the pump when the batch is depleted or when the clean reservoir is full, then return to idle.</li>
+        <li>Display: measure pH in the clean reservoir and display it for user awareness and diagnostics.</li>
+      </ul>
+    
+      <h3>Future Sensor Additions (If Time Allows)</h3>
+      <p>
+        If time and budget allow, additional sensors could improve robustness and provide better insight into water quality beyond turbidity alone.
+        Examples include a conductivity/TDS sensor for dissolved ions, a temperature sensor for compensation and logging, or simple flow sensing to
+        detect clogs and estimate filter loading over time.
+      </p>
+    
+      <h3>Embed Image Here</h3>
+      <pre><code>&lt;img src="assets/images/block-diagram.png" alt="Overall semi-batch system diagram with valves, pump, sensors, and two reservoirs" /&gt;</code></pre>
+    </div>
+  
+  
+      <!-- 3) Chemical/Physical Principles -->
+      <div class="card">
+        <h2>3) Chemical / Physical Principles</h2>
     <p>
-      Our purifier is designed to be connected to a continuous water source (e.g., a faucet adapter, jug with a feed line,
-      or other constant supply). The system operates in a <strong>semi-batch</strong> cycle: it produces a batch of clean
-      water on demand whenever the clean reservoir is low, rather than filtering continuously at all times. This keeps the
-      design simple, limits wasted pumping, and makes the “adaptive” behavior easy to enforce—<em>keep filtering until the
-      sensor says it’s clean</em>.
+      Our adaptive purifier uses physical filtration, chemical adsorption, and sensor-based feedback to determine when
+      water is clean enough to dispense.
     </p>
   
-    <h3>System Concept (Semi-Batch, Sensor-Gated)</h3>
-    <ul>
-      <li><strong>Source connection:</strong> A feed line supplies raw water to the system when a fill valve is opened.</li>
-      <li><strong>Batch treatment chamber:</strong> A dedicated “raw batch” container is filled to a set level each cycle.</li>
-      <li><strong>Recirculation loop:</strong> A pump drives water through a turbidity sensing section and a filter module repeatedly.</li>
-      <li><strong>Clean reservoir:</strong> Once clean, water is routed into a final reservoir where pH is measured and displayed.</li>
-      <li><strong>User interaction:</strong> The user empties the clean reservoir whenever they want; the system detects “low/empty” and starts the next batch.</li>
-    </ul>
-  
-    <h3>Flow Path (Detailed)</h3>
-    <ul>
-      <li>
-        <strong>1) Fill:</strong> When the clean reservoir is detected as low, the controller opens the <strong>inlet valve</strong>
-        to fill the raw batch chamber to a target level (level sensing via ultrasonic sensor or a float switch).
-      </li>
-      <li>
-        <strong>2) Recirculate + Filter:</strong> The pump circulates water through:
-        <strong>(i)</strong> an optical turbidity sensing section, then
-        <strong>(ii)</strong> the filtration module (particulate filter, and/or carbon stage depending on your final build),
-        returning to the raw batch chamber. This repeats until the turbidity measurement indicates the water is sufficiently clear.
-      </li>
-      <li>
-        <strong>3) “Pass” Condition:</strong> When turbidity stays below a threshold for a hold time (plus hysteresis),
-        the controller switches the valve state from <em>recirculation</em> to <em>transfer</em>.
-      </li>
-      <li>
-        <strong>4) Transfer to Clean Reservoir:</strong> Two <strong>pinch valves</strong> reconfigure the plumbing:
-        they <strong>close the recirculation return path</strong> and <strong>open the path to the clean reservoir</strong>,
-        sending the treated batch into the clean container.
-      </li>
-      <li>
-        <strong>5) Display + Ready State:</strong> A pH sensor in the clean reservoir provides a real-time pH readout on a screen.
-        The system remains idle until the clean reservoir is emptied or drops below a low threshold, at which point the cycle repeats.
-      </li>
-    </ul>
-  
-    <h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+    <h3>Particulate removal and turbidity</h3>
     <p>
-      Our “adaptive” decision variable is turbidity/clarity measured optically. A low-cost method uses an <strong>LED light source</strong>
-      and a <strong>photoresistor (LDR)</strong> arranged across a small inline chamber (or a transparent segment of tubing).
-      Suspended particles scatter and absorb light, so <strong>cloudy water reduces the light reaching the photoresistor</strong>.
-      As filtration improves clarity, more light reaches the sensor and the photoresistor’s resistance changes accordingly.
+      Suspended particles such as silt, organic debris, and microorganisms scatter light and make water appear cloudy.
+      This is measured as turbidity. A mesh and filter-pad stage removes these particles through size exclusion and
+      interception. As particles are removed, light scattering decreases and clarity increases, allowing turbidity to
+      be used as a real-time indicator of filtration progress.
     </p>
-    <ul>
-      <li><strong>Measurement idea:</strong> The microcontroller reads a voltage divider output from the LDR; this value correlates with transmitted light intensity.</li>
-      <li><strong>Why it works here:</strong> Even if it’s not a lab-grade NTU meter, it provides a consistent relative signal to detect “getting clearer” and “clear enough.”</li>
-      <li><strong>Practical design notes:</strong> Use a light-shielded housing (to block ambient light), consistent geometry, and averaging/median filtering to reduce noise.</li>
-      <li><strong>Calibration plan:</strong> Record a “clean baseline” (clear water) and a “dirty baseline” (intentional turbidity, e.g., a small amount of fine silt),
-        then set thresholds with hysteresis (different enter/exit thresholds) to prevent valve-chatter.</li>
-    </ul>
   
-    <h3>Control Logic (High-Level)</h3>
-    <ul>
-      <li><strong>Trigger:</strong> If clean reservoir level is low → start a new batch.</li>
-      <li><strong>Fill:</strong> Open inlet valve until batch chamber reaches set level.</li>
-      <li><strong>Filter loop:</strong> Pump ON; read turbidity continuously; keep recirculating while above threshold.</li>
-      <li><strong>Pass + transfer:</strong> If turbidity remains below threshold for N seconds → switch pinch valves to route flow to clean reservoir.</li>
-      <li><strong>Stop:</strong> When batch chamber is empty or clean reservoir is full → stop pump and return to idle.</li>
-      <li><strong>Display:</strong> pH is measured in the clean reservoir and shown on the screen (informational + diagnostic).</li>
-    </ul>
+    <h3>Adsorption using activated carbon</h3>
+    <p>
+      After particulates are removed, water flows through a packed bed of activated carbon. The carbon’s high surface
+      area adsorbs dissolved organic compounds, chlorine, and odor-causing molecules through surface interactions within
+      its pores. This improves taste and smell even when the water already looks clear.
+    </p>
   
-    <h3>Embed Image Here</h3>
-    <pre><code>&lt;img src="assets/images/block-diagram.png" alt="Overall semi-batch system diagram with valves, pump, sensors, and two reservoirs" /&gt;</code></pre>
-  </div>
-
-    <!-- 3) Chemical/Physical Principles -->
-    <div class="card">
-      <h2>3) Chemical / Physical Principles</h2>
-  <p>
-    Our adaptive purifier uses physical filtration, chemical adsorption, and sensor-based feedback to determine when
-    water is clean enough to dispense.
-  </p>
-
-  <h3>Particulate removal and turbidity</h3>
-  <p>
-    Suspended particles such as silt, organic debris, and microorganisms scatter light and make water appear cloudy.
-    This is measured as turbidity. A mesh and filter-pad stage removes these particles through size exclusion and
-    interception. As particles are removed, light scattering decreases and clarity increases, allowing turbidity to
-    be used as a real-time indicator of filtration progress.
-  </p>
-
-  <h3>Adsorption using activated carbon</h3>
-  <p>
-    After particulates are removed, water flows through a packed bed of activated carbon. The carbon’s high surface
-    area adsorbs dissolved organic compounds, chlorine, and odor-causing molecules through surface interactions within
-    its pores. This improves taste and smell even when the water already looks clear.
-  </p>
-
-  <h3>pH as a chemical indicator</h3>
-  <p>
-    pH measures hydrogen ion concentration and provides information about water chemistry and safety. Drinking water
-    is typically acceptable between pH 6.5 and 8.5. Large deviations can indicate contamination, corrosion, or improper
-    treatment. While pH is not the main “clean/not clean” trigger, it provides useful diagnostic feedback.
-  </p>
-
-  <h3>Water level and flow control</h3>
-  <p>
-    An ultrasonic sensor measures the distance to the water surface to estimate tank level. This enables automatic
-    refilling, prevents dry-running the pump, and stops dispensing when the clean tank is full.
-  </p>
-
-  </p>
-</div>
+    <h3>pH as a chemical indicator</h3>
+    <p>
+      pH measures hydrogen ion concentration and provides information about water chemistry and safety. Drinking water
+      is typically acceptable between pH 6.5 and 8.5. Large deviations can indicate contamination, corrosion, or improper
+      treatment. While pH is not the main “clean/not clean” trigger, it provides useful diagnostic feedback.
+    </p>
+  
+        <h3>Water level and flow control</h3>
+        <p>
+          An ultrasonic sensor measures the distance to the water surface to estimate tank level. This enables automatic
+          refilling, prevents dry-running the pump, and stops dispensing when the clean tank is full.
+        </p>
+      
+        </p>
+      </div>
 
 
     <!-- 4) General Materials and Parts List -->
