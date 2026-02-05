@@ -47,31 +47,79 @@
 
     <!-- 2) Overall Design -->
     <div class="card">
-      <h2>2) Overall Design</h2>
-      <p>
-        The system uses a recirculation loop with a filter + adsorbent module, sensors to estimate “cleanliness,” and a valve to
-        switch between recirculation and dispensing. A refill mechanism maintains continuous operation.
-      </p>
-
-      <h3>Flow Path</h3>
-      <ul>
-        <li><strong>Fill:</strong> reservoir → treatment chamber (auto-refill based on level sensing)</li>
-        <li><strong>Recirculate:</strong> chamber → pump → filter → adsorbent → sensors → chamber</li>
-        <li><strong>Dispense:</strong> when metrics pass threshold → valve opens outlet → user container</li>
-      </ul>
-
-      <h3>Control Loop (High-Level)</h3>
-      <ul>
-        <li>If turbidity is high → keep recirculating (and/or reduce flow if needed)</li>
-        <li>If turbidity is stable + below threshold for a hold time → allow dispense</li>
-        <li>If chamber level low → refill and resume cycle</li>
-        <li>Log and display pH (informational readout)</li>
-      </ul>
-
-      <h3>Embed Image Here</h3>
-
-      <pre><code>&lt;img src="assets/images/block-diagram.png" alt="System block diagram" /&gt;</code></pre>
-    </div>
+    <h2>2) Overall Design</h2>
+    <p>
+      Our purifier is designed to be connected to a continuous water source (e.g., a faucet adapter, jug with a feed line,
+      or other constant supply). The system operates in a <strong>semi-batch</strong> cycle: it produces a batch of clean
+      water on demand whenever the clean reservoir is low, rather than filtering continuously at all times. This keeps the
+      design simple, limits wasted pumping, and makes the “adaptive” behavior easy to enforce—<em>keep filtering until the
+      sensor says it’s clean</em>.
+    </p>
+  
+    <h3>System Concept (Semi-Batch, Sensor-Gated)</h3>
+    <ul>
+      <li><strong>Source connection:</strong> A feed line supplies raw water to the system when a fill valve is opened.</li>
+      <li><strong>Batch treatment chamber:</strong> A dedicated “raw batch” container is filled to a set level each cycle.</li>
+      <li><strong>Recirculation loop:</strong> A pump drives water through a turbidity sensing section and a filter module repeatedly.</li>
+      <li><strong>Clean reservoir:</strong> Once clean, water is routed into a final reservoir where pH is measured and displayed.</li>
+      <li><strong>User interaction:</strong> The user empties the clean reservoir whenever they want; the system detects “low/empty” and starts the next batch.</li>
+    </ul>
+  
+    <h3>Flow Path (Detailed)</h3>
+    <ul>
+      <li>
+        <strong>1) Fill:</strong> When the clean reservoir is detected as low, the controller opens the <strong>inlet valve</strong>
+        to fill the raw batch chamber to a target level (level sensing via ultrasonic sensor or a float switch).
+      </li>
+      <li>
+        <strong>2) Recirculate + Filter:</strong> The pump circulates water through:
+        <strong>(i)</strong> an optical turbidity sensing section, then
+        <strong>(ii)</strong> the filtration module (particulate filter, and/or carbon stage depending on your final build),
+        returning to the raw batch chamber. This repeats until the turbidity measurement indicates the water is sufficiently clear.
+      </li>
+      <li>
+        <strong>3) “Pass” Condition:</strong> When turbidity stays below a threshold for a hold time (plus hysteresis),
+        the controller switches the valve state from <em>recirculation</em> to <em>transfer</em>.
+      </li>
+      <li>
+        <strong>4) Transfer to Clean Reservoir:</strong> Two <strong>pinch valves</strong> reconfigure the plumbing:
+        they <strong>close the recirculation return path</strong> and <strong>open the path to the clean reservoir</strong>,
+        sending the treated batch into the clean container.
+      </li>
+      <li>
+        <strong>5) Display + Ready State:</strong> A pH sensor in the clean reservoir provides a real-time pH readout on a screen.
+        The system remains idle until the clean reservoir is emptied or drops below a low threshold, at which point the cycle repeats.
+      </li>
+    </ul>
+  
+    <h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+    <p>
+      Our “adaptive” decision variable is turbidity/clarity measured optically. A low-cost method uses an <strong>LED light source</strong>
+      and a <strong>photoresistor (LDR)</strong> arranged across a small inline chamber (or a transparent segment of tubing).
+      Suspended particles scatter and absorb light, so <strong>cloudy water reduces the light reaching the photoresistor</strong>.
+      As filtration improves clarity, more light reaches the sensor and the photoresistor’s resistance changes accordingly.
+    </p>
+    <ul>
+      <li><strong>Measurement idea:</strong> The microcontroller reads a voltage divider output from the LDR; this value correlates with transmitted light intensity.</li>
+      <li><strong>Why it works here:</strong> Even if it’s not a lab-grade NTU meter, it provides a consistent relative signal to detect “getting clearer” and “clear enough.”</li>
+      <li><strong>Practical design notes:</strong> Use a light-shielded housing (to block ambient light), consistent geometry, and averaging/median filtering to reduce noise.</li>
+      <li><strong>Calibration plan:</strong> Record a “clean baseline” (clear water) and a “dirty baseline” (intentional turbidity, e.g., a small amount of fine silt),
+        then set thresholds with hysteresis (different enter/exit thresholds) to prevent valve-chatter.</li>
+    </ul>
+  
+    <h3>Control Logic (High-Level)</h3>
+    <ul>
+      <li><strong>Trigger:</strong> If clean reservoir level is low → start a new batch.</li>
+      <li><strong>Fill:</strong> Open inlet valve until batch chamber reaches set level.</li>
+      <li><strong>Filter loop:</strong> Pump ON; read turbidity continuously; keep recirculating while above threshold.</li>
+      <li><strong>Pass + transfer:</strong> If turbidity remains below threshold for N seconds → switch pinch valves to route flow to clean reservoir.</li>
+      <li><strong>Stop:</strong> When batch chamber is empty or clean reservoir is full → stop pump and return to idle.</li>
+      <li><strong>Display:</strong> pH is measured in the clean reservoir and shown on the screen (informational + diagnostic).</li>
+    </ul>
+  
+    <h3>Embed Image Here</h3>
+    <pre><code>&lt;img src="assets/images/block-diagram.png" alt="Overall semi-batch system diagram with valves, pump, sensors, and two reservoirs" /&gt;</code></pre>
+  </div>
 
     <!-- 3) Chemical/Physical Principles -->
     <div class="card">
