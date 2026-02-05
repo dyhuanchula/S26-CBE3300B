@@ -1,77 +1,536 @@
-<!-- 9) Timeline -->
-<div class="card">
-  <h2>9) Timeline</h2>
-  <p>Key milestones with target dates and success metrics for tracking progress.</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preliminary Design — Adaptive Water Purifier</title>
+  <meta name="description" content="Preliminary design: principles, feasibility, parts list, and prototype plan for an adaptive water purifier." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Timeline Styles */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #3d3d5c;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 25px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -26px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #4a5568;
+      border: 2px solid #2d2d44;
+    }
+
+    .timeline-marker.done {
+      background: #6c5ce7;
+      border-color: #8b7cf7;
+    }
+
+    .timeline-marker.active {
+      background: #4a90d9;
+      border-color: #6ba3e0;
+      box-shadow: 0 0 8px rgba(74, 144, 217, 0.5);
+    }
+
+    .timeline-marker.crit {
+      background: #e74c3c;
+      border-color: #ff6b6b;
+    }
+
+    .timeline-content {
+      padding-left: 10px;
+    }
+
+    .timeline-content h3 {
+      margin: 0 0 5px 0;
+      font-size: 1.1em;
+      color: #fff;
+    }
+
+    .timeline-date {
+      display: inline-block;
+      font-size: 0.85em;
+      color: #4a90d9;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .timeline-content ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .timeline-content li {
+      color: #b0b0b0;
+      font-size: 0.9em;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">Preliminary Design</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
+
+    <h1>Preliminary Design</h1>
+    <p>Initial design documentation: market context, overall concept, core principles, parts list, and prototype plan.</p>
+  </header>
+
+  <main class="wrap">
+
+    <!-- 1) Introduction -->
+    <div class="card">
+      <h2>1) Introduction (Market Context)</h2>
+      <p>
+        Our goal is to build an "adaptive Brita"-style purifier that continuously recirculates water through a particulate
+        filter and an adsorbent bed until quality metrics meet a threshold, then dispenses treated water. We want to target
+        a low-cost and user-friendly where customers care about clarity, taste/odor, and basic feedback from the device.
+      </p>
+      
+      <h3>Who is this for?</h3>
+      <p>
+        Our adaptive water purifier is designed to work great and be implemented very simply. It's for people who want cleaner, better-tasting water without the hassle of
+        <strong>under-the-sink installations</strong> or the hassle of <strong>constantly refilling and waiting</strong> like a Brita. It also serves as a reliable 
+        <strong>emergency backup</strong> for situations where tap water quality may be temporarily compromised.
+      </p>
+      
+      <h3>What problem does it solve?</h3>
+      <p>
+        Standard pitcher filters operate on a "pour and wait" basis with no feedback. Do you know if the water is actually clean or if the filter is exhausted. This leads to:
+      </p>
+      <ul>
+        <li><strong>Inconsistent taste and odor</strong></li>
+        <li><strong>Visible cloudiness or particulates</strong></li>
+        <li><strong>Guesswork on filter replacement</strong></li>
+      </ul>
+      <p>
+        Our system eliminates this uncertainty by combining mechanical filtration with activated carbon treatment, then displaying the results in real time before dispensing.
+      </p>
+      
+      <h3>Why adaptive?</h3>
+      <p>
+        Traditional filters are passive—water passes through once and you hope for the best. Our system uses <strong>real-time optical turbidity sensing</strong> to continuously monitor water clarity during treatment. This enables:
+      </p>
+      <ul>
+        <li><strong>"Keep cycling until clean" behavior:</strong> The system automatically recirculates water through the filter and adsorbent stages until sensor readings confirm the water meets quality thresholds</li>
+        <li><strong>Automatic adaptation to varying source quality:</strong> Dirtier input water simply triggers more filtration passes—no manual adjustment needed</li>
+        <li><strong>User confidence through feedback:</strong> A pH display provides visible confirmation of water chemistry, and the sensor-gated approach means treated water is released only when it's actually ready</li>
+        <li><strong>Smarter maintenance alerts:</strong> Instead of arbitrary replacement schedules, the system can detect declining filter performance over time</li>
+      </ul>
+    </div>
+
+    <!-- 2) Overall Design -->
+    <div class="card">
+      <h2>2) Overall Design</h2>
+    
+      <p>
+        Our purifier is designed to connect to a continuous water source (for example, a faucet adapter or a feed line from a larger
+        container). The system runs in a semi-batch cycle: it produces a batch of clean water when the clean reservoir is low, rather
+        than filtering nonstop. This makes the system simpler, reduces unnecessary pumping, and makes the adaptive behavior clear:
+        keep cycling the water until the sensor indicates it is clean enough to transfer.
+      </p>
+    
+      <h3>System Concept (Semi-Batch, Sensor-Gated)</h3>
+      <ul>
+        <li>Source connection: a feed line supplies raw water when the inlet valve is opened.</li>
+        <li>Raw batch chamber: a dedicated container is filled to a set level at the start of each cycle.</li>
+        <li>Recirculation loop: a pump repeatedly drives water through sensing and filtration stages.</li>
+        <li>Clean reservoir: once water meets the turbidity threshold, it is routed into a final reservoir where pH is measured and displayed.</li>
+        <li>User interaction: the user empties the clean reservoir when desired; the system detects low/empty and starts the next batch.</li>
+      </ul>
+    
+      <h3>Flow Path (Detailed)</h3>
+      <ul>
+        <li>
+          1) Fill: when the clean reservoir is detected as low, the controller opens the inlet valve and fills the raw batch chamber to
+          a target level (measured using an ultrasonic sensor or a float switch).
+        </li>
+        <li>
+          2) Recirculate + treat: the pump circulates water through (i) an optical turbidity sensing section and (ii) the filtration module,
+          then returns the stream to the raw batch chamber. This repeats until turbidity indicates sufficient clarity.
+        </li>
+        <li>
+          3) Pass condition: once turbidity stays below a threshold for a hold time (with hysteresis to prevent rapid toggling), the controller
+          switches the plumbing from recirculation mode to transfer mode.
+        </li>
+        <li>
+          4) Transfer to clean reservoir: two pinch valves close the recirculation return path and open the path into the clean reservoir,
+          sending the treated batch to storage.
+        </li>
+        <li>
+          5) Display + ready state: the clean reservoir includes a pH sensor whose reading is shown on a display. The system idles until the clean
+          reservoir is emptied or drops below a low threshold, at which point a new batch is triggered.
+        </li>
+      </ul>
+    
+      <h3>Filtration Module (Mesh + Activated Carbon)</h3>
+      <p>
+        The filtration module uses two complementary mechanisms. First, a fine mesh or filter pad removes suspended solids through size exclusion:
+        particles larger than the pore openings are physically retained, which reduces cloudiness and improves clarity. Second, an activated carbon
+        stage improves taste and odor by adsorption. Activated carbon has a highly porous structure and large internal surface area, allowing it to
+        capture dissolved organic compounds and chlorine-related species that are not removed by mesh filtration alone. Together, these stages target
+        both visible turbidity and common "off-taste" chemical contributors.
+      </p>
+      <ul>
+        <li>Fine mesh / filter pad: primarily removes particulates (silt, debris, and other suspended solids) by size exclusion and interception.</li>
+        <li>Activated carbon bed: adsorbs dissolved molecules in its pores, improving taste/odor and reducing certain organic contaminants.</li>
+        <li>Design considerations: flow rate affects contact time in carbon and pressure drop across the mesh; both influence performance and pump requirements.</li>
+      </ul>
+    
+      <h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+      <p>
+        The adaptive decision variable is turbidity/clarity measured optically. A low-cost implementation uses an LED light source and a photoresistor
+        (LDR) placed across a small inline chamber (or a transparent segment of tubing). Suspended particles scatter and absorb light, so cloudy water
+        reduces the amount of light reaching the photoresistor. As the water becomes clearer, more light reaches the sensor and the LDR's resistance
+        changes in a repeatable way.
+      </p>
+      <ul>
+        <li>Measurement approach: the microcontroller reads a voltage divider output from the LDR, which correlates with transmitted light intensity.</li>
+        <li>Why it is sufficient here: even without absolute NTU calibration, it provides a consistent relative signal to detect "getting clearer" and "clear enough."</li>
+        <li>Practical notes: use a light-shielded housing to block ambient light, keep geometry fixed, and apply averaging/median filtering to reduce noise.</li>
+        <li>Calibration plan: record a clean baseline (clear water) and a dirty baseline (intentional turbidity, such as a small amount of fine silt),
+          then set thresholds with hysteresis to avoid valve chatter near the cutoff.</li>
+      </ul>
+    
+      <h3>Control Logic (High-Level)</h3>
+      <ul>
+        <li>Trigger: if the clean reservoir level is low, start a new batch.</li>
+        <li>Fill: open the inlet valve until the raw batch chamber reaches the target level.</li>
+        <li>Filter loop: turn the pump on and recirculate while monitoring turbidity; continue cycling while readings indicate the water is still too cloudy.</li>
+        <li>Pass + transfer: if turbidity remains below threshold for a set hold time, switch pinch valves to route flow to the clean reservoir.</li>
+        <li>Stop: stop the pump when the batch is depleted or when the clean reservoir is full, then return to idle.</li>
+        <li>Display: measure pH in the clean reservoir and display it for user awareness and diagnostics.</li>
+      </ul>
+    
+      <h3>Future Sensor Additions (If Time Allows)</h3>
+      <p>
+        If time and budget allow, additional sensors could improve robustness and provide better insight into water quality beyond turbidity alone.
+        Examples include a conductivity/TDS sensor for dissolved ions, a temperature sensor for compensation and logging, or simple flow sensing to
+        detect clogs and estimate filter loading over time.
+      </p>
+    
+      <h3>Diagram</h3>
+      <a class="figure-link" href="assets/images/block_diagram.jpg" target="_blank" rel="noopener">
+        <img class="diagram" src="assets/images/block_diagram.jpg"
+             alt="Overall system diagram">
+      </a>
+      <div class="figcap">System block diagram</div>
+
+    </div>
   
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-marker done"></div>
-      <div class="timeline-content">
-        <h3>Milestone 1: Preliminary Design</h3>
-        <span class="timeline-date">Week 2 — Feb 3</span>
-        <ul>
-          <li>GitHub Page live with documentation</li>
-          <li>Block diagram finalized</li>
-          <li>Parts list submitted</li>
-          <li>Physical/chemical principles documented</li>
-        </ul>
-      </div>
-    </div>
+  
+    <!-- 3) Chemical/Physical Principles -->
+    <div class="card">
+      <h2>3) Chemical / Physical Principles</h2>
     
-    <div class="timeline-item">
-      <div class="timeline-marker active"></div>
-      <div class="timeline-content">
-        <h3>Milestone 2: Initial Design</h3>
-        <span class="timeline-date">Week 4 — Feb 17</span>
-        <ul>
-          <li>SWOT analysis completed</li>
-          <li>At least 3 competitors researched with pricing</li>
-          <li>Gantt chart published</li>
-          <li>Value proposition defined</li>
-        </ul>
-      </div>
-    </div>
+      <p>
+        Our system combines mechanical filtration and activated carbon treatment, then uses sensor feedback to decide when the
+        water is "clean enough" to transfer into the final reservoir. In general, contaminants fall into two categories that
+        matter for this prototype: suspended particles (which drive cloudiness) and dissolved compounds (which drive taste/odor).
+      </p>
     
-    <div class="timeline-item">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-        <h3>Milestone 3: Demo 1 — Proof of Concept</h3>
-        <span class="timeline-date">Week 7 — Mar 10</span>
-        <ul>
-          <li>Turbidity sensor reads and logs values</li>
-          <li>Pump circulates water through filter</li>
-          <li>System detects "cloudy" vs "clear" difference</li>
-          <li>Breadboard prototype assembled</li>
-        </ul>
-      </div>
-    </div>
+      <h3>Filtration + treatment (mesh + activated carbon)</h3>
+      <p>
+        The treatment module is a two-stage approach in one integrated path. First, a fine mesh or filter pad removes suspended
+        solids primarily through size exclusion and interception (particles are physically retained by pores or collide with
+        fibers). Second, activated carbon improves taste and odor by adsorption: dissolved molecules adhere to the carbon's
+        internal pore surfaces due to its high surface area. Recirculation increases the total number of passes and total
+        contact time with both stages, which improves performance when the starting water quality is worse.
+      </p>
+      <ul>
+        <li>Mesh / filter pad: targets turbidity-causing particles and reduces cloudiness.</li>
+        <li>Activated carbon: targets chlorine taste/odor and many dissolved organic compounds.</li>
+        <li>Key tradeoff: tighter filtration and longer carbon contact time improve quality but increase pressure drop and cycle time.</li>
+      </ul>
     
-    <div class="timeline-item">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-        <h3>Milestone 4: Demo 2 — Functional Prototype</h3>
-        <span class="timeline-date">Week 10 — Mar 31</span>
-        <ul>
-          <li>Recirculation loop runs autonomously</li>
-          <li>Turbidity threshold triggers transfer</li>
-          <li>pH sensor displays reading</li>
-          <li>Serial output logs all sensor data</li>
-        </ul>
-      </div>
-    </div>
+      <h3>Turbidity and optics</h3>
+      <p>
+        Turbidity is a measure of how much suspended material is present in the water. These particles scatter and absorb light,
+        which makes water appear cloudy and reduces light transmission through the fluid. Our filtration stage removes suspended particles so turbidity tends to improve continuously during a cycle. This makes turbidity a
+        practical real-time variable for closed-loop control: the system can keep filtering until the turbidity signal stabilizes
+        below a target threshold.
+      </p>
     
-    <div class="timeline-item">
-      <div class="timeline-marker crit"></div>
-      <div class="timeline-content">
-        <h3>Milestone 5: Demo 3 — MVP</h3>
-        <span class="timeline-date">Week 13 — Apr 28</span>
-        <ul>
-          <li>Full system enclosed in housing</li>
-          <li>Automated fill → filter → dispense cycle works</li>
-          <li>Meets turbidity target consistently</li>
-          <li>pH displayed on screen for user</li>
-        </ul>
+      <p>
+        Our turbidity sensor uses a simple optical transmission setup. An LED shines across a small inline chamber (or a clear
+        tubing segment), and a photoresistor measures the received light intensity. Cloudier water reduces the received
+        intensity; clearer water increases it. The microcontroller reads the photoresistor through a voltage divider, giving a repeatable
+        signal that correlates with clarity even if it is not calibrated to lab-grade NTU units.
+      </p>
+    
+      <ul>
+        <li>Optical principle: suspended particles scatter/absorb light, reducing transmission and increasing apparent turbidity.</li>
+        <li>Expected trend: as filtration proceeds, transmitted light increases and then plateaus as the water becomes clear.</li>
+        <li>Noise sources: bubbles, turbulence, splashing, and ambient light leakage can cause fluctuations in the signal.</li>
+        <li>Design mitigation: use a light-shielded housing, fixed geometry, and filtering (moving average/median) on the sensor signal.</li>
+        <li>Decision logic: use a turbidity threshold plus a hold time, and add hysteresis to prevent rapid switching near the cutoff.</li>
+        <li>Calibration approach: measure a clean baseline (clear water) and a dirty baseline (intentional turbidity like fine silt),
+          then select thresholds that reliably separate "still cloudy" from "consistently clear."</li>
+      </ul>
+    
+      <h3>pH</h3>
+      <p>
+        pH provides context about water chemistry and is displayed to the user as an informational metric. Typical drinking water
+        is often considered acceptable around pH 6.5–8.5. In this prototype, pH is not used as the main pass/fail trigger because
+        pH alone does not quantify clarity or many specific dissolved contaminants, but it is useful for diagnosing unusual
+        source conditions and verifying the system is behaving consistently across runs.
+      </p>
+    
+      <h3>Flow, mixing, and contact time</h3>
+      <p>
+        Pump flow rate affects both pressure drop across the filter and contact time in the carbon stage. Higher flow can shorten
+        cycle time but reduces per-pass contact time; lower flow increases adsorption effectiveness but can slow overall throughput.
+        As the filter loads with solids, resistance increases and performance can change over time. The advantage of the sensor-gated,
+        semi-batch approach is that the system can adapt by running longer when conditions require it.
+      </p>
+    
+      <h3>Extensions (if time allows)</h3>
+      <p>
+        If time allows, additional sensors such as conductivity/TDS or flow could improve performance monitoring,
+        detect clogs, and give better insight into dissolved contaminants not captured by turbidity alone.
+      </p>
+    </div>
+
+
+    <!-- 4) General Materials and Parts List -->
+    <div class="card">
+      <h2>4) General Materials and Parts List</h2>
+
+      <h3>Core Hardware</h3>
+      <ul>
+        <li>Reservoir + treatment chamber (food-safe container)</li>
+        <li>Silicone tubing + barbed fittings + clamps</li>
+        <li>Pump (recirculation)</li>
+        <li>Valve/actuator (switch recirculate vs dispense)</li>
+        <li>Filter housing/module</li>
+        <li>Adsorbent bed housing (DIY packed bed)</li>
+        <li>Microcontroller (Arduino/ESP32) + power supply</li>
+      </ul>
+
+      <h3>Sensors</h3>
+      <ul>
+        <li>Turbidity/optical clarity sensor (inline)</li>
+        <li>pH probe + interface board</li>
+        <li>Ultrasonic level sensor (or float switch alternative)</li>
+      </ul>
+
+      <p class="small">
+        Work in progress
+      </p>
+    </div>
+
+    <!-- 5) In depth on: Turbidity -->
+    <div class="card">
+      <h2>5) In Depth: Turbidity (Optical Clarity)</h2>
+      <p>
+        Turbidity is our primary "adaptive" signal because particle filtration directly changes optical clarity in real time.
+        We can implement an inline LED + photodiode/phototransistor sensor or a turbidity module.
+      </p>
+      <ul>
+        <li><strong>Placement:</strong> after filter/adsorbent in the recirculation loop to measure improvement.</li>
+        <li><strong>Algorithm:</strong> recirculate until clarity &gt; threshold for N seconds (hold time) + hysteresis.</li>
+        <li><strong>Calibration:</strong> define clean baseline vs intentionally cloudy baseline (e.g., fine silt test).</li>
+      </ul>
+      <p class="small">Include a simple plot later: sensor reading vs time during a cleaning cycle.</p>
+    </div>
+
+    <!-- 6) In depth on: pH -->
+    <div class="card">
+      <h2>6) In Depth: pH</h2>
+      <p>
+        The pH sensor provides a real-time readout for user awareness and logging. In this design, pH is not used as the main
+        "clean/not clean" gate, but it is useful for diagnostics and reporting.
+      </p>
+      <ul>
+        <li><strong>Response time target:</strong> stable reading within ~30–60 seconds in a well-mixed chamber.</li>
+        <li><strong>Placement:</strong> in the chamber or in a flowing side-stream to avoid stagnant readings.</li>
+        <li><strong>Calibration:</strong> 2-point calibration (pH 4 and pH 7 buffers; optionally pH 10).</li>
+      </ul>
+    </div>
+
+    <!-- 7) In depth on: Adsorbent -->
+    <div class="card">
+      <h2>7) In Depth: Adsorbent</h2>
+      <p>
+        We plan to use a DIY packed-bed adsorbent module to reduce chlorine/taste/odor and some organic compounds (depending on
+        adsorbent selection). The bed will be held between mesh + filter pads to retain granules and block fines.
+      </p>
+      <ul>
+        <li><strong>Candidate media:</strong> activated carbon (or catalytic carbon if chloramine is a focus).</li>
+        <li><strong>Design variables:</strong> bed length/diameter, packing density, flow rate (contact time).</li>
+        <li><strong>Feasibility calc:</strong> estimate contact time = (bed volume / flow) and expected media life (later).</li>
+      </ul>
+      <p class="small">Add a photo/diagram of the packed-bed module once built.</p>
+    </div>
+
+    <!-- 8) In depth on: Ultrasound sensor -->
+    <div class="card">
+      <h2>8) In Depth: Ultrasound Sensor (Water Level)</h2>
+      <p>
+        The ultrasonic sensor measures the distance to the water surface to estimate chamber or reservoir level. This enables
+        auto-refill behavior and prevents dry-running the pump.
+      </p>
+      <ul>
+        <li><strong>Mounting:</strong> above the water, pointed downward; shield from splashing.</li>
+        <li><strong>Noise sources:</strong> bubbles, turbulence, angled surfaces → use averaging/median filtering.</li>
+        <li><strong>Fallback option:</strong> float switch for simple low/high water detection.</li>
+      </ul>
+    </div>
+
+    <!-- 9) Timeline -->
+    <div class="card">
+      <h2>9) Timeline</h2>
+      <p>Key milestones with target dates and success metrics for tracking progress.</p>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker done"></div>
+          <div class="timeline-content">
+            <h3>Milestone 1: Preliminary Design</h3>
+            <span class="timeline-date">Week 2 — Feb 3</span>
+            <ul>
+              <li>GitHub Page live with documentation</li>
+              <li>Block diagram finalized</li>
+              <li>Parts list submitted</li>
+              <li>Physical/chemical principles documented</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-marker active"></div>
+          <div class="timeline-content">
+            <h3>Milestone 2: Initial Design</h3>
+            <span class="timeline-date">Week 4 — Feb 17</span>
+            <ul>
+              <li>SWOT analysis completed</li>
+              <li>At least 3 competitors researched with pricing</li>
+              <li>Gantt chart published</li>
+              <li>Value proposition defined</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h3>Milestone 3: Demo 1 — Proof of Concept</h3>
+            <span class="timeline-date">Week 7 — Mar 10</span>
+            <ul>
+              <li>Turbidity sensor reads and logs values</li>
+              <li>Pump circulates water through filter</li>
+              <li>System detects "cloudy" vs "clear" difference</li>
+              <li>Breadboard prototype assembled</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h3>Milestone 4: Demo 2 — Functional Prototype</h3>
+            <span class="timeline-date">Week 10 — Mar 31</span>
+            <ul>
+              <li>Recirculation loop runs autonomously</li>
+              <li>Turbidity threshold triggers transfer</li>
+              <li>pH sensor displays reading</li>
+              <li>Serial output logs all sensor data</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-marker crit"></div>
+          <div class="timeline-content">
+            <h3>Milestone 5: Demo 3 — MVP</h3>
+            <span class="timeline-date">Week 13 — Apr 28</span>
+            <ul>
+              <li>Full system enclosed in housing</li>
+              <li>Automated fill → filter → dispense cycle works</li>
+              <li>Meets turbidity target consistently</li>
+              <li>pH displayed on screen for user</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <!-- 10) Future Considerations -->
+    <div class="card">
+      <h2>10) Future Considerations + Additions (If Time)</h2>
+      <p>
+        While the current system focuses on turbidity-based control, activated carbon adsorption, and pH monitoring, several
+        upgrades could improve accuracy, automation, and real-world usability.
+      </p>
+
+      <h3>Expanded water quality sensing</h3>
+      <p>
+        Adding a conductivity or total dissolved solids (TDS) sensor would allow the system to quantify dissolved
+        contaminants that are not detected by turbidity alone. This would provide a second chemical check after carbon
+        filtration and improve confidence in water quality.
+      </p>
+
+      <h3>Automatic pH control</h3>
+      <p>
+        The pH sensor could be paired with small dosing pumps to automatically adjust acidity, keeping the water in a range
+        that is optimal for adsorption and safe for consumption. This would reduce manual intervention and improve
+        consistency across different water sources.
+      </p>
+
+      <h3>Data logging and user interface</h3>
+      <p>
+        Future versions could include wireless data logging or SD card storage to track turbidity, pH, and filtration
+        cycles over time. This would allow users to monitor filter performance and know when maintenance or replacement is
+        needed.
+      </p>
+
+      <h3>Scalability and cartridge design</h3>
+      <p>
+        The activated carbon bed could be redesigned as a replaceable cartridge, making the system easier to maintain and
+        scale for household or portable applications.
+      </p>
+    </div>
+
+    <div class="footer wrap">
+      <hr />
+      <div>© <span id="year"></span> • Adaptive Water Purifier</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
