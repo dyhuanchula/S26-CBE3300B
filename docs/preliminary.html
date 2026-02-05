@@ -146,43 +146,78 @@
   
   
       <!-- 3) Chemical/Physical Principles -->
-      <div class="card">
-        <h2>3) Chemical / Physical Principles</h2>
-    <p>
-      Our adaptive purifier uses physical filtration, chemical adsorption, and sensor-based feedback to determine when
-      water is clean enough to dispense.
-    </p>
-  
-    <h3>Particulate removal and turbidity</h3>
-    <p>
-      Suspended particles such as silt, organic debris, and microorganisms scatter light and make water appear cloudy.
-      This is measured as turbidity. A mesh and filter-pad stage removes these particles through size exclusion and
-      interception. As particles are removed, light scattering decreases and clarity increases, allowing turbidity to
-      be used as a real-time indicator of filtration progress.
-    </p>
-  
-    <h3>Adsorption using activated carbon</h3>
-    <p>
-      After particulates are removed, water flows through a packed bed of activated carbon. The carbon’s high surface
-      area adsorbs dissolved organic compounds, chlorine, and odor-causing molecules through surface interactions within
-      its pores. This improves taste and smell even when the water already looks clear.
-    </p>
-  
-    <h3>pH as a chemical indicator</h3>
-    <p>
-      pH measures hydrogen ion concentration and provides information about water chemistry and safety. Drinking water
-      is typically acceptable between pH 6.5 and 8.5. Large deviations can indicate contamination, corrosion, or improper
-      treatment. While pH is not the main “clean/not clean” trigger, it provides useful diagnostic feedback.
-    </p>
-  
-        <h3>Water level and flow control</h3>
-        <p>
-          An ultrasonic sensor measures the distance to the water surface to estimate tank level. This enables automatic
-          refilling, prevents dry-running the pump, and stops dispensing when the clean tank is full.
-        </p>
-      
-        </p>
-      </div>
+    <!-- 3) Chemical/Physical Principles -->
+    <div class="card">
+      <h2>3) Chemical / Physical Principles</h2>
+    
+      <p>
+        Our system combines mechanical filtration and activated carbon treatment, then uses sensor feedback to decide when the
+        water is “clean enough” to transfer into the final reservoir. In general, contaminants fall into two categories that
+        matter for this prototype: suspended particles (which drive cloudiness) and dissolved compounds (which drive taste/odor).
+      </p>
+    
+      <h3>Filtration + treatment (mesh + activated carbon)</h3>
+      <p>
+        The treatment module is a two-stage approach in one integrated path. First, a fine mesh or filter pad removes suspended
+        solids primarily through size exclusion and interception (particles are physically retained by pores or collide with
+        fibers). Second, activated carbon improves taste and odor by adsorption: dissolved molecules adhere to the carbon’s
+        internal pore surfaces due to its high surface area. Recirculation increases the total number of passes and total
+        contact time with both stages, which improves performance when the starting water quality is worse.
+      </p>
+      <ul>
+        <li>Mesh / filter pad: targets turbidity-causing particles and reduces cloudiness.</li>
+        <li>Activated carbon: targets chlorine taste/odor and many dissolved organic compounds.</li>
+        <li>Key tradeoff: tighter filtration and longer carbon contact time improve quality but increase pressure drop and cycle time.</li>
+      </ul>
+    
+      <h3>Turbidity and optics (primary adaptive signal)</h3>
+      <p>
+        Turbidity is a measure of how much suspended material is present in the water. These particles scatter and absorb light,
+        which makes water appear cloudy and reduces light transmission through the fluid. Because our first filtration stage
+        directly removes suspended particles, turbidity tends to improve continuously during a cycle. This makes turbidity a
+        practical real-time variable for closed-loop control: the system can keep filtering until the turbidity signal stabilizes
+        below a target threshold.
+      </p>
+    
+      <p>
+        Our turbidity sensor uses a simple optical transmission setup. An LED shines across a small inline chamber (or a clear
+        tubing segment), and a photoresistor (LDR) measures the received light intensity. Cloudier water reduces the received
+        intensity; clearer water increases it. The microcontroller reads the LDR through a voltage divider, giving a repeatable
+        signal that correlates with clarity even if it is not calibrated to lab-grade NTU units.
+      </p>
+    
+      <ul>
+        <li>Optical principle: suspended particles scatter/absorb light, reducing transmission and increasing apparent turbidity.</li>
+        <li>Expected trend: as filtration proceeds, transmitted light increases and then plateaus as the water becomes clear.</li>
+        <li>Noise sources: bubbles, turbulence, splashing, and ambient light leakage can cause fluctuations in the signal.</li>
+        <li>Design mitigation: use a light-shielded housing, fixed geometry, and filtering (moving average/median) on the sensor signal.</li>
+        <li>Decision logic: use a turbidity threshold plus a hold time, and add hysteresis to prevent rapid switching near the cutoff.</li>
+        <li>Calibration approach: measure a clean baseline (clear water) and a dirty baseline (intentional turbidity like fine silt),
+          then select thresholds that reliably separate “still cloudy” from “consistently clear.”</li>
+      </ul>
+    
+      <h3>pH (diagnostic chemical indicator)</h3>
+      <p>
+        pH provides context about water chemistry and is displayed to the user as an informational metric. Typical drinking water
+        is often considered acceptable around pH 6.5–8.5. In this prototype, pH is not used as the main pass/fail trigger because
+        pH alone does not quantify clarity or many specific dissolved contaminants, but it is useful for diagnosing unusual
+        source conditions and verifying the system is behaving consistently across runs.
+      </p>
+    
+      <h3>Flow, mixing, and contact time (why hydraulics matter)</h3>
+      <p>
+        Pump flow rate affects both pressure drop across the filter and contact time in the carbon stage. Higher flow can shorten
+        cycle time but reduces per-pass contact time; lower flow increases adsorption effectiveness but can slow overall throughput.
+        As the filter loads with solids, resistance increases and performance can change over time. The advantage of the sensor-gated,
+        semi-batch approach is that the system can adapt by running longer when conditions require it.
+      </p>
+    
+      <h3>Extensions (if time allows)</h3>
+      <p>
+        If time allows, additional sensors such as conductivity/TDS, temperature, or flow could improve performance monitoring,
+        detect clogs, and give better insight into dissolved contaminants not captured by turbidity alone.
+      </p>
+    </div>
 
 
     <!-- 4) General Materials and Parts List -->
