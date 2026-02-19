@@ -145,6 +145,65 @@
 </div>
 </div>
 </div>
+    <h2 style="text-align:center;">1) Background / Introduction</h2>
+
+<div style="max-width:900px; margin:0 auto; text-align:left;">
+
+<p>
+<strong>Use case:</strong> reliable <strong>drip / micro irrigation</strong> when the available water source is
+<strong>turbid surface water</strong> (runoff-affected ponds, canals, rivers, holding tanks) whose sediment load changes with
+rainfall and seasonal conditions. Drip systems are sensitive to particulates because emitters have small passages and clog
+quickly as turbidity rises.
+</p>
+
+<p>
+<strong>Market context:</strong> the <strong>global drip irrigation market</strong> is valued at about <strong>$6B (2024)</strong>
+and is projected to grow at <strong>~10–12% CAGR through 2030</strong>. Major drivers include
+<strong>precision agriculture adoption</strong>, <strong>water scarcity</strong>, increasing
+<strong>sediment variability</strong>, and broader <strong>automation of farm systems</strong>.
+</p>
+
+<p>
+<strong>Problem it solves:</strong> today, turbidity fluctuations force growers to either (i) accept clogging and downtime or
+(ii) install <strong>oversized, maintenance-heavy filtration</strong> (screen/sand/disk systems plus chemical injection)
+designed for worst-case conditions. This raises cost and energy use even when the source water is temporarily cleaner.
+</p>
+
+<p>
+<strong>Why adaptive here:</strong> turbidity is a <em>fast-changing</em> and <em>measurable</em> variable. A sensor-gated,
+semi-batch loop can run filtration only as long as needed to hit an irrigation-relevant clarity target (design objective:
+<strong>&lt; 10 NTU</strong> for drip/micro irrigation), then transfer the batch to storage. When turbidity spikes after storms,
+the same system simply runs longer rather than requiring permanent over-filtration.
+</p>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:center;
+gap:2rem;
+flex-wrap:wrap;
+margin-top:2rem;
+">
+
+<div class="card" style="max-width:420px;">
+<strong>Target customer (for this design)</strong>
+<ul>
+<li>Growers using drip/micro irrigation with variable source water (surface water or mixed sources).</li>
+<li>Operators who experience emitter clogging, frequent maintenance, and inconsistent irrigation reliability.</li>
+</ul>
+</div>
+
+<div class="card" style="max-width:420px;">
+<strong>Key performance goal</strong>
+<ul>
+<li>Deliver “irrigation-ready” water by driving turbidity below a threshold (objective: <strong>&lt; 10 NTU</strong>).</li>
+<li>Minimize energy by avoiding continuous filtration when not needed.</li>
+</ul>
+</div>
+
+</div>
+
 <div class="card" id="overall-design-expanded">
 <h2>2) Overall Design (Expanded — updated for irrigation customer)</h2>
 <p>
