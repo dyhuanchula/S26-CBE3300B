@@ -742,3 +742,514 @@ https://www.dripworks.com/blog/what-are-the-different-types-of-filters-for-your-
 
 </body>
 </html>
+
+<div class="card">
+<h1>Initial Design: Water Works™ (Irrigation) — Market + Timeline</h1>
+<p class="small">
+Adaptive, sensor-gated filtration for <strong>drip/micro irrigation</strong> using variable-quality surface water. This page builds on our
+Preliminary Design Report and updates the concept for an <strong>irrigation customer</strong> (Initial Design Presentation).
+</p>
+</div>
+
+<div class="card">
+<h2>1) Introduction</h2>
+
+<p>
+Despite major advances in irrigation technology, many farms still rely on <strong>surface water</strong> sources (ponds, canals, rivers, holding tanks)
+whose sediment load changes rapidly after storms and seasonally with runoff. For growers using <strong>drip and micro irrigation</strong>, this variability
+creates a reliability problem: emitters have small passages that clog quickly as turbidity rises, leading to downtime, maintenance, and uneven irrigation.
+</p>
+
+<p>
+Our goal is to build an adaptive irrigation filtration system, <strong>Water Works™</strong>, that automatically circulates source water through a
+<strong>particulate filtration stage</strong> and an <strong>adsorbent treatment stage</strong> until sensor feedback indicates the water has reached an
+irrigation-relevant clarity target. Rather than filtering continuously at a fixed setting, the system operates in a <strong>semi-batch</strong> mode:
+it produces a batch of “irrigation-ready” water only when storage is low. This reduces unnecessary pumping and makes the adaptive behavior clear:
+<strong>filter only as long as needed</strong>.
+</p>
+
+<p>
+<strong>Who is this for?</strong> Water Works™ targets growers and operators using drip/micro irrigation with variable source water (surface water or mixed sources),
+especially those experiencing frequent emitter clogging, high maintenance burden, and inconsistent irrigation reliability.
+</p>
+
+<p>
+<strong>What problem does it solve?</strong> Today, turbidity swings force growers to either (i) accept clogging/downtime or (ii) install
+<strong>oversized, maintenance-heavy filtration</strong> sized for worst-case conditions (screen/sand/disk systems plus chemical injection). Both approaches can
+increase cost and energy use, even when the source water is temporarily cleaner.
+</p>
+
+<p>
+<strong>Why adaptive?</strong> Turbidity is a <em>fast-changing</em> and <em>measurable</em> variable. A sensor-gated recirculation loop can run filtration
+only until clarity reaches a target and then stop, preventing permanent over-filtration. Our design objective is to deliver water suitable for drip/micro irrigation
+with an operational clarity target of <strong>&lt; 10 NTU</strong>.
+</p>
+
+<div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:1.5rem;">
+  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
+    <strong>Target customer (for this design)</strong>
+    <ul>
+      <li>Growers using drip/micro irrigation with variable source water (surface water or mixed sources).</li>
+      <li>Operators who experience emitter clogging, frequent maintenance, and inconsistent irrigation reliability.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
+    <strong>Key performance goal</strong>
+    <ul>
+      <li>Deliver “irrigation-ready” water by driving turbidity below a threshold (objective: <strong>&lt; 10 NTU</strong>).</li>
+      <li>Minimize energy by avoiding continuous filtration when not needed.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div class="card" id="overall-design-expanded">
+<h2>2) Overall Design (Expanded — updated for irrigation customer)</h2>
+
+<p>
+Water Works™ connects to a continuous irrigation water source (feed line from pond/canal/holding tank). It runs in a <strong>semi-batch cycle</strong>:
+it produces a batch of treated irrigation water when the storage level is low, rather than filtering nonstop. This keeps the system simple, reduces unnecessary pumping,
+and highlights the adaptive behavior: <strong>keep cycling water until the sensor indicates it is clean enough to transfer</strong>.
+</p>
+
+<h3>System Concept (Semi-Batch, Sensor-Gated)</h3>
+<ul>
+  <li><strong>Source connection:</strong> a feed line supplies raw water when the inlet valve is opened.</li>
+  <li><strong>Raw batch chamber (Tank 1):</strong> filled to a set level at the start of each cycle.</li>
+  <li><strong>Recirculation loop:</strong> pump repeatedly drives water through sensing + filtration stages, returning to Tank 1.</li>
+  <li><strong>Clean storage reservoir (Tank 2):</strong> once turbidity threshold is met, water is routed to storage; pH is measured and displayed.</li>
+  <li><strong>User interaction:</strong> users draw from Tank 2; the system detects low/empty storage and starts the next batch automatically.</li>
+</ul>
+
+<p>
+<strong>Why two tanks?</strong> Tank 1 is the controlled “process volume” we recirculate until it reaches the clarity target. Tank 2 is a decoupled storage buffer
+that can be larger. This keeps the control problem stable and repeatable (always treat a known batch volume in Tank 1) while still delivering useful storage capacity.
+</p>
+
+<h3>Flow Path (Detailed)</h3>
+<ol>
+  <li><strong>Fill:</strong> when Tank 2 is low, open inlet valve and fill Tank 1 to a target level (ultrasonic sensor or float switch).</li>
+  <li><strong>Recirculate + treat:</strong> pump circulates water through (i) turbidity sensing and (ii) filtration module, then returns to Tank 1.</li>
+  <li><strong>Pass condition:</strong> once turbidity stays below threshold for a hold time (with hysteresis), switch from recirculation mode to transfer mode.</li>
+  <li><strong>Transfer:</strong> pinch valves close the recirculation return and open the path to Tank 2; treated batch is sent to storage.</li>
+  <li><strong>Ready state:</strong> display pH in Tank 2; system idles until Tank 2 drops below threshold and repeats.</li>
+</ol>
+
+<h3>Filtration Module (Mesh + Activated Carbon)</h3>
+<ul>
+  <li><strong>Fine mesh / filter pad:</strong> removes particulates (silt, debris, suspended solids) by size exclusion and interception, protecting emitters.</li>
+  <li><strong>Activated carbon bed:</strong> provides adsorption capacity for dissolved organics and odor-causing species, adding treatment margin.</li>
+  <li><strong>Key design considerations:</strong> flow rate affects carbon contact time; packing density and mesh tightness affect pressure drop and energy use.</li>
+</ul>
+
+<h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+<p>
+The adaptive decision variable is turbidity/clarity measured optically. An LED shines through an inline chamber (or clear tubing segment) and a photoresistor (LDR)
+measures received light intensity. Cloudier water scatters/absorbs more light, reducing intensity; clearer water increases it. The microcontroller reads an analog voltage
+from a voltage divider to produce a repeatable “clarity” signal.
+</p>
+<ul>
+  <li><strong>Measurement approach:</strong> analog voltage from LDR divider correlates with transmitted light.</li>
+  <li><strong>Why sufficient here:</strong> even without absolute NTU calibration, it provides a consistent signal for “getting clearer” and “clear enough.”</li>
+  <li><strong>Noise mitigation:</strong> light-shielded housing, fixed geometry, and moving average/median filtering.</li>
+  <li><strong>Calibration plan:</strong> measure clean baseline (clear water) and dirty baseline (fine silt) → choose thresholds with hysteresis to avoid chatter.</li>
+</ul>
+
+<h3>Control Logic (High-Level)</h3>
+<ul>
+  <li><strong>Trigger:</strong> if Tank 2 is low, start a new batch.</li>
+  <li><strong>Fill:</strong> open inlet valve until Tank 1 reaches target level.</li>
+  <li><strong>Filter loop:</strong> recirculate while monitoring turbidity; continue until criteria met.</li>
+  <li><strong>Pass + transfer:</strong> if turbidity remains below threshold for hold time, route to Tank 2.</li>
+  <li><strong>Stop:</strong> stop pump when batch depleted or Tank 2 full; return to idle.</li>
+  <li><strong>Display:</strong> measure and display pH in Tank 2 as a diagnostic/context metric.</li>
+</ul>
+
+<h3>Future Sensor Additions (If Time Allows)</h3>
+<p>
+Additional sensors could improve robustness beyond turbidity alone. Examples include conductivity/TDS for dissolved ions, temperature compensation/logging,
+and simple flow sensing to detect clogs and estimate filter loading over time. Large irrigation systems also commonly use chemical injection, a natural extension
+for later prototypes.
+</p>
+
+<p><strong>Diagram slots (to be inserted):</strong> Overall system diagram; system block diagram; flow path: Source → Fill Tank 1 → Recirculation loop (Sensor + Filter) → Transfer valves → Tank 2 (storage).</p>
+</div>
+
+<div class="card">
+<h2>3) Chemical / Physical Principles</h2>
+
+<p>
+Our system combines <strong>mechanical filtration</strong> and <strong>adsorbent treatment</strong>, then uses <strong>sensor feedback</strong> to decide when the water is “clean enough”
+to transfer into storage. For this prototype, contaminants that matter operationally fall into two categories:
+<strong>suspended particles</strong> (drive turbidity and clogging risk) and <strong>dissolved compounds/organics</strong> (can contribute to fouling, odor, and inconsistent behavior).
+</p>
+
+<h3>Filtration + treatment (mesh + activated carbon)</h3>
+<ul>
+  <li><strong>Mesh / filter pad:</strong> removes suspended solids by size exclusion/interception; reduces turbidity and protects emitters.</li>
+  <li><strong>Activated carbon:</strong> adsorbs dissolved organic compounds; adds treatment margin for surface-water organics.</li>
+  <li><strong>Key tradeoff:</strong> tighter filtration + longer contact improves quality but increases pressure drop and cycle time.</li>
+</ul>
+
+<h3>Turbidity and optics (sensor feedback)</h3>
+<p>
+Turbidity measures suspended material. These particles scatter/absorb light, reducing transmission. During filtration, the turbidity signal should improve and then plateau.
+That monotonic trend makes turbidity practical for closed-loop control: filter until the signal stabilizes below a threshold.
+</p>
+<ul>
+  <li><strong>Optical principle:</strong> scatter/absorb light → lower transmission in cloudy water.</li>
+  <li><strong>Expected trend:</strong> transmitted light increases and plateaus as water clears.</li>
+  <li><strong>Noise sources:</strong> bubbles, turbulence, splashing, ambient light leakage.</li>
+  <li><strong>Mitigation:</strong> light-shielded housing, fixed geometry, signal filtering.</li>
+  <li><strong>Decision logic:</strong> threshold + hold time + hysteresis to prevent rapid switching.</li>
+</ul>
+
+<h3>pH (context metric)</h3>
+<p>
+pH provides context about water chemistry and is displayed as an informational metric. Irrigation water pH can influence nutrient availability and scaling risk, but pH alone
+does not quantify clarity or many specific contaminants. We therefore use turbidity as the control variable and pH as a diagnostic consistency check.
+</p>
+
+<h3>Flow, mixing, and contact time</h3>
+<p>
+Pump flow rate affects pressure drop across the filter and contact time in the carbon stage. Higher flow shortens cycle time but reduces per-pass contact time; lower flow
+improves adsorption but reduces throughput. As the filter loads, resistance increases and performance can shift over time. The advantage of the sensor-gated semi-batch approach
+is adaptability: it runs longer when required rather than assuming worst-case conditions at all times.
+</p>
+</div>
+
+<div class="card">
+<h2>4) Chemical Engineering Principles & Equations</h2>
+
+<div class="grid" style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+  <div class="card" style="flex:1; min-width:280px;">
+    <strong>1. Flow Rate and Residence Time</strong>
+    <p><code>Q = A v</code></p>
+    <p class="small">
+      Q = volumetric flow rate<br>
+      A = flow cross-sectional area<br>
+      v = fluid velocity
+    </p>
+    <p>Determines residence time through filtration media and overall treatment efficiency.</p>
+  </div>
+
+  <div class="card" style="flex:1; min-width:280px;">
+    <strong>2. Filter Pressure Drop (Darcy-type)</strong>
+    <p><code>ΔP ∝ (μ L / k) Q</code></p>
+    <p class="small">
+      μ = viscosity<br>
+      L = filter thickness<br>
+      k = permeability
+    </p>
+    <p>Increased filtration resistance leads to higher pump energy demand.</p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:1.5rem;">
+  <strong>3. Turbidity Reduction Model (first-order)</strong>
+  <p style="text-align:center;"><code>dC/dt = −k C</code></p>
+  <p style="text-align:center;"><code>C(t) = C₀ e^(−k t)</code></p>
+  <p class="small" style="text-align:center;">
+    C = turbidity concentration &nbsp;|&nbsp; k = filtration rate constant
+  </p>
+  <p style="text-align:center;">
+    Recirculation increases effective contact time and improves clarity over time; adaptive control stops once diminishing returns begin.
+  </p>
+</div>
+</div>
+
+<div class="card">
+<h2>5) General Materials and Parts List (Expanded)</h2>
+
+<h3>Turbidity Sensing</h3>
+<ul>
+  <li>Arduino UNO R3 (or equivalent MCU)</li>
+  <li>5 V USB power supply</li>
+  <li>LED source (IR or visible)</li>
+  <li>GL5528 photoresistor (LDR)</li>
+  <li>100–220 Ω resistor (LED limit)</li>
+  <li>~100 kΩ resistor (LDR voltage divider)</li>
+  <li>Breadboard + jumper wires</li>
+  <li>Opaque housing / black heat-shrink tubing</li>
+</ul>
+<p class="small">
+The LDR output is read as an analog voltage and used to detect relative clarity changes. Light shielding reduces noise from room lighting and reflections.
+</p>
+
+<h3>pH Sensing (context metric)</h3>
+<ul>
+  <li>Arduino UNO R3</li>
+  <li>pH sensor module</li>
+  <li>Display screen</li>
+  <li>(Optional instrumentation components for stability: op-amp/regulator/potentiometer if using raw probe signal conditioning)</li>
+</ul>
+<p class="small">
+pH is measured after treatment as a chemistry indicator and consistency check; it is not the main pass/fail trigger.
+</p>
+
+<h3>Filtration and Adsorbent Module</h3>
+<ul>
+  <li>Activated carbon</li>
+  <li>Micron-scale nylon mesh / filter pad (target ~150 µm for emitter protection)</li>
+</ul>
+<p class="small">
+Mesh removes suspended solids by size exclusion and interception. Activated carbon adsorbs dissolved organic compounds and adds treatment margin.
+Flow rate and packing density affect pressure drop and contact time and will be optimized during testing.
+</p>
+
+<h3>Valve and Flow Routing (Adaptive Control)</h3>
+<ul>
+  <li>2 × micro servo motors</li>
+  <li>2 × pinch valve housings (3D printed) + mounting hardware</li>
+  <li>External 5–6 V power supply for servos</li>
+  <li>Common ground wiring between Arduino and servo supply</li>
+</ul>
+<p class="small">
+Servos actuate pinch valves to redirect flow without contacting water. External servo supply prevents voltage drops and unintended MCU resets.
+</p>
+
+<h3>Pump, Tubing, and Fluid Handling</h3>
+<ul>
+  <li>Pump</li>
+  <li>Flexible tubing</li>
+  <li>Barbed hose fittings</li>
+  <li>Hose clamps or zip ties</li>
+  <li>Silicone sealant</li>
+  <li>Reservoir containers (prototyping tanks/cups)</li>
+</ul>
+
+<h3>Water Level Sensing (Semi-batch operation)</h3>
+<ul>
+  <li>Ultrasonic distance sensor (or float switch)</li>
+  <li>Arduino UNO R3</li>
+</ul>
+
+<h3>Tools / Fabrication</h3>
+<ul>
+  <li>Soldering iron</li>
+  <li>Wire cutter / stripper</li>
+  <li>Multimeter</li>
+  <li>Glue gun / electrical tape</li>
+  <li>3D printer (e.g., Bambu Lab P1S)</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>6) Market Research</h2>
+
+<h3>Market nature (size / trend / fragmentation)</h3>
+
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Item</th><th>Content</th><th>Source</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>Market size</td>
+  <td>Global drip irrigation market ≈ <strong>$6B (2024)</strong></td>
+  <td><a href="https://www.stellarmr.com/report/Drip-Irrigation-Systems-Market/1397">Stellar Market Research — Drip Irrigation Systems Market</a></td>
+</tr>
+<tr>
+  <td>Trend / CAGR</td>
+  <td>Projected <strong>~10–12% CAGR</strong> through ~2030</td>
+  <td><a href="https://www.stellarmr.com/report/Drip-Irrigation-Systems-Market/1397">Stellar Market Research — Drip Irrigation Systems Market</a></td>
+</tr>
+<tr>
+  <td>Fragmentation</td>
+  <td>Fragmented across filtration tech (screen/sand/disk) plus chemical treatment add-ons</td>
+  <td><a href="https://www.dripworks.com/blog/what-are-the-different-types-of-filters-for-your-irrigation-system">DripWorks — Types of Irrigation Filters</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>SWOT Analysis</h3>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Strength</th><th>Weakness</th><th>Opportunity</th><th>Threat</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>Adaptive filtration reduces emitter clogging; real-time water quality monitoring; potentially lower maintenance vs static filters</td>
+  <td>Requires electrical power; sensor calibration required; added hardware complexity</td>
+  <td>Precision agriculture growth; smart farm automation trends; water scarcity policy pressure</td>
+  <td>Established irrigation OEMs; conservative adoption by farmers; certification/compliance requirements</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Extra element #1 — Competitor Analysis / Comparable Offerings</h3>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Product / Category</th><th>Example vendor</th><th>Notes (Why it matters)</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>Screen filters</td>
+  <td>Netafim</td>
+  <td>Fixed filtration level; not turbidity-adaptive; can clog under sediment spikes</td>
+</tr>
+<tr>
+  <td>Sand media filters</td>
+  <td>Amiad (example category)</td>
+  <td>Effective for organics but typically higher maintenance/backwash requirements</td>
+</tr>
+<tr>
+  <td>Disk filters</td>
+  <td>Rain Bird</td>
+  <td>Widely used; performance depends on disk grade and cleaning schedule</td>
+</tr>
+<tr>
+  <td>Chemical injection</td>
+  <td>Industry standard add-on</td>
+  <td>Helps biofouling/scale; does not replace solids filtration and adds operating cost</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Extra element #2 — Cost Breakdown (Prototype BOM)</h3>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Category</th><th>Estimated Cost</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Electronics (MCU + sensors + display)</td><td>~$55.50</td><td>Arduino ($20) + pH module ($24) + screen ($10) + turbidity components (~$1.50)</td></tr>
+<tr><td>Media / filter (mesh + activated carbon)</td><td>~$45.00</td><td>~$13 mesh + ~$32 carbon</td></tr>
+<tr><td>Pump / valves / plumbing</td><td>~$36.50</td><td>~$25 pump + ~$8 servos + ~$3.50 tubing/fittings</td></tr>
+<tr><td>Fabrication (3D-printed parts)</td><td>~$5.00</td><td>PLA + hardware</td></tr>
+<tr><td><strong>Estimated prototype total</strong></td><td><strong>~$149</strong></td><td>Prototype estimate; updated as purchases are made</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Value Proposition / Market Opportunity</h3>
+<ul>
+  <li><strong>Adaptive filtration:</strong> filters only as long as needed using real-time turbidity feedback (avoids permanent over-filtration).</li>
+  <li><strong>Reliability:</strong> reduces emitter clogging, downtime, and maintenance burden under variable sediment conditions.</li>
+  <li><strong>Efficiency:</strong> semi-batch design minimizes energy by stopping when clarity target is met.</li>
+  <li><strong>Positioning:</strong> complements existing filtration approaches by adding sensing + control to respond to turbidity spikes automatically.</li>
+</ul>
+
+<h3>Target Market, Pricing, and Marketing Strategy</h3>
+<ul>
+  <li><strong>Target users:</strong> growers using drip/micro irrigation with surface water or mixed sources; operators impacted by turbidity variability.</li>
+  <li><strong>Geography:</strong> regions with water scarcity, surface-water reliance, and increasing precision agriculture adoption.</li>
+  <li><strong>Pricing (prototype context):</strong> early prototype built from commodity components; future pricing depends on enclosure, durability, and scaling.</li>
+  <li><strong>Go-to-market concept:</strong> sell through irrigation suppliers / farm equipment channels; emphasize reduced clogging and reduced maintenance vs fixed filtration.</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h2>7) Timeline + Project Management (Gantt + Milestones)</h2>
+
+<h3>Milestone Summary</h3>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Milestone</th><th>Due Date</th><th>Points</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr><td>Preliminary Design Report</td><td>Week 2</td><td>100 pts (10%)</td><td>✅ Complete</td></tr>
+<tr><td>Initial Design Presentation</td><td>Week 4</td><td>100 pts (10%)</td><td>🔄 In Progress</td></tr>
+<tr><td>Demo 1: Initial Prototype</td><td>Week 7</td><td>125 pts (12.5%)</td><td>⏳ Planned</td></tr>
+<tr><td>Demo 2: Intermediate Prototype</td><td>Week 10</td><td>125 pts (12.5%)</td><td>⏳ Planned</td></tr>
+<tr><td>Demo 3: MVP</td><td>Week 13</td><td>150 pts (15%)</td><td>⏳ Planned</td></tr>
+<tr><td>Final Report</td><td>Week 17</td><td>225 pts (22.5%)</td><td>⏳ Planned</td></tr>
+<tr><td>Final Demonstration</td><td>Week 17</td><td>125 pts (12.5%)</td><td>⏳ Planned</td></tr>
+<tr><td><strong>Total</strong></td><td></td><td><strong>1000 pts</strong></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Gantt Chart (Semester Plan — update weekly)</h3>
+<p class="small">
+Update this chart throughout the semester with real-time progress. Mark completed tasks, add notes/links to test results, and refine durations as needed.
+</p>
+
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+  <th>Task</th>
+  <th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th>
+  <th>W10</th><th>W11</th><th>W12</th><th>W13</th><th>W14</th><th>W15</th><th>W16</th><th>W17</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Preliminary Design (report + block diagram)</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Initial Design (market research + SWOT + slides)</td><td></td><td></td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Component testing (turbidity sensor + mesh + pump)</td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Demo 1 build + proof of concept</td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Demo 2 system integration (valves + control)</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Demo 3 enclosure + robustness + logging</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td></tr>
+<tr><td>Final report + final demo prep</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h2>8) Future Considerations</h2>
+
+<h3>Expanded Water Quality Sensing</h3>
+<p>
+Currently, turbidity is the primary control variable and pH is a diagnostic/context readout. Future versions could incorporate conductivity/TDS to quantify dissolved ions
+that remain invisible to turbidity sensing and improve confidence in water quality under varying source conditions.
+</p>
+
+<h3>Data Logging and User Interface Improvements</h3>
+<p>
+Future iterations could include data logging via SD card or wireless communication to record turbidity, pH, and cycle duration over time. This would help track performance,
+identify trends, and give clearer guidance on maintenance and media replacement.
+</p>
+
+<h3>Scalability and Cartridge-Based Design</h3>
+<p>
+The filtration media could be redesigned as replaceable cartridges for easier maintenance and scalability. Media swaps (e.g., catalytic carbon, alternative adsorbents)
+could tailor treatment to specific irrigation source-water challenges.
+</p>
+
+<h3>Integrated and Enclosed System Design</h3>
+<p>
+A future enclosure could protect sensors/electronics from the environment, reduce contamination risk, and improve robustness for real farm settings.
+</p>
+</div>
+
+<div class="card">
+<h2>References</h2>
+
+<p>U.S. Geological Survey (USGS). “Turbidity and Water.” Available at: https://www.usgs.gov/water-science-school/science/turbidity-and-water</p>
+
+<p>California State Water Resources Control Board. “Guidance for Continuous Water Quality Monitoring.” Available at: https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/cwt/guidance/3150en.pdf</p>
+
+<p>International Water Association Publishing. “Setting Water Quality Criteria for Agricultural Water Reuse.” Available at: https://iwaponline.com/jwrd/article/7/2/121/28751/Setting-water-quality-criteria-for-agricultural</p>
+
+<p>United States Department of Agriculture (USDA), National Agricultural Statistics Service (NASS). “Irrigation and Water Management Survey News Release (2024).” Available at: https://www.nass.usda.gov/Newsroom/archive/2024/10-31-2024.php</p>
+
+<p>Stellar Market Research. “Drip Irrigation Systems Market Report.” Available at: https://www.stellarmr.com/report/Drip-Irrigation-Systems-Market/1397</p>
+
+<p>DripWorks. “What Are the Different Types of Filters for Your Irrigation System?” Available at: https://www.dripworks.com/blog/what-are-the-different-types-of-filters-for-your-irrigation-system</p>
+
+<p>Netafim. “Agricultural Filtration Systems Documentation.” Available at: https://www.netafim.com</p>
+
+<p>Rain Bird Corporation. “Agricultural Irrigation Filtration Manuals.” Available at: https://www.rainbird.com</p>
+
+<p>McCabe, W. L., Smith, J. C., and Harriott, P. <em>Unit Operations of Chemical Engineering</em>. McGraw-Hill Education.</p>
+
+<p>Perry, R. H., and Green, D. W., editors. <em>Perry’s Chemical Engineers’ Handbook</em>. McGraw-Hill Education.</p>
+
+<p>Centers for Disease Control and Prevention (CDC). “Drinking Water Facts and Statistics.” Available at: https://www.cdc.gov/drinking-water/data-research/facts-stats/index.html</p>
+
+<p>Culligan of Houston. “Problems with pH in Drinking Water.” Available at: https://houstonculligan.com/problems/ph-problems/</p>
+
+<p>Arduino Forum. “pH Sensor Detection Circuit Design.” Available at: https://forum.arduino.cc/t/ph-sensor-detection-circuit-design/478631</p>
+</div>
+
