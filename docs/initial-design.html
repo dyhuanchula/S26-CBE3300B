@@ -836,6 +836,15 @@ that can be larger. This keeps the control problem stable and repeatable (always
   <li><strong>Ready state:</strong> display pH in Tank 2; system idles until Tank 2 drops below threshold and repeats.</li>
 </ol>
 
+<h3>Diagram</h3>
+<div style="border:2px dashed #7a7a7a; border-radius:14px; padding:18px; text-align:center;">
+  <a class="figure-link" href="assets/images/block_diagram.jpg" target="_blank" rel="noopener">
+    <img class="diagram" src="assets/images/updated_diagram.jpg" alt="Overall system diagram">
+  </a>
+  <div class="figcap">System block diagram</div>
+  <span class="small">Flow path: Source → Fill Tank 1 → Recirculation loop (Sensor + Filter) → Transfer valves → Tank 2 (storage)</span>
+</div>
+
 <h3>Filtration Module (Mesh + Activated Carbon)</h3>
 <ul>
   <li><strong>Fine mesh / filter pad:</strong> removes particulates (silt, debris, suspended solids) by size exclusion and interception, protecting emitters.</li>
@@ -843,18 +852,25 @@ that can be larger. This keeps the control problem stable and repeatable (always
   <li><strong>Key design considerations:</strong> flow rate affects carbon contact time; packing density and mesh tightness affect pressure drop and energy use.</li>
 </ul>
 
-<h3>Turbidity Sensing with a Photoresistor (Optical Clarity)</h3>
+<h3>Turbidity Sensing with a Phototransistor (Optical Clarity)</h3>
 <p>
-The adaptive decision variable is turbidity/clarity measured optically. An LED shines through an inline chamber (or clear tubing segment) and a photoresistor (LDR)
-measures received light intensity. Cloudier water scatters/absorbs more light, reducing intensity; clearer water increases it. The microcontroller reads an analog voltage
-from a voltage divider to produce a repeatable “clarity” signal.
+The adaptive decision variable is turbidity/clarity measured optically. An LED shines through an inline chamber (or clear tubing segment) and a
+<strong>phototransistor</strong> measures received light intensity. Cloudier water scatters/absorbs more light, reducing intensity at the detector; clearer
+water increases it. The microcontroller reads a repeatable signal (voltage across a resistor / divider) that correlates with transmitted light.
 </p>
 <ul>
-  <li><strong>Measurement approach:</strong> analog voltage from LDR divider correlates with transmitted light.</li>
+  <li><strong>Measurement approach:</strong> Arduino reads an analog voltage tied to phototransistor current (more light → more current → different voltage).</li>
   <li><strong>Why sufficient here:</strong> even without absolute NTU calibration, it provides a consistent signal for “getting clearer” and “clear enough.”</li>
   <li><strong>Noise mitigation:</strong> light-shielded housing, fixed geometry, and moving average/median filtering.</li>
   <li><strong>Calibration plan:</strong> measure clean baseline (clear water) and dirty baseline (fine silt) → choose thresholds with hysteresis to avoid chatter.</li>
 </ul>
+
+<div style="border:2px dashed #7a7a7a; border-radius:14px; padding:18px; text-align:center; margin-top:10px;">
+  <a class="figure-link" href="assets/images/block_diagram.jpg" target="_blank" rel="noopener">
+    <img class="diagram" src="assets/images/sensor.jpg" alt="Schematic of Sensor">
+  </a>
+  <span class="small">LED + resistor → optical chamber → phototransistor sensing circuit → Arduino analog input</span>
+</div>
 
 <h3>Control Logic (High-Level)</h3>
 <ul>
@@ -872,8 +888,6 @@ Additional sensors could improve robustness beyond turbidity alone. Examples inc
 and simple flow sensing to detect clogs and estimate filter loading over time. Large irrigation systems also commonly use chemical injection, a natural extension
 for later prototypes.
 </p>
-
-<p><strong>Diagram slots (to be inserted):</strong> Overall system diagram; system block diagram; flow path: Source → Fill Tank 1 → Recirculation loop (Sensor + Filter) → Transfer valves → Tank 2 (storage).</p>
 </div>
 
 <div class="card">
@@ -920,69 +934,36 @@ is adaptability: it runs longer when required rather than assuming worst-case co
 </div>
 
 <div class="card">
-<h2>4) Chemical Engineering Principles & Equations</h2>
+<h2>4) General Materials and Parts List (Expanded)</h2>
 
-<div class="grid" style="display:flex; gap:1.5rem; flex-wrap:wrap;">
-  <div class="card" style="flex:1; min-width:280px;">
-    <strong>1. Flow Rate and Residence Time</strong>
-    <p><code>Q = A v</code></p>
-    <p class="small">
-      Q = volumetric flow rate<br>
-      A = flow cross-sectional area<br>
-      v = fluid velocity
-    </p>
-    <p>Determines residence time through filtration media and overall treatment efficiency.</p>
-  </div>
-
-  <div class="card" style="flex:1; min-width:280px;">
-    <strong>2. Filter Pressure Drop (Darcy-type)</strong>
-    <p><code>ΔP ∝ (μ L / k) Q</code></p>
-    <p class="small">
-      μ = viscosity<br>
-      L = filter thickness<br>
-      k = permeability
-    </p>
-    <p>Increased filtration resistance leads to higher pump energy demand.</p>
-  </div>
-</div>
-
-<div class="card" style="margin-top:1.5rem;">
-  <strong>3. Turbidity Reduction Model (first-order)</strong>
-  <p style="text-align:center;"><code>dC/dt = −k C</code></p>
-  <p style="text-align:center;"><code>C(t) = C₀ e^(−k t)</code></p>
-  <p class="small" style="text-align:center;">
-    C = turbidity concentration &nbsp;|&nbsp; k = filtration rate constant
-  </p>
-  <p style="text-align:center;">
-    Recirculation increases effective contact time and improves clarity over time; adaptive control stops once diminishing returns begin.
-  </p>
-</div>
-</div>
-
-<div class="card">
-<h2>5) General Materials and Parts List (Expanded)</h2>
-
-<h3>Turbidity Sensing</h3>
+<h3>Turbidity Sensing (Phototransistor)</h3>
 <ul>
   <li>Arduino UNO R3 (or equivalent MCU)</li>
   <li>5 V USB power supply</li>
   <li>LED source (IR or visible)</li>
-  <li>GL5528 photoresistor (LDR)</li>
-  <li>100–220 Ω resistor (LED limit)</li>
-  <li>~100 kΩ resistor (LDR voltage divider)</li>
+  <li>Phototransistor</li>
+  <li>LED current-limiting resistor</li>
+  <li>Resistor/load for phototransistor sensing (to create readable voltage)</li>
   <li>Breadboard + jumper wires</li>
   <li>Opaque housing / black heat-shrink tubing</li>
 </ul>
 <p class="small">
-The LDR output is read as an analog voltage and used to detect relative clarity changes. Light shielding reduces noise from room lighting and reflections.
+Phototransistor output is read as an analog voltage correlated with transmitted light intensity. Light shielding reduces noise from room lighting and reflections.
 </p>
+
+<div style="border:2px dashed #7a7a7a; border-radius:14px; padding:18px; text-align:center; margin-top:10px;">
+  <a class="figure-link" href="assets/images/block_diagram.jpg" target="_blank" rel="noopener">
+    <img class="diagram" src="assets/images/sensor.jpg" alt="Schematic of Sensor">
+  </a>
+  <span class="small">LED + resistor → optical chamber → phototransistor sensing circuit → Arduino analog input</span>
+</div>
 
 <h3>pH Sensing (context metric)</h3>
 <ul>
   <li>Arduino UNO R3</li>
   <li>pH sensor module</li>
   <li>Display screen</li>
-  <li>(Optional instrumentation components for stability: op-amp/regulator/potentiometer if using raw probe signal conditioning)</li>
+  <li>(Optional instrumentation components for stability if using raw probe conditioning)</li>
 </ul>
 <p class="small">
 pH is measured after treatment as a chemistry indicator and consistency check; it is not the main pass/fail trigger.
@@ -1036,7 +1017,7 @@ Servos actuate pinch valves to redirect flow without contacting water. External 
 </div>
 
 <div class="card">
-<h2>6) Market Research</h2>
+<h2>5) Market Research</h2>
 
 <h3>Market nature (size / trend / fragmentation)</h3>
 
@@ -1148,7 +1129,7 @@ Servos actuate pinch valves to redirect flow without contacting water. External 
 </div>
 
 <div class="card">
-<h2>7) Timeline + Project Management (Gantt + Milestones)</h2>
+<h2>6) Timeline + Project Management (Gantt + Milestones)</h2>
 
 <h3>Milestone Summary</h3>
 <div style="overflow-x:auto;">
@@ -1175,29 +1156,66 @@ Update this chart throughout the semester with real-time progress. Mark complete
 </p>
 
 <div style="overflow-x:auto;">
-<table>
+<table class="gantt">
 <thead>
 <tr>
-  <th>Task</th>
+  <th style="min-width:240px;">Task</th>
   <th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th>
   <th>W10</th><th>W11</th><th>W12</th><th>W13</th><th>W14</th><th>W15</th><th>W16</th><th>W17</th>
 </tr>
 </thead>
 <tbody>
-<tr><td>Preliminary Design (report + block diagram)</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Initial Design (market research + SWOT + slides)</td><td></td><td></td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Component testing (turbidity sensor + mesh + pump)</td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Demo 1 build + proof of concept</td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Demo 2 system integration (valves + control)</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Demo 3 enclosure + robustness + logging</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td><td></td><td></td><td></td></tr>
-<tr><td>Final report + final demo prep</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>■</td><td>■</td><td>■</td></tr>
+<tr>
+  <td><strong>Preliminary Design (report + block diagram)</strong></td>
+  <td><span class="bar done"></span></td><td><span class="bar done"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Initial Design (market research + SWOT + slides)</strong></td>
+  <td></td><td></td>
+  <td><span class="bar active"></span></td><td><span class="bar active"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Component testing (sensor + mesh + pump)</strong></td>
+  <td></td><td></td>
+  <td><span class="bar active"></span></td><td><span class="bar active"></span></td><td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 1 build + proof of concept</strong></td>
+  <td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td><td><span class="bar planned"></span></td><td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 2 integration (valves + control + logging)</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td><td><span class="bar planned"></span></td><td><span class="bar planned"></span></td><td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 3 enclosure + robustness</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td><td><span class="bar planned"></span></td><td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Final report + final demo prep</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td><td><span class="bar planned"></span></td><td><span class="bar planned"></span></td>
+</tr>
 </tbody>
 </table>
 </div>
+
+<p class="small">
+Legend: <span class="legend done">Done</span> <span class="legend active">Active</span> <span class="legend planned">Planned</span>
+</p>
 </div>
 
 <div class="card">
-<h2>8) Future Considerations</h2>
+<h2>7) Future Considerations</h2>
 
 <h3>Expanded Water Quality Sensing</h3>
 <p>
@@ -1227,29 +1245,31 @@ A future enclosure could protect sensors/electronics from the environment, reduc
 <h2>References</h2>
 
 <p>U.S. Geological Survey (USGS). “Turbidity and Water.” Available at: https://www.usgs.gov/water-science-school/science/turbidity-and-water</p>
-
 <p>California State Water Resources Control Board. “Guidance for Continuous Water Quality Monitoring.” Available at: https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/cwt/guidance/3150en.pdf</p>
-
 <p>International Water Association Publishing. “Setting Water Quality Criteria for Agricultural Water Reuse.” Available at: https://iwaponline.com/jwrd/article/7/2/121/28751/Setting-water-quality-criteria-for-agricultural</p>
-
 <p>United States Department of Agriculture (USDA), National Agricultural Statistics Service (NASS). “Irrigation and Water Management Survey News Release (2024).” Available at: https://www.nass.usda.gov/Newsroom/archive/2024/10-31-2024.php</p>
-
 <p>Stellar Market Research. “Drip Irrigation Systems Market Report.” Available at: https://www.stellarmr.com/report/Drip-Irrigation-Systems-Market/1397</p>
-
 <p>DripWorks. “What Are the Different Types of Filters for Your Irrigation System?” Available at: https://www.dripworks.com/blog/what-are-the-different-types-of-filters-for-your-irrigation-system</p>
-
 <p>Netafim. “Agricultural Filtration Systems Documentation.” Available at: https://www.netafim.com</p>
-
 <p>Rain Bird Corporation. “Agricultural Irrigation Filtration Manuals.” Available at: https://www.rainbird.com</p>
-
 <p>McCabe, W. L., Smith, J. C., and Harriott, P. <em>Unit Operations of Chemical Engineering</em>. McGraw-Hill Education.</p>
-
 <p>Perry, R. H., and Green, D. W., editors. <em>Perry’s Chemical Engineers’ Handbook</em>. McGraw-Hill Education.</p>
-
 <p>Centers for Disease Control and Prevention (CDC). “Drinking Water Facts and Statistics.” Available at: https://www.cdc.gov/drinking-water/data-research/facts-stats/index.html</p>
-
 <p>Culligan of Houston. “Problems with pH in Drinking Water.” Available at: https://houstonculligan.com/problems/ph-problems/</p>
-
 <p>Arduino Forum. “pH Sensor Detection Circuit Design.” Available at: https://forum.arduino.cc/t/ph-sensor-detection-circuit-design/478631</p>
 </div>
 
+<style>
+/* Optional: simple gantt styling (safe to paste into your page) */
+table.gantt { border-collapse: collapse; width: 100%; }
+table.gantt th, table.gantt td { border: 1px solid rgba(255,255,255,0.12); padding: 6px; text-align: center; }
+table.gantt th:first-child, table.gantt td:first-child { text-align: left; }
+.bar { display:inline-block; width: 100%; height: 14px; border-radius: 8px; background: rgba(255,255,255,0.10); }
+.bar.done { background: rgba(120, 220, 170, 0.65); }
+.bar.active { background: rgba(120, 170, 255, 0.75); }
+.bar.planned { background: rgba(255, 210, 120, 0.70); }
+.legend { display:inline-block; padding: 2px 10px; border-radius: 999px; margin-right: 8px; font-size: 12px; }
+.legend.done { background: rgba(120, 220, 170, 0.65); }
+.legend.active { background: rgba(120, 170, 255, 0.75); }
+.legend.planned { background: rgba(255, 210, 120, 0.70); }
+</style>
