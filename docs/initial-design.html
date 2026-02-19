@@ -107,7 +107,6 @@
 <div class="card" id="intro-expanded">
 <h2>1) Background / Introduction </h2>
 <p>
-
 <p>
 <strong>Use case:</strong> reliable <strong>drip / micro irrigation</strong> when the available water source is
 <strong>turbid surface water</strong> (runoff-affected ponds, canals, rivers, holding tanks) whose sediment load changes with
@@ -131,13 +130,12 @@ designed for worst-case conditions. This raises cost and energy use even when th
 <p>
 <strong>Why adaptive here:</strong> turbidity is a <em>fast-changing</em> and <em>measurable</em> variable. A sensor-gated,
 semi-batch loop can run filtration only as long as needed to hit an irrigation-relevant clarity target (design objective:
-<strong>&lt; 10 NTU</strong> for drip/micro irrigation), then transfer the batch to storage. When turbidity spikes after storms,
-the same system simply runs longer rather than requiring permanent over-filtration.
+<strong>&lt; 10 NTU</strong> for drip/micro irrigation), then transfer the batch to storage.
 </p>
 
 </div>
 
-<!-- CENTERED CARDS -->
+<!-- centered cards INSIDE box -->
 <div style="
 display:flex;
 justify-content:center;
@@ -146,7 +144,7 @@ flex-wrap:wrap;
 margin-top:2rem;
 ">
 
-<div class="card" style="max-width:420px;">
+<div class="card" style="flex:1; min-width:320px; max-width:420px;">
 <strong>Target customer (for this design)</strong>
 <ul>
 <li>Growers using drip/micro irrigation with variable source water (surface water or mixed sources).</li>
@@ -154,7 +152,7 @@ margin-top:2rem;
 </ul>
 </div>
 
-<div class="card" style="max-width:420px;">
+<div class="card" style="flex:1; min-width:320px; max-width:420px;">
 <strong>Key performance goal</strong>
 <ul>
 <li>Deliver “irrigation-ready” water by driving turbidity below a threshold (objective: <strong>&lt; 10 NTU</strong>).</li>
