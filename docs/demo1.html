@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Demo 1 — Initial Prototype</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Demo 1 page-specific enhancements ── */
+
+    /* Status pill colours already in style.css; extend for inline use */
+    .kpi { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+
+    /* Progress checklist */
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: .6rem; padding: .35rem 0; border-bottom: 1px solid var(--border, #e5e7eb); font-size: .95rem; }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+
+    /* Next-steps with priority tags */
+    .steps { list-style: none; padding: 0; margin: 0; }
+    .steps li { display: flex; align-items: flex-start; gap: .7rem; padding: .5rem 0; border-bottom: 1px solid var(--border, #e5e7eb); }
+    .steps li:last-child { border-bottom: none; }
+    .steps .step-label { flex: 1; font-size: .95rem; }
+    .tag { font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .15rem .45rem; border-radius: 999px; flex-shrink: 0; }
+    .tag.blocker  { background: #fee2e2; color: #b91c1c; }
+    .tag.hardware { background: #fef9c3; color: #854d0e; }
+    .tag.software { background: #dbeafe; color: #1d4ed8; }
+    .tag.integration { background: #ede9fe; color: #6d28d9; }
+    .tag.sensor { background: #d1fae5; color: #065f46; }
+
+    /* Image placeholder grid */
+    .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .media-slot { border: 2px dashed var(--border, #d1d5db); border-radius: 8px; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; color: #9ca3af; font-size: .8rem; text-align: center; padding: 1rem; background: #f9fafb; }
+    .media-slot .media-icon { font-size: 1.8rem; }
+    .media-slot code { font-size: .72rem; background: #f3f4f6; padding: .1rem .3rem; border-radius: 4px; color: #6b7280; word-break: break-all; }
+
+    /* Callout box */
+    .callout { background: #fff7ed; border-left: 4px solid #f97316; border-radius: 0 8px 8px 0; padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; color: #7c2d12; }
+    .callout strong { display: block; margin-bottom: .2rem; }
+
+    /* Material switch note */
+    .switch-note { background: #f0fdf4; border-left: 4px solid #22c55e; border-radius: 0 8px 8px 0; padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; color: #14532d; }
+
+    /* ChemE principle cards */
+    .principle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: .75rem; }
+    .principle-card { background: #f8fafc; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 1rem; }
+    .principle-card h4 { margin: 0 0 .4rem; font-size: .9rem; color: #1e40af; }
+    .principle-card p  { margin: 0; font-size: .85rem; color: #475569; line-height: 1.5; }
+  </style>
 </head>
 <body>
   <header class="wrap">
@@ -26,46 +69,178 @@
   </header>
 
   <main class="wrap">
+
+    <!-- ── 1. Prototype Status ── -->
     <div class="card">
       <h2>Prototype Functionality</h2>
       <div class="kpi">
-        <span class="pill good">Working: TBD</span>
-        <span class="pill warn">Partial: TBD</span>
-        <span class="pill bad">Missing: TBD</span>
+        <span class="pill good">✓ Working: 3</span>
+        <span class="pill warn">⚠ Partial / Pending: 3</span>
+        <span class="pill bad">✗ Not Built Yet: 3</span>
       </div>
-      <ul>
-        <li>What works (specific):</li>
-        <li>What is unstable:</li>
-        <li>What is not built yet:</li>
+
+      <ul class="checklist">
+        <!-- Working -->
+        <li><span class="icon">✅</span><span><strong>Turbidity sensor</strong> — reads and logs values; calibration curve established for initial material (milk baseline).</span></li>
+        <li><span class="icon">✅</span><span><strong>Peristaltic pump</strong> — switches on/off on command to drive flow through the system.</span></li>
+        <li><span class="icon">✅</span><span><strong>Filter housing</strong> — 3-D printed enclosure fabricated and test-fitted.</span></li>
+
+        <!-- Partial / Pending -->
+        <li><span class="icon">⚠️</span><span><strong>Sensor calibration</strong> — needs full redo for diatomaceous earth (DE) suspension; milk-based curve no longer valid after material switch.</span></li>
+        <li><span class="icon">⚠️</span><span><strong>Filter cartridge</strong> — ordered unit is oversized for the housing; replacement on order. System cannot run closed-loop until it arrives.</span></li>
+        <li><span class="icon">⚠️</span><span><strong>Serial monitor during pump operation</strong> — USB serial is unavailable while the pump is active (shared power / interrupt conflict), though the Arduino sketch continues to execute. Data logging workaround needed.</span></li>
+
+        <!-- Not built yet -->
+        <li><span class="icon">❌</span><span><strong>Valve / flow-diversion system</strong> — directional valves to redirect flow once effluent is deemed clean are not yet installed.</span></li>
+        <li><span class="icon">❌</span><span><strong>Integrated single housing</strong> — pump, filter, and electronics are separate; full enclosure and plumbing integration pending.</span></li>
+        <li><span class="icon">❌</span><span><strong>pH sensor</strong> — final-output water quality sensor not yet sourced or wired.</span></li>
       </ul>
     </div>
 
+    <!-- ── 2. ChemE Principles ── -->
     <div class="card">
       <h2>Application of ChemE Principles</h2>
-      <ul>
-        <li>How separation mechanism works (filter/carbon/membrane/UV)</li>
-        <li>Why performance is limited (ΔP, flux, capacity, residence time)</li>
-      </ul>
+      <div class="principle-grid">
+        <div class="principle-card">
+          <h4>Solid–Liquid Separation (Filtration)</h4>
+          <p>Suspended particulates (diatomaceous earth, ~5–50 µm) are removed by depth or surface filtration. The pressure drop across the filter bed (Darcy's law, ΔP = μQL/kA) governs flux; a clogged or over-sized cartridge severely limits throughput.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Mass Transfer — Turbidity as Surrogate</h4>
+          <p>Turbidity (NTU) correlates with suspended-solids concentration via Beer–Lambert scattering. The sensor measures transmitted/scattered light intensity; calibration maps voltage to NTU so the controller can infer effluent quality in real time.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Residence Time &amp; Flow Rate</h4>
+          <p>Effective clarification requires sufficient contact time inside the filter (τ = V/Q). The peristaltic pump sets Q; the filter volume V and pressure differential together determine whether τ is long enough for target particle removal.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Feedback Control Loop</h4>
+          <p>The designed control strategy reads turbidity, compares to a setpoint, and actuates valves to recirculate or pass water downstream — a classic proportional on/off control analogous to a CSTR with recycle.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Current Performance Limitation</strong>
+        The oversized filter cartridge means the housing does not seal properly, allowing bypass flow around the media. This artificially inflates apparent turbidity removal efficiency and makes calibration data unreliable until the correctly-sized cartridge arrives.
+      </div>
     </div>
 
+    <!-- ── 3. Material Switch ── -->
+    <div class="card">
+      <h2>Test Material: Milk → Diatomaceous Earth</h2>
+      <div class="switch-note">
+        <strong>Why we switched</strong> — Milk particle size is too small to meaningfully test the filter, and milk goes bad. Diatomaceous earth (DE) produces a more reproducible, inorganic particulate suspension with well-characterised settling behaviour, making it a better calibration standard.
+      </div>
+      <ul>
+        <li><strong>Settling test:</strong> DE suspensions were photographed to show visible differences in turbidity and how quickly the suspension settles over time.</li>
+        <li><strong>Implication:</strong> A new turbidity calibration curve must be generated using DE standards before closed-loop testing can proceed.</li>
+      </ul>
+
+      <h3 style="margin-top:1.2rem; font-size:1rem;">Hardware &amp; Calibration</h3>
+      <p style="font-size:.85rem; color:#6b7280;">Add your files to <code>docs/assets/plots/</code> and replace the placeholders below with <code>&lt;img&gt;</code> tags.</p>
+      <div class="media-grid">
+        <div class="media-slot">
+          <span class="media-icon">📈</span>
+          <span>Sensor Calibration Plot</span>
+          <code>plots/sensor-calibration.png</code>
+        </div>
+        <div class="media-slot">
+          <span class="media-icon">📡</span>
+          <span>Turbidity Sensor</span>
+          <code>plots/sensor.jpg</code>
+        </div>
+        <div class="media-slot">
+          <span class="media-icon">⚙️</span>
+          <span>Pump &amp; Filter Housing</span>
+          <code>plots/pump-housing.jpg</code>
+        </div>
+        <div class="media-slot">
+          <span class="media-icon">🧪</span>
+          <span>Turbidity — Unsettled vs. Settled</span>
+          <code>plots/turbidity-comparison.jpg</code>
+        </div>
+        <div class="media-slot">
+          <span class="media-icon">🧪</span>
+          <span>Turbidity — Before vs. After Filter</span>
+          <code>plots/turbidity-before-after.jpg</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4. Performance Data ── -->
     <div class="card">
       <h2>Testing + Initial Performance Data</h2>
-      <p>Upload plots/images to <code>docs/assets/plots/</code> and link them here.</p>
       <table>
-        <thead><tr><th>Test</th><th>Method</th><th>Result</th><th>Notes</th></tr></thead>
+        <thead>
+          <tr><th>Test</th><th>Method</th><th>Result</th><th>Notes</th></tr>
+        </thead>
         <tbody>
-          <tr><td>Influent vs effluent turbidity</td><td>TBD</td><td>TBD</td><td>TBD</td></tr>
-          <tr><td>TDS reduction</td><td>TBD</td><td>TBD</td><td>TBD</td></tr>
+          <tr>
+            <td>Sensor calibration (milk)</td>
+            <td>Known dilutions → voltage reading</td>
+            <td>Curve obtained</td>
+            <td>Deprecated; DE calibration required</td>
+          </tr>
+          <tr>
+            <td>Pump on/off operation</td>
+            <td>Manual activation via Arduino</td>
+            <td>✓ Functional</td>
+            <td>Pump switches on/off only; no flow rate modulation</td>
+          </tr>
+          <tr>
+            <td>DE settling rate</td>
+            <td>Visual + sensor at timed intervals</td>
+            <td>Qualitative ✓</td>
+            <td>Quantitative NTU values to be logged once calibration is redone</td>
+          </tr>
+          <tr>
+            <td>Influent vs. effluent turbidity</td>
+            <td>Sensor before/after filter</td>
+            <td>Pending</td>
+            <td>Blocked until correct filter cartridge arrives</td>
+          </tr>
+          <tr>
+            <td>TDS reduction</td>
+            <td>TDS meter</td>
+            <td>Pending</td>
+            <td>Will measure once system is sealed</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- ── 5. Next Steps ── -->
     <div class="card">
       <h2>Project Management + Next Steps</h2>
-      <ul>
-        <li>Action items before Demo 2</li>
-        <li>Timeline updates (also update Gantt)</li>
+      <p style="font-size:.85rem; color:#6b7280; margin-bottom:.75rem;">Action items before Demo 2, in rough priority order.</p>
+      <ul class="steps">
+        <li>
+          <span class="tag blocker">Blocker</span>
+          <span class="step-label"><strong>Wait for correctly-sized filter cartridge</strong> — system cannot be sealed or performance-tested until the replacement arrives. Track shipping and test fit immediately on receipt.</span>
+        </li>
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label"><strong>Redo turbidity calibration with diatomaceous earth</strong> — prepare DE standards at known concentrations (e.g. 0, 5, 10, 25, 50, 100 NTU equivalents), record sensor voltage, generate a new calibration curve, and update firmware constants.</span>
+        </li>
+        <li>
+          <span class="tag software">Software</span>
+          <span class="step-label"><strong>Fix serial monitor conflict during pump operation</strong> — investigate shared-ground / power-rail noise causing USB disconnect. Consider using SD card logging or Bluetooth serial as a workaround so data is captured while the pump runs.</span>
+        </li>
+        <li>
+          <span class="tag hardware">Hardware</span>
+          <span class="step-label"><strong>Design and install valve/flow-diversion system</strong> — add solenoid or servo valves to redirect flow to "clean" output vs. recirculation line based on turbidity setpoint. Draft valve placement into housing CAD.</span>
+        </li>
+        <li>
+          <span class="tag integration">Integration</span>
+          <span class="step-label"><strong>Consolidate all components into one housing</strong> — route tubing, mount pump and electronics, seal filter cartridge, and label I/O ports. Perform leak test before sensor testing.</span>
+        </li>
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label"><strong>Source and integrate pH sensor</strong> — select a compatible analog/I2C pH probe, wire to Arduino, write firmware for reading + threshold logic, and include in final output monitoring.</span>
+        </li>
       </ul>
+
+      <p style="margin-top:1rem; font-size:.85rem; color:#6b7280;">⚠️ Also update the Gantt chart in <code>initial-design.html</code> to reflect the filter delay and revised calibration timeline.</p>
     </div>
 
     <div class="footer">
@@ -73,7 +248,7 @@
       <div>© <span id="year"></span></div>
     </div>
   </main>
-
   <script src="script.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
