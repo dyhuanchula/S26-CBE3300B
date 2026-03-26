@@ -526,12 +526,111 @@
           </span>
         </li>
       </ul>
+<div class="card">
+<h2>6) Timeline + Project Management (Gantt + Milestones)</h2>
 
-      <p class="subsection-note" style="margin-top: 1rem;">
-        Also update the Gantt chart in <code>initial-design.html</code> to reflect the filter delay, mesh redesign, and revised calibration timeline.
-      </p>
-    </div>
+<h3>Milestone Summary</h3>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Milestone</th><th>Due Date</th><th>Points</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr><td>Preliminary Design Report</td><td>Week 2</td><td>100 pts (10%)</td><td>Complete</td></tr>
+<tr><td>Initial Design Presentation</td><td>Week 4</td><td>100 pts (10%)</td><td>Complete</td></tr>
+<tr><td>Demo 1: Initial Prototype</td><td>Week 7</td><td>125 pts (12.5%)</td><td>Complete</td></tr>
+<tr><td>Demo 2: Intermediate Prototype</td><td>Week 10</td><td>125 pts (12.5%)</td><td>Planned</td></tr>
+<tr><td>Demo 3: MVP</td><td>Week 13</td><td>150 pts (15%)</td><td>Planned</td></tr>
+<tr><td>Final Report</td><td>Week 17</td><td>225 pts (22.5%)</td><td>Planned</td></tr>
+<tr><td>Final Demonstration</td><td>Week 17</td><td>125 pts (12.5%)</td><td>Planned</td></tr>
+<tr><td><strong>Total</strong></td><td></td><td><strong>1000 pts</strong></td><td></td></tr>
+</tbody>
+</table>
+</div>
 
+<h3>Gantt Chart (Semester Plan — update weekly)</h3>
+<p class="small">
+This chart has been updated so all work through Week 7 is marked complete.
+</p>
+
+<div style="overflow-x:auto;">
+<table class="gantt">
+<thead>
+<tr>
+  <th style="min-width:240px;">Task</th>
+  <th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th>
+  <th>W10</th><th>W11</th><th>W12</th><th>W13</th><th>W14</th><th>W15</th><th>W16</th><th>W17</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Preliminary Design (report + block diagram)</strong></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td></td><td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Initial Design (market research + SWOT + slides)</strong></td>
+  <td></td><td></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Component testing (sensor + mesh + pump)</strong></td>
+  <td></td><td></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 1 build + proof of concept</strong></td>
+  <td></td><td></td><td></td><td></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td><span class="bar done"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 2 integration (valves + control + logging)</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Demo 3 enclosure + robustness</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><strong>Final report + final demo prep</strong></td>
+  <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+  <td><span class="bar planned"></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="small">
+Legend:
+<span class="legend done">Done</span>
+<span class="legend active">Active</span>
+<span class="legend planned">Planned</span>
+</p>
+</div>
     <div class="footer">
       <hr />
       <div>© <span id="year"></span></div>
