@@ -243,12 +243,505 @@
       <p style="margin-top:1rem; font-size:.85rem; color:#6b7280;">⚠️ Also update the Gantt chart in <code>initial-design.html</code> to reflect the filter delay and revised calibration timeline.</p>
     </div>
 
+    <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 1 — Initial Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Demo 1 page-specific enhancements */
+    .kpi { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      padding: .35rem 0;
+      border-bottom: 1px solid var(--border, #e5e7eb);
+      font-size: .95rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+
+    .steps { list-style: none; padding: 0; margin: 0; }
+    .steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: .7rem;
+      padding: .5rem 0;
+      border-bottom: 1px solid var(--border, #e5e7eb);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps .step-label { flex: 1; font-size: .95rem; }
+
+    .tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: .15rem .45rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+    .tag.blocker  { background: #fee2e2; color: #b91c1c; }
+    .tag.hardware { background: #fef9c3; color: #854d0e; }
+    .tag.software { background: #dbeafe; color: #1d4ed8; }
+    .tag.integration { background: #ede9fe; color: #6d28d9; }
+    .tag.sensor { background: #d1fae5; color: #065f46; }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .media-slot {
+      border: 1px solid var(--border, #d1d5db);
+      border-radius: 10px;
+      padding: .75rem;
+      background: #f9fafb;
+      text-align: center;
+      color: #374151;
+      font-size: .85rem;
+    }
+
+    .media-slot img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: .55rem;
+      object-fit: cover;
+    }
+
+    .media-slot .media-icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: .4rem;
+    }
+
+    .media-slot code {
+      font-size: .72rem;
+      background: #f3f4f6;
+      padding: .1rem .3rem;
+      border-radius: 4px;
+      color: #6b7280;
+      word-break: break-all;
+      display: inline-block;
+      margin-top: .35rem;
+    }
+
+    .callout {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 0 8px 8px 0;
+      padding: .75rem 1rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+      color: #7c2d12;
+    }
+    .callout strong { display: block; margin-bottom: .2rem; }
+
+    .switch-note {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      border-radius: 0 8px 8px 0;
+      padding: .75rem 1rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+      color: #14532d;
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: .75rem;
+    }
+    .principle-card {
+      background: #f8fafc;
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .principle-card h4 {
+      margin: 0 0 .4rem;
+      font-size: .9rem;
+      color: #1e40af;
+    }
+    .principle-card p {
+      margin: 0;
+      font-size: .85rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .subsection-note {
+      font-size: .9rem;
+      color: #374151;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">Demo 1</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
+    <h1>Demo 1 — Initial Prototype</h1>
+    <p>Proof of concept: basic purification, turbidity-based pump control, and early tank-level sensing.</p>
+  </header>
+
+  <main class="wrap">
+
+    <!-- 1. Overview -->
+    <div class="card">
+      <h2>Overview</h2>
+      <p class="subsection-note">
+        Our initial prototype demonstrates the core proof of concept for the adaptive water purifier.
+        At this stage, we have a working turbidity sensor connected to the Arduino, a peristaltic pump
+        that responds to control logic, an ultrasonic sensor circuit assembled for future water-level
+        monitoring, and an initial 3-D printed tank / housing concept. This milestone shows that the
+        design is progressing from concept into a functional prototype that targets the minimum design
+        specifications.
+      </p>
+      <p class="subsection-note">
+        The current prototype is centered around turbidity-based feedback control. If the water remains
+        too turbid, the pump continues operating so water can be recirculated. Once turbidity decreases
+        below a threshold, the system is intended to stop or redirect flow. We also identified an important
+        hardware issue during testing: the current filter / mesh configuration is too large, so the next
+        iteration will use a smaller mesh to better retain fine particulate matter and make the turbidity
+        response more meaningful.
+      </p>
+    </div>
+
+    <!-- 2. Prototype Status -->
+    <div class="card">
+      <h2>Prototype Functionality</h2>
+      <div class="kpi">
+        <span class="pill good">✓ Working: 3</span>
+        <span class="pill warn">⚠ Partial / Pending: 3</span>
+        <span class="pill bad">✗ Not Built Yet: 3</span>
+      </div>
+
+      <ul class="checklist">
+        <li><span class="icon">✅</span><span><strong>Turbidity sensor</strong> — reads and logs values; calibration curve established for initial material (milk baseline).</span></li>
+        <li><span class="icon">✅</span><span><strong>Peristaltic pump</strong> — switches on/off on command to drive flow through the system.</span></li>
+        <li><span class="icon">✅</span><span><strong>Filter housing</strong> — 3-D printed enclosure fabricated and test-fitted.</span></li>
+
+        <li><span class="icon">⚠️</span><span><strong>Sensor calibration</strong> — needs full redo for diatomaceous earth (DE) suspension; milk-based curve no longer valid after material switch.</span></li>
+        <li><span class="icon">⚠️</span><span><strong>Filter cartridge / mesh size</strong> — current ordered unit is oversized for the housing, and the existing filter / mesh configuration is too large for the particulate sizes being tested. A smaller replacement is needed so the system can seal properly and better capture fine suspended contaminants.</span></li>
+        <li><span class="icon">⚠️</span><span><strong>Serial monitor during pump operation</strong> — USB serial is unavailable while the pump is active (shared power / interrupt conflict), though the Arduino sketch continues to execute. A data-logging workaround is still needed.</span></li>
+
+        <li><span class="icon">❌</span><span><strong>Valve / flow-diversion system</strong> — directional valves to redirect flow once effluent is deemed clean are not yet installed.</span></li>
+        <li><span class="icon">❌</span><span><strong>Integrated single housing</strong> — pump, filter, and electronics are still separate; full enclosure and plumbing integration are pending.</span></li>
+        <li><span class="icon">❌</span><span><strong>pH sensor</strong> — final-output water quality sensor has not yet been sourced or wired.</span></li>
+      </ul>
+    </div>
+
+    <!-- 3. ChemE Principles -->
+    <div class="card">
+      <h2>Application of ChemE Principles</h2>
+
+      <div class="principle-grid">
+        <div class="principle-card">
+          <h4>Solid–Liquid Separation (Filtration)</h4>
+          <p>
+            Suspended particulates such as diatomaceous earth (~5–50 µm) are removed by depth or surface filtration.
+            The pressure drop across the filter bed, described by Darcy’s law (ΔP = μQL / kA), governs flux. A clogged,
+            oversized, or poorly fitted cartridge severely limits throughput and can create bypass flow.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Mass Transfer — Turbidity as Surrogate</h4>
+          <p>
+            Turbidity correlates with suspended-solids concentration through light scattering / attenuation. The turbidity
+            sensor measures transmitted or scattered light intensity, and calibration maps voltage to a turbidity metric
+            so the controller can infer water quality in real time.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Residence Time &amp; Flow Rate</h4>
+          <p>
+            Effective clarification requires enough contact time inside the filter. Residence time is approximated by
+            τ = V / Q, where the peristaltic pump sets Q. Filter volume, pressure differential, and flow resistance
+            together determine whether residence time is long enough for target particle removal.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Feedback Control Loop</h4>
+          <p>
+            The control strategy reads turbidity, compares it to a setpoint, and uses that signal to decide whether water
+            should continue recirculating or be allowed to move downstream. This is an on/off feedback loop analogous to
+            a recycle process in chemical engineering.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Ultrasonic Level Detection</h4>
+          <p>
+            The HC-SR04 ultrasonic sensor is being integrated to measure the distance from the top of the final tank to
+            the water surface. This will allow the system to detect when the final tank is full and notify the user to
+            empty it and restart the purification cycle.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Current Performance Limitation</strong>
+        The oversized filter cartridge means the housing does not seal properly, which can allow bypass flow around the
+        media. In addition, the current mesh is too large for the particulates being tested. Together, these issues
+        inflate apparent purification performance and make calibration and filtration data unreliable until the correctly
+        sized cartridge and smaller filter mesh are used.
+      </div>
+    </div>
+
+    <!-- 4. Material Switch -->
+    <div class="card">
+      <h2>Test Material: Milk → Diatomaceous Earth</h2>
+
+      <div class="switch-note">
+        <strong>Why we switched</strong> — Milk particle size is too small to meaningfully test the filter, and milk
+        also goes bad over time. Diatomaceous earth (DE) produces a more reproducible inorganic particulate suspension
+        with better-defined settling behavior, making it a more realistic and stable turbidity test material.
+      </div>
+
+      <ul>
+        <li><strong>Settling test:</strong> DE suspensions were photographed to show visible differences in turbidity and settling over time.</li>
+        <li><strong>Implication:</strong> A new turbidity calibration curve must be generated using DE standards before closed-loop testing can proceed.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Filter Design Update</strong>
+        Testing made it clear that the current filter / mesh opening is too large. The next design iteration will use a
+        smaller mesh so that finer particles are retained more effectively, the filtration path is more realistic, and
+        turbidity readings better reflect actual purification progress.
+      </div>
+
+      <h3 style="margin-top:1.2rem; font-size:1rem;">Hardware &amp; Calibration</h3>
+      <p style="font-size:.85rem; color:#6b7280;">
+        Add files to <code>docs/assets/plots/</code> if needed and replace / update image paths below based on your repo structure.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <img src="Screen Shot 2026-03-26 at 1.20.02 PM.png" alt="Pump and turbidity sensor circuit" />
+          <span>Pump + Turbidity Sensor Circuit</span>
+        </div>
+
+        <div class="media-slot">
+          <img src="Screen Shot 2026-03-26 at 1.28.00 PM.png" alt="Initial tank CAD / 3D printed tank concept" />
+          <span>Initial Tank CAD / Printed Geometry</span>
+        </div>
+
+        <div class="media-slot">
+          <span class="media-icon">📡</span>
+          <span>Ultrasonic Sensor Circuit</span>
+          <code>HC-SR04 Arduino setup</code>
+        </div>
+
+        <div class="media-slot">
+          <span class="media-icon">📈</span>
+          <span>Sensor Calibration Plot</span>
+          <code>plots/sensor-calibration.png</code>
+        </div>
+
+        <div class="media-slot">
+          <span class="media-icon">🧪</span>
+          <span>Turbidity — Unsettled vs. Settled</span>
+          <code>plots/turbidity-comparison.jpg</code>
+        </div>
+
+        <div class="media-slot">
+          <span class="media-icon">🧪</span>
+          <span>Turbidity — Before vs. After Filter</span>
+          <code>plots/turbidity-before-after.jpg</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Circuit / Assembly -->
+    <div class="card">
+      <h2>Circuit Integration and Initial Assembly</h2>
+      <p class="subsection-note">
+        The current prototype includes a working turbidity-sensor-to-pump control loop. The turbidity sensor is housed
+        in the black inline assembly attached to the tubing and connected to the Arduino. The pump is controlled through
+        the Arduino using threshold-based logic, so when turbidity readings indicate that water is still contaminated,
+        the pump remains on and continues recirculating fluid. When the reading drops below the chosen threshold, the
+        pump can stop or the system can eventually redirect flow.
+      </p>
+      <p class="subsection-note">
+        The ultrasonic sensor was wired separately using a standard HC-SR04 setup and has been tested as a standalone
+        subsystem. In future iterations, it will be mounted above the final tank so the system can detect when the water
+        level reaches the sensor threshold and tell the user to empty the tank and restart purification.
+      </p>
+      <p class="subsection-note">
+        The 3-D printed tank prototype provides an early physical basis for integrating the pump, tubing, sensors, and
+        future pinch valves into a single flow path. At this stage, full tank-to-sensor-to-pump integration is still
+        being developed.
+      </p>
+    </div>
+
+    <!-- 6. Performance Data -->
+    <div class="card">
+      <h2>Testing + Initial Performance Data</h2>
+
+      <p style="font-size:.9rem; color:#374151; margin-bottom:.85rem;">
+        The turbidity sensor is integrated with the pump through Arduino-based threshold control. When turbidity readings
+        indicate that the water is still contaminated, the pump remains active to recirculate fluid through the system.
+        When turbidity falls below a defined threshold, the pump is intended to shut off. This demonstrates a basic
+        working feedback loop between sensing and actuation, even though full closed-loop filtration testing is still
+        pending hardware updates.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Method</th>
+            <th>Result</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sensor calibration (milk)</td>
+            <td>Known dilutions → voltage reading</td>
+            <td>Curve obtained</td>
+            <td>Deprecated; DE calibration required</td>
+          </tr>
+          <tr>
+            <td>Pump on/off operation</td>
+            <td>Manual activation via Arduino</td>
+            <td>✓ Functional</td>
+            <td>Pump switches on/off only; no flow rate modulation</td>
+          </tr>
+          <tr>
+            <td>DE settling rate</td>
+            <td>Visual + sensor at timed intervals</td>
+            <td>Qualitative ✓</td>
+            <td>Quantitative values to be logged once calibration is redone</td>
+          </tr>
+          <tr>
+            <td>Influent vs. effluent turbidity</td>
+            <td>Sensor before/after filter</td>
+            <td>Pending</td>
+            <td>Blocked until correct filter cartridge and smaller mesh are installed</td>
+          </tr>
+          <tr>
+            <td>TDS reduction</td>
+            <td>TDS meter</td>
+            <td>Pending</td>
+            <td>Will be measured once the system is fully sealed and running</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7. Next Steps -->
+    <div class="card">
+      <h2>Project Management + Next Steps</h2>
+      <p style="font-size:.85rem; color:#6b7280; margin-bottom:.75rem;">
+        Action items before Demo 2, in rough priority order.
+      </p>
+
+      <ul class="steps">
+        <li>
+          <span class="tag blocker">Blocker</span>
+          <span class="step-label">
+            <strong>Wait for correctly-sized filter cartridge</strong> — the system cannot be fully sealed or
+            performance-tested until the replacement arrives. Test fit should be performed as soon as it is received.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag hardware">Hardware</span>
+          <span class="step-label">
+            <strong>Reduce filter mesh size</strong> — the current mesh is too large for the fine particulate being
+            tested. A smaller mesh is needed to improve contaminant retention and make turbidity-based control more meaningful.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Redo turbidity calibration with diatomaceous earth</strong> — prepare DE standards at known
+            concentrations, record sensor output, generate a new calibration curve, and update firmware constants.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag software">Software</span>
+          <span class="step-label">
+            <strong>Fix serial monitor conflict during pump operation</strong> — investigate shared-ground or power-rail
+            noise causing USB disconnect. Consider SD-card or alternate logging methods so data is captured while the pump runs.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag hardware">Hardware</span>
+          <span class="step-label">
+            <strong>Design and install valve / flow-diversion system</strong> — add pinch, solenoid, or servo valves to
+            redirect flow to either recirculation or clean output once water quality reaches the target threshold.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag integration">Integration</span>
+          <span class="step-label">
+            <strong>Consolidate all components into one housing</strong> — route tubing, mount pump and electronics,
+            seal filter cartridge, and perform leak testing before additional sensor trials.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Integrate ultrasonic sensor into tank</strong> — mount the HC-SR04 above the final tank and use it
+            to detect when the tank is full so the user can be notified to empty it and restart the purifier.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Source and integrate pH sensor</strong> — select a compatible pH probe, wire it to the Arduino,
+            and include it in final output monitoring.
+          </span>
+        </li>
+      </ul>
+
+      <p style="margin-top:1rem; font-size:.85rem; color:#6b7280;">
+        ⚠️ Also update the Gantt chart in <code>initial-design.html</code> to reflect the filter delay, mesh redesign,
+        and revised calibration timeline.
+      </p>
+    </div>
+
     <div class="footer">
       <hr />
       <div>© <span id="year"></span></div>
     </div>
   </main>
+
   <script src="script.js"></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
