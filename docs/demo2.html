@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 2 — Intermediate Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Page-specific styling for readability on dark / gradient backgrounds */
+
+    .card,
+    .card p,
+    .card li,
+    .card td,
+    .card th,
+    .card span,
+    .card div {
+      color: #e5e7eb;
+    }
+
+    .card h2,
+    .card h3,
+    .card h4,
+    .card strong,
+    table th {
+      color: #f8fafc !important;
+    }
+
+    .subsection-note,
+    .principle-card p,
+    .steps .step-label,
+    .checklist li span,
+    .switch-note,
+    .callout,
+    table td,
+    .plain-list li {
+      color: #cbd5e1 !important;
+    }
+
+    .kpi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .checklist .icon {
+      width: 1.4rem;
+      flex-shrink: 0;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-top: 0.02rem;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .steps li:last-child {
+      border-bottom: none;
+    }
+
+    .steps .step-label {
+      flex: 1;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .tag.blocker  { background: #7f1d1d; color: #fecaca; }
+    .tag.hardware { background: #78350f; color: #fde68a; }
+    .tag.software { background: #1e3a8a; color: #bfdbfe; }
+    .tag.integration { background: #4c1d95; color: #ddd6fe; }
+    .tag.sensor { background: #064e3b; color: #a7f3d0; }
+    .tag.testing { background: #713f12; color: #fef08a; }
+
+    .callout {
+      background: rgba(249,115,22,0.12);
+      border-left: 4px solid #fb923c;
+      border-radius: 0 8px 8px 0;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+      color: #fed7aa !important;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: #fff7ed !important;
+    }
+
+    .callout-blue {
+      background: rgba(59,130,246,0.12);
+      border-left: 4px solid #60a5fa;
+      border-radius: 0 8px 8px 0;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+      color: #bfdbfe !important;
+    }
+
+    .callout-blue strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: #eff6ff !important;
+    }
+
+    .switch-note {
+      background: rgba(34,197,94,0.12);
+      border-left: 4px solid #4ade80;
+      border-radius: 0 8px 8px 0;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+      color: #bbf7d0 !important;
+    }
+
+    .switch-note strong {
+      color: #f0fdf4 !important;
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .principle-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .principle-card h4 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+      color: #dbeafe !important;
+    }
+
+    .principle-card p {
+      margin: 0;
+      font-size: 0.87rem;
+      line-height: 1.6;
+    }
+
+    .subsection-note {
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    .plain-list {
+      padding-left: 1.2rem;
+      margin-top: 0.6rem;
+    }
+
+    .plain-list li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8rem;
+    }
+
+    table thead th {
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.16);
+      padding: 0.85rem 1rem 0.85rem 0;
+      color: #f8fafc !important;
+      letter-spacing: 0.03em;
+    }
+
+    table tbody td {
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 0.95rem 1rem 0.95rem 0;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .media-slot {
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: rgba(255,255,255,0.03);
+      text-align: center;
+    }
+
+    .media-slot h4 {
+      margin: 0 0 0.65rem;
+      font-size: 0.9rem;
+      color: #f8fafc !important;
+    }
+
+    .media-slot img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin: 0 auto 0.65rem auto;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .media-slot p {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: #cbd5e1 !important;
+    }
+
+    .data-table-scroll {
+      overflow-x: auto;
+      margin-top: 0.8rem;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .data-table thead th {
+      text-align: center;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+      padding: 0.6rem 0.5rem;
+      color: #f8fafc !important;
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+    }
+
+    .data-table tbody td {
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 0.55rem 0.5rem;
+      color: #cbd5e1 !important;
+    }
+
+    .data-table tbody tr:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .data-table .row-label {
+      text-align: left;
+      font-weight: 600;
+      color: #e5e7eb !important;
+      white-space: nowrap;
+    }
+
+    .data-table .avg-col {
+      color: #93c5fd !important;
+      font-weight: 600;
+    }
+
+    .data-table .change-col {
+      font-weight: 700;
+    }
+
+    .change-positive { color: #4ade80 !important; }
+    .change-neutral { color: #fbbf24 !important; }
+    .change-na { color: #6b7280 !important; }
+
+    .particle-diagram {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    .particle-diagram img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .particle-diagram p {
+      font-size: 0.84rem;
+      color: #94a3b8 !important;
+      margin-top: 0.6rem;
+    }
+
+    .filter-spectrum {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 1.2rem 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.82rem;
+    }
+
+    .filter-spectrum .band {
+      flex: 1;
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .filter-spectrum .band strong {
+      display: block;
+      font-size: 0.78rem;
+      color: #f8fafc !important;
+    }
+
+    .filter-spectrum .band span {
+      font-size: 0.72rem;
+    }
+
+    .band-100 { background: rgba(239,68,68,0.2); color: #fca5a5 !important; }
+    .band-100 span { color: #fca5a5 !important; }
+    .band-50 { background: rgba(251,191,36,0.2); color: #fde68a !important; }
+    .band-50 span { color: #fde68a !important; }
+    .band-20 { background: rgba(34,197,94,0.2); color: #86efac !important; }
+    .band-20 span { color: #86efac !important; }
+    .band-2 { background: rgba(59,130,246,0.2); color: #93c5fd !important; }
+    .band-2 span { color: #93c5fd !important; }
+
+    .footer div,
+    .footer span {
+      color: #cbd5e1 !important;
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">Demo 2</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
+    <h1>Demo 2 — Intermediate Prototype</h1>
+    <p>Progress on filtration testing, pinch valve flow control, and standalone housing integration.</p>
+  </header>
+
+  <main class="wrap">
+
+    <div class="card">
+      <h2>Overview</h2>
+      <p class="subsection-note">
+        Demo 2 marks a transition from proof-of-concept to a more integrated and testable prototype. The primary focus areas since Demo 1 were: designing and building pinch valves to redirect water flow when cleaner water is detected, developing a new standalone housing to consolidate all components into a single unit, and extensive testing of the model contaminant (diatomaceous earth) across multiple filter configurations to characterize filtration performance and inform future design choices.
+      </p>
+      <p class="subsection-note">
+        While the turbidity-based feedback loop from Demo 1 remains functional, much of the effort this cycle went into understanding the filtration problem itself: what filter mesh sizes actually capture the DE particles, how concentration and number of passes affect turbidity signal, and what the practical limits are of mesh-based filtration at ambient pressure. These findings are shaping the path toward a finalized filter configuration for the remaining demos.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Prototype Functionality</h2>
+      <div class="kpi">
+        <span class="pill good">Working: 5</span>
+        <span class="pill warn">Partial / In Progress: 3</span>
+        <span class="pill bad">Not Built Yet: 2</span>
+      </div>
+
+      <ul class="checklist">
+        <li><span class="icon">1.</span><span><strong>Turbidity sensor</strong> — reads and logs values; calibration curve established for diatomaceous earth suspensions.</span></li>
+        <li><span class="icon">2.</span><span><strong>Peristaltic pump</strong> — switches on/off on command; drives flow through the system reliably.</span></li>
+        <li><span class="icon">3.</span><span><strong>Filter housing</strong> — 3-D printed enclosure fabricated, test-fitted, and integrated with tubing.</span></li>
+        <li><span class="icon">4.</span><span><strong>Pinch valve flow diversion</strong> — CAD designed and built; valves redirect flow between recirculation and clean output paths based on turbidity threshold.</span></li>
+        <li><span class="icon">5.</span><span><strong>Standalone housing</strong> — new consolidated enclosure designed in CAD to hold pump, electronics, filter, and tubing in a single unit.</span></li>
+
+        <li><span class="icon">6.</span><span><strong>Filter mesh finalization</strong> — multiple mesh sizes tested (100 µm, 50 µm, ~20 µm coffee filter, 2.5 µm Whatman Grade 5); none yet provide the ideal balance of particle capture and flow rate at ambient pressure. Further testing required.</span></li>
+        <li><span class="icon">7.</span><span><strong>Model contaminant preparation</strong> — centrifuged DE being evaluated as an alternative; particle size distribution investigation ongoing.</span></li>
+        <li><span class="icon">8.</span><span><strong>Ultrasonic level sensor</strong> — wired and tested standalone; not yet mounted in housing.</span></li>
+
+        <li><span class="icon">9.</span><span><strong>Display screen</strong> — not yet sourced or integrated; intended to show real-time turbidity, pH/TDS, and system status to the user.</span></li>
+        <li><span class="icon">10.</span><span><strong>pH / TDS sensor</strong> — not yet sourced or wired; will provide secondary water quality readings alongside turbidity.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Hardware Progress: Pinch Valves</h2>
+      <p class="subsection-note">
+        A key advancement in Demo 2 is the design and construction of pinch valves that allow the system to change the direction of water flow. When the turbidity sensor indicates that the water has been sufficiently cleaned (below threshold), the valve actuates to redirect flow from the recirculation loop into the clean output path. This is a critical piece of the adaptive control scheme: the system can now make a decision about where to send water rather than simply turning the pump on or off.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Pinch Valve CAD</h4>
+          <!-- INSERT IMAGE: pinch valve CAD rendering -->
+          <img src="PINCH_VALVE_CAD_IMAGE.png" alt="Pinch valve CAD model for flow diversion" />
+          <p>
+            CAD model of the pinch valve assembly used to redirect flow between recirculation and clean output paths.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Hardware Progress: Standalone Housing</h2>
+      <p class="subsection-note">
+        The second major hardware development is a new consolidated housing designed to hold the pump, Arduino, turbidity sensor, filter assembly, pinch valves, and tubing routing in a single standalone unit. This replaces the loose breadboard-and-tubing setup from Demo 1 and moves the prototype closer to a self-contained device. The housing was designed in CAD and is being 3-D printed.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Standalone Housing CAD</h4>
+          <!-- INSERT IMAGE: standalone housing CAD rendering -->
+          <img src="STANDALONE_HOUSING_CAD_IMAGE.png" alt="Standalone housing CAD model" />
+          <p>
+            CAD model of the new standalone enclosure consolidating all system components into a single unit.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Application of ChemE Principles</h2>
+
+      <div class="principle-grid">
+        <div class="principle-card">
+          <h4>Particle Size Distribution and Filtration</h4>
+          <p>
+            The effectiveness of any filter is fundamentally governed by the relationship between the filter's pore size and the particle size distribution (PSD) of the contaminant. Diatomaceous earth is composed of fossilized diatom frustules, and published literature on similar commercial DE products shows that the PSD tends to be more uniform than might be expected from a natural material. One might hypothesize that DE sourced from different diatom species or geological deposits would exhibit multiple peaks in the size distribution corresponding to common frustule morphologies, but measured distributions often show a relatively tight, single-peaked curve. Whether our specific DE product follows this pattern or has a broader, multi-modal distribution is an open question that affects how we think about filtration efficiency at each mesh size.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Filter Cutoff Spectrum</h4>
+          <p>
+            We tested four filter media spanning roughly two orders of magnitude in pore size. The 100 µm mesh is far too coarse to capture any meaningful fraction of DE particles and produced no measurable turbidity change. The 50 µm mesh sits closer to the upper end of the DE size range and captures some fraction of particles, producing a modest signal change at high concentrations. The ~20 µm coffee filter approaches the median particle size and should capture a larger fraction, but flow rate is noticeably reduced. The 2.5 µm Whatman Grade 5 filter would theoretically capture nearly all DE particles, but it is so fine that even clean water cannot pass through at ambient pressure, making it impractical without a pressurized system.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Cake Filtration and Multi-Pass Dynamics</h4>
+          <p>
+            A critical filtration mechanism for our system is the formation of a filter cake. On the first pass through a mesh filter, particles larger than the pore openings are physically captured and begin to accumulate on the upstream face of the mesh. This deposited layer of trapped particles effectively reduces the functional pore size of the filter, meaning that on subsequent passes, smaller particles that would have passed through the clean mesh are now captured by the cake layer. This is a well-known phenomenon in cake filtration theory: the cake itself becomes the primary filtering medium. For our system, this means that multi-pass recirculation is not just about repeated exposure to the same filter; each pass incrementally improves the filter's ability to capture finer particles, which is why we expect diminishing but continued improvement in turbidity with additional passes.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Concentration Effects on Detection</h4>
+          <p>
+            The turbidity sensor's ability to detect a change depends on both the absolute concentration of suspended solids and the fractional removal achieved by the filter. At high DE concentrations (2.5% by weight), even a small fractional removal produces a measurable change in light transmission. At low concentrations (0.2% by weight), the same fractional removal produces a much smaller absolute change in sensor voltage, potentially falling within the noise floor of the measurement. This has practical implications for the system's sensitivity and the conditions under which the feedback loop can reliably distinguish filtered from unfiltered water.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Pressure Drop and Flow Rate Trade-off</h4>
+          <p>
+            Darcy's law governs the relationship between pressure drop, flow rate, and filter resistance. As pore size decreases, the hydraulic resistance of the filter medium increases, requiring higher driving pressure to maintain the same volumetric flow rate. Our peristaltic pump operates at essentially ambient pressure, so there is a practical lower bound on filter fineness: below a certain pore size, the pump simply cannot push water through at a useful rate. The 2.5 µm Whatman filter demonstrated this limit clearly. The design challenge is finding a filter pore size that captures enough DE to produce a meaningful turbidity response while still allowing adequate flow at the pressures our pump can deliver.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h4>Feedback Control Loop</h4>
+          <p>
+            The control strategy reads turbidity, compares it to a setpoint, and uses that signal to decide whether water should continue recirculating or be diverted downstream via the pinch valve. With the addition of the pinch valve, this is now a true two-state feedback loop: recirculate or output. The system's ability to make this decision meaningfully depends on the filter producing a detectable turbidity change, which is the central challenge being addressed by the filtration testing.
+          </p>
+        </div>
+      </div>
+
+      <h3>Filter Pore Size Spectrum vs. DE Particle Range</h3>
+      <p class="subsection-note">
+        The diagram below shows where each of the tested filter media falls relative to the expected DE particle size range, illustrating why certain meshes are effective, marginal, or impractical.
+      </p>
+
+      <div class="filter-spectrum">
+        <div class="band band-100">
+          <strong>100 µm mesh</strong>
+          <span>Too coarse; no capture</span>
+        </div>
+        <div class="band band-50">
+          <strong>50 µm mesh</strong>
+          <span>Marginal; captures large tail</span>
+        </div>
+        <div class="band band-20">
+          <strong>~20 µm coffee filter</strong>
+          <span>Near median; reduced flow</span>
+        </div>
+        <div class="band band-2">
+          <strong>2.5 µm Whatman Gr. 5</strong>
+          <span>Full capture; no flow at ambient P</span>
+        </div>
+      </div>
+
+      <div class="particle-diagram">
+        <!-- INSERT IMAGE: DE particle size distribution plot or reference figure -->
+        <img src="DE_PARTICLE_SIZE_DISTRIBUTION.png" alt="Diatomaceous earth particle size distribution" />
+        <p>Published particle size distribution for a commercial DE product similar to the one used in testing. Note the relatively uniform, single-peaked distribution.</p>
+      </div>
+
+      <div class="callout-blue">
+        <strong>Open Question: Our DE's Actual PSD</strong>
+        Published data on similar DE products suggests a fairly uniform size distribution, but the specific product we purchased may differ. We initially hypothesized that the geological and biological origin of DE (fossilized diatoms from different species) would produce a distribution with several distinct peaks corresponding to common frustule sizes. If the actual distribution is tighter and more uniform than expected, it narrows the effective filtration window and makes it harder to find a single mesh size that captures a meaningful fraction without choking flow.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Model Contaminant Testing: Filter Configuration Results</h2>
+
+      <p class="subsection-note">
+        The bulk of the experimental effort for Demo 2 focused on systematically testing different filter configurations with diatomaceous earth suspensions at varying concentrations and pass counts. The goal was to characterize how much turbidity reduction each setup can achieve and whether the sensor can reliably detect those changes. All voltage readings are from the IR turbidity sensor (3 trials per measurement point). The 100 µm mesh was also tested and produced no measurable change; those results are omitted from the tables for brevity.
+      </p>
+
+      <h3>Test 1: Double-Layer 50 µm Mesh, High Concentration (2.5% wt DE)</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1</th>
+              <th>Trial 2</th>
+              <th>Trial 3</th>
+              <th>Average</th>
+              <th>% Change from No Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">No pass (baseline)</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-na">--</td>
+            </tr>
+            <tr>
+              <td class="row-label">1 pass</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-positive">~25%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        At high concentration with double-layer 50 µm mesh, a single pass produced approximately a 25% change in sensor signal, indicating that the mesh is capturing the larger fraction of DE particles. The sensor can reliably detect this magnitude of change.
+      </p>
+
+      <h3>Test 2: Double-Layer 50 µm Mesh, Low Concentration (0.2% wt DE)</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1</th>
+              <th>Trial 2</th>
+              <th>Trial 3</th>
+              <th>Average</th>
+              <th>% Change from No Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">No pass (baseline)</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-na">--</td>
+            </tr>
+            <tr>
+              <td class="row-label">1 pass</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-neutral">No significant change</td>
+            </tr>
+            <tr>
+              <td class="row-label">2 passes</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-neutral">No significant change</td>
+            </tr>
+            <tr>
+              <td class="row-label">3 passes</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-neutral">No significant change</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        At low concentration, even three passes through double-layer 50 µm mesh produced no significant change in sensor signal. This suggests that at 0.2% wt, the absolute amount of material removed per pass is too small to register above the sensor's noise floor, or that the particles remaining in suspension at this concentration are predominantly smaller than the 50 µm cutoff.
+      </p>
+
+      <h3>Test 3: Single-Layer 50 µm Mesh, High Concentration (2.5% wt DE)</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1</th>
+              <th>Trial 2</th>
+              <th>Trial 3</th>
+              <th>Average</th>
+              <th>% Change from No Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">No pass (baseline)</td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td><!-- DATA --></td>
+              <td class="avg-col"><!-- AVG --></td>
+              <td class="change-col change-na">--</td>
+            </tr>
+            <tr>
+              <td class="row-label">1 pass</td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Results pending</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-na">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        Data collection for single-layer 50 µm mesh at high concentration is in progress. Results will be added when available.
+      </p>
+
+      <h3>Test 4: Centrifuged DE Contaminant</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1</th>
+              <th>Trial 2</th>
+              <th>Trial 3</th>
+              <th>Average</th>
+              <th>% Change from No Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">No pass (baseline)</td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Pending filter selection</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-na">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        Centrifuging the DE suspension removes larger particles and concentrates the finer fraction. The filter configuration for this test has not yet been determined. Results will be added as testing continues.
+      </p>
+
+      <h3>Additional Tests (Upcoming)</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1</th>
+              <th>Trial 2</th>
+              <th>Trial 3</th>
+              <th>Average</th>
+              <th>% Change from No Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">TBD configuration</td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Testing in progress</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-na">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        Additional filter configurations and concentrations are being tested. Results will be added as they become available before the demo.
+      </p>
+
+      <div class="callout">
+        <strong>Key Finding: 100 µm Mesh and 2.5 µm Whatman Grade 5</strong>
+        The 100 µm mesh produced no measurable turbidity reduction at any concentration or pass count, confirming that the pore size is far too large relative to the DE particle distribution. On the other end, the Whatman Grade 5 filter (2.5 µm) is fine enough to capture effectively all DE particles, but it does not allow even clean water to pass at ambient pressure, making it impractical for our pump-driven system. These two extremes bracket the useful operating range for our filter design.
+      </p>
+      </div>
+
+      <!-- INSERT: Images from filtration testing, before/after filter photos, etc. -->
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Filtration Test Setup</h4>
+          <!-- INSERT IMAGE -->
+          <img src="FILTRATION_TEST_IMAGE.png" alt="Filtration test setup with DE suspension" />
+          <p>Testing setup for measuring turbidity change across different filter mesh configurations.</p>
+        </div>
+        <div class="media-slot">
+          <h4>Filter Comparison</h4>
+          <!-- INSERT IMAGE -->
+          <img src="FILTER_COMPARISON_IMAGE.png" alt="Comparison of tested filter meshes" />
+          <p>Visual comparison of the filter mesh sizes tested: 100 µm, 50 µm, ~20 µm coffee filter, and 2.5 µm Whatman Grade 5.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Hardware and Prototype Images</h2>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Pump and Turbidity Sensor Circuit</h4>
+          <img src="Screen%20Shot%202026-03-26%20at%201.20.02%20PM.png" alt="Pump and turbidity sensor circuit connected to Arduino" />
+          <p>
+            Arduino, peristaltic pump, tubing, and inline turbidity sensor assembly used for prototype testing (carried over from Demo 1).
+          </p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Pinch Valve Assembly</h4>
+          <!-- INSERT IMAGE: actual pinch valve photo -->
+          <img src="PINCH_VALVE_PHOTO.png" alt="Pinch valve assembly for flow diversion" />
+          <p>
+            Built pinch valve assembly for redirecting water flow between recirculation and clean output paths.
+          </p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Standalone Housing</h4>
+          <!-- INSERT IMAGE: housing photo or additional CAD angle -->
+          <img src="STANDALONE_HOUSING_PHOTO.png" alt="Standalone housing prototype" />
+          <p>
+            New consolidated housing for pump, electronics, filter, and tubing. Designed to make the system self-contained.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Circuit Integration and System Assembly</h2>
+      <p class="subsection-note">
+        The turbidity-sensor-to-pump control loop from Demo 1 remains functional. The main integration work for Demo 2 has been incorporating the pinch valves into the flow path and beginning to route everything into the new housing. The pinch valves are controlled through the Arduino alongside the pump, using the same threshold-based turbidity logic to decide whether to recirculate or divert flow.
+      </p>
+      <p class="subsection-note">
+        The ultrasonic sensor remains wired and tested as a standalone subsystem. It has not yet been physically mounted in the new housing but will be integrated in a future iteration for final-tank water level monitoring.
+      </p>
+      <p class="subsection-note">
+        The serial monitor conflict from Demo 1 (USB disconnect when pump activates due to EMI) has been mitigated through improved grounding, though a fully robust logging solution is still needed for long-duration testing runs.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Testing + Performance Summary</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Method</th>
+            <th>Result</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DE calibration (turbidity sensor)</td>
+            <td>Known DE concentrations to voltage reading</td>
+            <td>Curve obtained</td>
+            <td>Replaced deprecated milk calibration from Demo 1</td>
+          </tr>
+          <tr>
+            <td>100 µm mesh filtration</td>
+            <td>DE suspension, multiple passes</td>
+            <td>No effect</td>
+            <td>Pore size too large relative to DE particle range</td>
+          </tr>
+          <tr>
+            <td>Double 50 µm mesh, 2.5% wt DE</td>
+            <td>Sensor before/after filter, 3 trials</td>
+            <td>~25% signal change after 1 pass</td>
+            <td>Detectable; captures upper tail of PSD</td>
+          </tr>
+          <tr>
+            <td>Double 50 µm mesh, 0.2% wt DE</td>
+            <td>Sensor before/after filter, 3 trials, up to 3 passes</td>
+            <td>No significant change</td>
+            <td>Below sensor detection threshold at this concentration</td>
+          </tr>
+          <tr>
+            <td>Single 50 µm mesh, 2.5% wt DE</td>
+            <td>Sensor before/after filter</td>
+            <td>Pending</td>
+            <td>Data collection in progress</td>
+          </tr>
+          <tr>
+            <td>Whatman Grade 5 (2.5 µm)</td>
+            <td>Flow test at ambient pressure</td>
+            <td>No flow</td>
+            <td>Even clean water cannot pass; impractical without pressurization</td>
+          </tr>
+          <tr>
+            <td>Centrifuged DE</td>
+            <td>TBD</td>
+            <td>Pending</td>
+            <td>Filter selection not yet determined</td>
+          </tr>
+          <tr>
+            <td>Pinch valve actuation</td>
+            <td>Arduino-controlled valve switching</td>
+            <td>Functional</td>
+            <td>Redirects flow between recirculation and output paths</td>
+          </tr>
+          <tr>
+            <td>TDS / pH measurement</td>
+            <td>TDS meter / pH probe</td>
+            <td>Pending</td>
+            <td>Sensors not yet sourced</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Project Management + Next Steps</h2>
+      <p class="subsection-note">
+        Action items before Demo 3, in rough priority order.
+      </p>
+
+      <ul class="steps">
+        <li>
+          <span class="tag blocker">Blocker</span>
+          <span class="step-label">
+            <strong>Finalize filtration configuration</strong> — the model contaminant (DE) is too fine for the current mesh sizes to produce reliable, repeatable turbidity reduction at low concentrations. Need to identify a filter or filter combination (potentially layered mesh + coffee filter, or a custom pore size) that provides both adequate particle capture and sufficient flow rate at ambient pump pressure.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag testing">Testing</span>
+          <span class="step-label">
+            <strong>Complete pending filtration tests</strong> — finish single-layer 50 µm mesh testing, centrifuged DE testing, and any additional configurations identified during ongoing work. Fill in data tables above.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Source and integrate display screen</strong> — add an LCD or OLED display to show real-time turbidity readings, system status (recirculating vs. outputting), and eventual pH/TDS values so the user can monitor the purification process.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Source and integrate pH or TDS sensor</strong> — select a compatible probe, wire it to the Arduino, and include it in final output monitoring to provide a secondary water quality metric alongside turbidity.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag integration">Integration</span>
+          <span class="step-label">
+            <strong>Complete housing assembly</strong> — finish routing tubing, mounting pump, electronics, and pinch valves into the standalone housing. Perform leak testing and verify all components fit and operate correctly within the enclosure.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Mount ultrasonic sensor in housing</strong> — physically integrate the HC-SR04 above the final tank within the new housing for water level monitoring.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag software">Software</span>
+          <span class="step-label">
+            <strong>Implement robust data logging</strong> — finalize a logging solution (SD card or wireless) that works reliably while the pump is active, replacing the serial monitor workaround.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Timeline + Project Management (Gantt + Milestones)</h2>
+
+      <tbody>
+
+      <tr>
+        <td><strong>Preliminary Design (report + block diagram)</strong></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Initial Design (market research + SWOT + slides)</strong></td>
+        <td></td><td></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Component testing (sensor + mesh + pump)</strong></td>
+        <td></td><td></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Demo 1 build + proof of concept</strong></td>
+        <td></td><td></td><td></td><td></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Demo 2 integration (valves + filtration + housing)</strong></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td><span class="bar done"></span></td>
+        <td></td><td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Demo 3 enclosure + robustness</strong></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td>
+        <td><span class="bar planned"></span></td>
+        <td><span class="bar planned"></span></td>
+        <td><span class="bar planned"></span></td>
+        <td></td><td></td>
+      </tr>
+
+      <tr>
+        <td><strong>Final report + final demo prep</strong></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td>
+        <td><span class="bar planned"></span></td>
+        <td><span class="bar planned"></span></td>
+        <td><span class="bar planned"></span></td>
+      </tr>
+
+      </tbody>
+    </div>
+
+    <div class="footer">
+      <hr />
+      <div>&copy; <span id="year"></span></div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
