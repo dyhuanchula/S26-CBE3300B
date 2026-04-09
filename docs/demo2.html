@@ -1020,80 +1020,122 @@
       </ul>
     </div>
 
-    <div class="card">
-      <h2>Timeline + Project Management (Gantt + Milestones)</h2>
+   <div class="card">
+  <h2>Timeline + Project Management (Gantt + Milestones)</h2>
 
+  <h3>Milestone Summary</h3>
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>Milestone</th><th>Due Date</th><th>Points</th><th>Status</th></tr>
+      </thead>
       <tbody>
-
-      <tr>
-        <td><strong>Preliminary Design (report + block diagram)</strong></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td></td><td></td><td></td><td></td><td></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Initial Design (market research + SWOT + slides)</strong></td>
-        <td></td><td></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td></td><td></td><td></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Component testing (sensor + mesh + pump)</strong></td>
-        <td></td><td></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Demo 1 build + proof of concept</strong></td>
-        <td></td><td></td><td></td><td></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Demo 2 integration (valves + filtration + housing)</strong></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td><span class="bar done"></span></td>
-        <td></td><td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Demo 3 enclosure + robustness</strong></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-        <td></td><td></td><td></td>
-        <td><span class="bar planned"></span></td>
-        <td><span class="bar planned"></span></td>
-        <td><span class="bar planned"></span></td>
-        <td></td><td></td>
-      </tr>
-
-      <tr>
-        <td><strong>Final report + final demo prep</strong></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-        <td></td><td></td><td></td><td></td><td></td>
-        <td></td>
-        <td><span class="bar planned"></span></td>
-        <td><span class="bar planned"></span></td>
-        <td><span class="bar planned"></span></td>
-      </tr>
-
+        <tr><td>Preliminary Design Report</td><td>Week 2</td><td>100 pts (10%)</td><td>Complete</td></tr>
+        <tr><td>Initial Design Presentation</td><td>Week 4</td><td>100 pts (10%)</td><td>Complete</td></tr>
+        <tr><td>Demo 1: Initial Prototype</td><td>Week 7</td><td>125 pts (12.5%)</td><td>Complete</td></tr>
+        <tr><td>Demo 2: Intermediate Prototype</td><td>Week 10</td><td>125 pts (12.5%)</td><td>In Progress</td></tr>
+        <tr><td>Demo 3: MVP</td><td>Week 13</td><td>150 pts (15%)</td><td>Planned</td></tr>
+        <tr><td>Final Report</td><td>Week 17</td><td>225 pts (22.5%)</td><td>Planned</td></tr>
+        <tr><td>Final Demonstration</td><td>Week 17</td><td>125 pts (12.5%)</td><td>Planned</td></tr>
+        <tr><td><strong>Total</strong></td><td></td><td><strong>1000 pts</strong></td><td></td></tr>
       </tbody>
-    </div>
+    </table>
+  </div>
+
+  <h3>Gantt Chart (Semester Plan — update weekly)</h3>
+  <p class="subsection-note">
+    This chart reflects completed work through Demo 1 and current progress on Demo 2 integration, filtration testing, housing development, and valve implementation.
+  </p>
+
+  <div style="overflow-x:auto;">
+    <table class="gantt">
+      <thead>
+        <tr>
+          <th style="min-width:240px;">Task</th>
+          <th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th>
+          <th>W10</th><th>W11</th><th>W12</th><th>W13</th><th>W14</th><th>W15</th><th>W16</th><th>W17</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Preliminary Design (report + block diagram)</strong></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Initial Design (market research + SWOT + slides)</strong></td>
+          <td></td><td></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td></td><td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Component testing (sensor + mesh + pump)</strong></td>
+          <td></td><td></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar active"></span></td>
+          <td><span class="bar active"></span></td>
+          <td><span class="bar active"></span></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Demo 1 build + proof of concept</strong></td>
+          <td></td><td></td><td></td><td></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td><span class="bar done"></span></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Demo 2 integration (valves + filtration + housing)</strong></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td><span class="bar active"></span></td>
+          <td><span class="bar active"></span></td>
+          <td><span class="bar active"></span></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Demo 3 enclosure + robustness</strong></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td>
+          <td><span class="bar planned"></span></td>
+          <td><span class="bar planned"></span></td>
+          <td><span class="bar planned"></span></td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+
+        <tr>
+          <td><strong>Final report + final demo prep</strong></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td><span class="bar planned"></span></td>
+          <td><span class="bar planned"></span></td>
+          <td><span class="bar planned"></span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="subsection-note" style="margin-top: 0.85rem;">
+    Legend:
+    <span class="legend done">Done</span>
+    <span class="legend active">Active</span>
+    <span class="legend planned">Planned</span>
+  </p>
+</div>
 
     <div class="footer">
       <hr />
