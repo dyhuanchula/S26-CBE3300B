@@ -556,7 +556,7 @@
       </div>
     </div>
 
-    <div class="card">
+     <div class="card">
       <h2>Model Contaminant Testing: Filter Configuration Results</h2>
 
       <p class="subsection-note">
@@ -564,115 +564,149 @@
       </p>
 
       <h3>Test 1: Double-Layer 50 µm Mesh, High Concentration (2.5% wt DE)</h3>
+      <p class="subsection-note" style="margin-bottom:0.4rem;">25 g DE in 1000 g water (ratio 0.025).</p>
       <div class="data-table-scroll">
         <table class="data-table">
           <thead>
             <tr>
               <th></th>
-              <th>Trial 1</th>
-              <th>Trial 2</th>
-              <th>Trial 3</th>
-              <th>Average</th>
-              <th>% Change from No Pass</th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="row-label">No pass (baseline)</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
+              <td>&minus;0.122</td>
+              <td>&minus;0.117</td>
+              <td>&minus;0.117</td>
+              <td class="avg-col">&minus;0.1187</td>
               <td class="change-col change-na">--</td>
             </tr>
             <tr>
               <td class="row-label">1 pass</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
-              <td class="change-col change-positive">~25%</td>
+              <td>&minus;0.0928</td>
+              <td>&minus;0.0879</td>
+              <td>&minus;0.0879</td>
+              <td class="avg-col">&minus;0.0895</td>
+              <td class="change-col change-positive">24.6%</td>
             </tr>
           </tbody>
         </table>
       </div>
       <p class="subsection-note" style="margin-top:0.6rem;">
-        At high concentration with double-layer 50 µm mesh, a single pass produced approximately a 25% change in sensor signal, indicating that the mesh is capturing the larger fraction of DE particles. The sensor can reliably detect this magnitude of change.
+        At high concentration with double-layer 50 µm mesh, a single pass produced a 24.6% reduction in signal magnitude, indicating that the mesh is capturing the larger fraction of DE particles. The sensor can reliably detect this magnitude of change. The voltage becomes less negative after filtering, consistent with reduced light attenuation from lower particle concentration.
       </p>
 
       <h3>Test 2: Double-Layer 50 µm Mesh, Low Concentration (0.2% wt DE)</h3>
+      <p class="subsection-note" style="margin-bottom:0.4rem;">0.5 g DE in 250 g water (ratio 0.002).</p>
       <div class="data-table-scroll">
         <table class="data-table">
           <thead>
             <tr>
               <th></th>
-              <th>Trial 1</th>
-              <th>Trial 2</th>
-              <th>Trial 3</th>
-              <th>Average</th>
-              <th>% Change from No Pass</th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="row-label">No pass (baseline)</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
+              <td>&minus;0.19062</td>
+              <td>&minus;0.1955</td>
+              <td>&minus;0.19062</td>
+              <td class="avg-col">&minus;0.19225</td>
               <td class="change-col change-na">--</td>
             </tr>
             <tr>
               <td class="row-label">1 pass</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
-              <td class="change-col change-neutral">No significant change</td>
+              <td>&minus;0.19062</td>
+              <td>&minus;0.19062</td>
+              <td>&minus;0.1955</td>
+              <td class="avg-col">&minus;0.19225</td>
+              <td class="change-col change-neutral">0.0%</td>
             </tr>
             <tr>
               <td class="row-label">2 passes</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
-              <td class="change-col change-neutral">No significant change</td>
+              <td>&minus;0.1955</td>
+              <td>&minus;0.1955</td>
+              <td>&minus;0.20039</td>
+              <td class="avg-col">&minus;0.19713</td>
+              <td class="change-col change-neutral">&minus;2.5%</td>
             </tr>
             <tr>
               <td class="row-label">3 passes</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
-              <td class="change-col change-neutral">No significant change</td>
+              <td>&minus;0.21017</td>
+              <td>&minus;0.20039</td>
+              <td>&minus;0.1955</td>
+              <td class="avg-col">&minus;0.20202</td>
+              <td class="change-col change-neutral">&minus;5.1%</td>
             </tr>
           </tbody>
         </table>
       </div>
       <p class="subsection-note" style="margin-top:0.6rem;">
-        At low concentration, even three passes through double-layer 50 µm mesh produced no significant change in sensor signal. This suggests that at 0.2% wt, the absolute amount of material removed per pass is too small to register above the sensor's noise floor, or that the particles remaining in suspension at this concentration are predominantly smaller than the 50 µm cutoff.
+        At low concentration, up to three passes through double-layer 50 µm mesh produced no meaningful improvement. The signal actually drifts slightly more negative with additional passes, which is likely sensor noise or minor settling effects rather than a real increase in turbidity. The key takeaway is that at 0.2% wt, the absolute amount of material being removed per pass (if any) is too small to register above the noise floor of the measurement, or the particles remaining in suspension are predominantly smaller than the 50 µm cutoff.
       </p>
 
-      <h3>Test 3: Single-Layer 50 µm Mesh, High Concentration (2.5% wt DE)</h3>
+      <h3>Test 3: Double-Layer 50 µm Mesh, ~1% wt DE</h3>
+      <p class="subsection-note" style="margin-bottom:0.4rem;">1.01 g DE in 100 g water (ratio 0.0101).</p>
       <div class="data-table-scroll">
         <table class="data-table">
           <thead>
             <tr>
               <th></th>
-              <th>Trial 1</th>
-              <th>Trial 2</th>
-              <th>Trial 3</th>
-              <th>Average</th>
-              <th>% Change from No Pass</th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="row-label">No pass (baseline)</td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td><!-- DATA --></td>
-              <td class="avg-col"><!-- AVG --></td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Not yet measured</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-na">--</td>
+            </tr>
+            <tr>
+              <td class="row-label">1 pass</td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Not yet measured</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-neutral">No clear difference</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        At ~1% wt DE, preliminary observations suggest no clear difference in turbidity after filtering through double-layer 50 µm mesh. Quantitative voltage data has not yet been collected. This concentration sits between the 2.5% and 0.2% tests and will help determine whether the sensor detection threshold is concentration-dependent as expected.
+      </p>
+
+      <h3>Test 4: Single-Layer 50 µm Mesh, High Concentration (2.5% wt DE)</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">No pass (baseline)</td>
+              <td colspan="3" style="text-align:center; color:#6b7280 !important;"><em>Results pending</em></td>
+              <td class="avg-col">--</td>
               <td class="change-col change-na">--</td>
             </tr>
             <tr>
@@ -685,20 +719,45 @@
         </table>
       </div>
       <p class="subsection-note" style="margin-top:0.6rem;">
-        Data collection for single-layer 50 µm mesh at high concentration is in progress. Results will be added when available.
+        Data collection for single-layer 50 µm mesh at high concentration is in progress. Comparing single vs. double-layer results will quantify how much the second mesh layer contributes to particle capture and whether it is worth the added flow resistance.
       </p>
 
-      <h3>Test 4: Centrifuged DE Contaminant</h3>
+      <h3>Test 5: ~20 µm Coffee Filter</h3>
       <div class="data-table-scroll">
         <table class="data-table">
           <thead>
             <tr>
               <th></th>
-              <th>Trial 1</th>
-              <th>Trial 2</th>
-              <th>Trial 3</th>
-              <th>Average</th>
-              <th>% Change from No Pass</th>
+              <th colspan="3">Observation</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">Qualitative result</td>
+              <td colspan="3" style="text-align:center; color:#86efac !important;"><em>Visible turbidity reduction observed; quantitative voltage data not yet recorded</em></td>
+              <td class="avg-col">--</td>
+              <td class="change-col change-na">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="subsection-note" style="margin-top:0.6rem;">
+        The coffee filter (~20 µm effective pore size) produced a visible difference in turbidity after filtering, which is promising. Quantitative voltage measurements have not yet been taken. The coffee filter's finer pore size should capture a significantly larger fraction of the DE distribution than the 50 µm mesh, but at the cost of reduced flow rate. Formal data collection is planned.
+      </p>
+
+      <h3>Test 6: Centrifuged DE Contaminant</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
             </tr>
           </thead>
           <tbody>
@@ -712,7 +771,7 @@
         </table>
       </div>
       <p class="subsection-note" style="margin-top:0.6rem;">
-        Centrifuging the DE suspension removes larger particles and concentrates the finer fraction. The filter configuration for this test has not yet been determined. Results will be added as testing continues.
+        Centrifuging the DE suspension removes larger particles and concentrates the finer fraction, producing a contaminant that more closely challenges the filter's lower-bound capture ability. The filter configuration for this test has not yet been determined. Results will be added as testing continues.
       </p>
 
       <h3>Additional Tests (Upcoming)</h3>
@@ -721,11 +780,11 @@
           <thead>
             <tr>
               <th></th>
-              <th>Trial 1</th>
-              <th>Trial 2</th>
-              <th>Trial 3</th>
-              <th>Average</th>
-              <th>% Change from No Pass</th>
+              <th>Trial 1 (V)</th>
+              <th>Trial 2 (V)</th>
+              <th>Trial 3 (V)</th>
+              <th>Average (V)</th>
+              <th>% Change from Baseline</th>
             </tr>
           </thead>
           <tbody>
@@ -739,13 +798,12 @@
         </table>
       </div>
       <p class="subsection-note" style="margin-top:0.6rem;">
-        Additional filter configurations and concentrations are being tested. Results will be added as they become available before the demo.
+        Additional filter configurations, concentrations, and pass counts are being tested. Results will be added as they become available before the demo.
       </p>
 
       <div class="callout">
         <strong>Key Finding: 100 µm Mesh and 2.5 µm Whatman Grade 5</strong>
         The 100 µm mesh produced no measurable turbidity reduction at any concentration or pass count, confirming that the pore size is far too large relative to the DE particle distribution. On the other end, the Whatman Grade 5 filter (2.5 µm) is fine enough to capture effectively all DE particles, but it does not allow even clean water to pass at ambient pressure, making it impractical for our pump-driven system. These two extremes bracket the useful operating range for our filter design.
-      </p>
       </div>
 
       <!-- INSERT: Images from filtration testing, before/after filter photos, etc. -->
