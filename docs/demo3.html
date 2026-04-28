@@ -648,3 +648,775 @@
           <h4>Settling and Particle Density</h4>
           <p>
             Iron(III) oxide's high density (5.2 g/cm³) causes particles to settle faster than DE, which aids filtr
+<section id="demo3" class="demo-section">
+  <h1>Demo 3 — Minimum Viable Product</h1>
+  <p class="subtitle">
+    Progress on activated carbon filtration testing, sensor calibration, housing integration, ultrasonic overflow sensing, and live turbidity display.
+  </p>
+
+  <h2>Overview</h2>
+  <p>
+    Demo 3 marks the next stage of development from Demo 2, moving from an intermediate prototype toward a more complete and testable minimum viable product. The main updates since Demo 2 are the switch from diatomaceous earth to activated carbon as the model contaminant being filtered out, the development of a new activated carbon turbidity calibration curve, multi-pass filtration testing through a 20 µm filter, and continued progress on housing and sensor integration.
+  </p>
+
+  <p>
+    The overall system goal remains the same: Water Works is an adaptive filtration system for irrigation that responds to changing water quality. Instead of running at a constant setting, the system uses a turbidity sensor to monitor water clarity and cycles water through the filter until it reaches a target level. Once that threshold is met, the system can redirect the water to a clean reservoir. This helps reduce unnecessary filtration while still preventing clogging in irrigation systems.
+  </p>
+
+  <p>
+    This demo focuses especially on proving that our sensor and filter setup can detect and remove a suspended contaminant over repeated passes. Activated carbon was used as the contaminant because it creates a strong turbidity signal and can be visibly and quantitatively tracked during filtration. The current results show that most filtration improvement happens in the first 2–3 passes, after which the system begins approaching the clean water baseline.
+  </p>
+
+  <h2>Prototype Functionality</h2>
+
+  <p><strong>Working: 7</strong></p>
+  <p><strong>Partial / In Progress: 3</strong></p>
+  <p><strong>Not Integrated: 2</strong></p>
+
+  <ol>
+    <li>
+      <strong>Turbidity sensor</strong> — reads and logs water clarity values; currently calibrated using activated carbon suspensions.
+    </li>
+    <li>
+      <strong>Peristaltic pump</strong> — drives water through the filtration system and supports repeated pass testing.
+    </li>
+    <li>
+      <strong>20 µm filter</strong> — removes suspended activated carbon particles from water and produces measurable turbidity reduction.
+    </li>
+    <li>
+      <strong>Activated carbon model contaminant</strong> — now used as the contaminant being filtered out; provides a stronger and more consistent sensor response than DE.
+    </li>
+    <li>
+      <strong>Multi-pass filtration testing</strong> — completed for 0.01, 0.02, and 0.03 activated carbon concentrations across 0–4 passes.
+    </li>
+    <li>
+      <strong>Updated housing design</strong> — includes overall housing, intermediate tank, filter holder, and sensor location.
+    </li>
+    <li>
+      <strong>Ultrasonic sensor</strong> — added above the filter to monitor water buildup and detect overflow or clogging.
+    </li>
+    <li>
+      <strong>Display screen</strong> — added to provide live turbidity readings; full UI refinement still in progress.
+    </li>
+    <li>
+      <strong>Pinch valve flow diversion</strong> — remains part of the adaptive design; final threshold-based automation is still being refined.
+    </li>
+    <li>
+      <strong>Final enclosure assembly</strong> — CAD is developed, but physical assembly, sealing, and tubing routing still need final testing.
+    </li>
+    <li>
+      <strong>pH / TDS sensor</strong> — planned as an additional water quality metric, but not yet integrated.
+    </li>
+    <li>
+      <strong>Long-duration data logging</strong> — not yet complete; future work includes a more reliable method for storing sensor data during operation.
+    </li>
+  </ol>
+
+  <h2>Key Change: Activated Carbon as the Model Contaminant</h2>
+
+  <p>
+    A major update for Demo 3 was switching the model contaminant from diatomaceous earth to activated carbon. In Demo 2, diatomaceous earth was difficult to filter consistently because much of the particle size distribution was too fine for our low-pressure, mesh-based filtration setup. This made it hard to produce reliable turbidity changes and made the filtration results less repeatable.
+  </p>
+
+  <p>
+    Activated carbon is now being used as the contaminant that we are filtering out. This is important because activated carbon creates a strong dark turbidity signal in water and can be tracked more clearly by the turbidity sensor. As the water passes through the 20 µm filter, activated carbon particles are removed, and the sensor reading moves closer to the clean water baseline.
+  </p>
+
+  <p>
+    This change made our filtration testing more useful because it allowed us to compare initial concentration, number of passes, and percent removal. It also gave us a clearer way to demonstrate the value of multi-pass recirculation in our system.
+  </p>
+
+  <h3>Why Activated Carbon Works Better for This Stage</h3>
+  <ul>
+    <li>Produces a strong turbidity signal that the sensor can detect.</li>
+    <li>Creates a visible before/after difference during filtration.</li>
+    <li>Works better with the 20 µm filter currently used in our system.</li>
+    <li>Allows comparison across multiple concentrations and pass counts.</li>
+    <li>Makes it easier to show diminishing returns after repeated filtration.</li>
+  </ul>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT PHOTO: Activated carbon suspension before and after filtration]</strong></p>
+  </div>
+
+  <h2>Application of ChemE Principles</h2>
+
+  <h3>Particle Size Distribution and Filtration</h3>
+  <p>
+    The effectiveness of the filter is governed by the relationship between the filter pore size and the particle size distribution of the contaminant. In this demo, activated carbon particles are suspended in water and passed through a 20 µm filter. Particles larger than the effective pore size are captured, while smaller particles may pass through. This means filtration performance depends on both the pore size of the filter and the actual size range of the activated carbon particles in the suspension.
+  </p>
+
+  <h3>Filter Cutoff Spectrum</h3>
+  <p>
+    The 20 µm filter represents a practical balance between filtration efficiency and usable flow rate. A filter that is too coarse would allow too much activated carbon to pass through, while a filter that is too fine would create too much resistance for the peristaltic pump. Based on our earlier testing, very fine filtration media can block flow at ambient pressure. The 20 µm filter is fine enough to show measurable removal while still allowing water to move through the system.
+  </p>
+
+  <h3>Cake Filtration and Multi-Pass Dynamics</h3>
+  <p>
+    A key mechanism in our current setup is cake filtration. During the first pass, activated carbon particles begin collecting on the filter surface. This trapped layer becomes a secondary filter, reducing the effective pore size and helping capture additional particles on later passes. This explains why multi-pass recirculation improves filtration performance even when the same filter is used each time.
+  </p>
+
+  <p>
+    The data also shows diminishing returns. Most of the removal happens early, especially in the first 2–3 passes. After that, the water approaches the clean water baseline, so each additional pass gives a smaller improvement.
+  </p>
+
+  <h3>Concentration Effects on Detection</h3>
+  <p>
+    The turbidity sensor's ability to detect a change depends on both the starting concentration of activated carbon and the absolute change in sensor reading after filtration. At higher concentrations, the water is darker and the sensor signal changes more clearly as particles are removed. At lower concentrations, the change is smaller and can be closer to the noise floor of the sensor. This affects how reliably the system can decide whether water is clean enough to stop recirculating.
+  </p>
+
+  <h3>Pressure Drop and Flow Rate Tradeoff</h3>
+  <p>
+    Darcy’s Law helps explain the tradeoff between filtration and flow. As pore size decreases or particles build up on the filter, hydraulic resistance increases. This can reduce flow rate and increase the load on the pump. Our system uses a low-pressure peristaltic pump, so the filter cannot be too restrictive. The design challenge is finding a filter that removes enough activated carbon to improve clarity while still allowing useful flow.
+  </p>
+
+  <h3>Feedback Control Loop</h3>
+  <p>
+    The long-term control strategy reads turbidity, compares it to a target threshold, and uses that signal to decide whether water should continue recirculating or be diverted toward the clean reservoir. This is the core adaptive behavior of Water Works. The activated carbon testing helps define the sensor readings needed to make this control loop meaningful and reliable.
+  </p>
+
+  <h2>Hardware Progress: Housing</h2>
+
+  <p>
+    The housing design has been updated to better organize the filter, intermediate tank, turbidity sensor, and flow path. The goal is to move away from a loose tubing setup and toward a more self-contained prototype. The current design separates the filtration region from the sensing region and uses geometry to guide water toward the turbidity sensor.
+  </p>
+
+  <h3>Overall Housing</h3>
+  <div class="image-grid">
+    <div>
+      <div class="image-placeholder">
+        <p><strong>[INSERT PHOTO: Overall housing CAD]</strong></p>
+      </div>
+      <p class="caption">
+        Complete system housing showing separate compartments for filtration, sensors, and flow pathways.
+      </p>
+    </div>
+
+    <div>
+      <div class="image-placeholder">
+        <p><strong>[INSERT PHOTO: Turbidity sensor close-up]</strong></p>
+      </div>
+      <p class="caption">
+        Close-up of the turbidity sensor mounted at the base of the inlet column.
+      </p>
+    </div>
+  </div>
+
+  <h3>Intermediate Tank</h3>
+  <p>
+    The intermediate tank sits between the filter and the turbidity sensor. It stores water briefly after filtration and uses a sloped base to direct the sample toward the sensor. This should make the turbidity readings more consistent by reducing stagnant regions and guiding water toward the measurement point.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT PHOTO: Intermediate tank with sloped base]</strong></p>
+  </div>
+  <p class="caption">
+    Intermediate tank between the filter and sensor with a sloped base to direct flow toward the sensor.
+  </p>
+
+  <h3>Filter Holder</h3>
+  <p>
+    The filter holder is located at the top of the column and is designed to hold the filtration media in place. This gives the filter a consistent position and makes it easier to test different filter materials without changing the rest of the housing design.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT PHOTO: Filter holder / top column filter housing]</strong></p>
+  </div>
+  <p class="caption">
+    Filter housing at the top of the column, designed to hold and secure the filtration media.
+  </p>
+
+  <h2>Hardware Progress: Pinch Valve Flow Diversion</h2>
+
+  <p>
+    The pinch valve remains a central part of the adaptive filtration system. Its purpose is to redirect water based on turbidity. If the water is still too turbid, the system should continue recirculating it through the filter. Once the turbidity sensor indicates that the water has reached the desired clarity, the valve can redirect the flow toward the clean reservoir.
+  </p>
+
+  <p>
+    The pinch valve design is useful because it keeps the mechanical components outside the water path. Instead of placing a moving part directly in the water, the valve pinches flexible tubing from the outside. This reduces contamination risk and keeps the fluid path simpler.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[KEEP / INSERT PHOTO: Pinch valve assembly]</strong></p>
+  </div>
+  <p class="caption">
+    Pinch valve assembly used to redirect flow between recirculation and clean output paths.
+  </p>
+
+  <h2>Hardware Progress: Ultrasonic Sensor Safety Feature</h2>
+
+  <p>
+    An ultrasonic sensor was added above the filter as a safety feature. If the filter begins to clog, water may start backing up above the filter. The ultrasonic sensor can monitor this water level in real time and alert the user before overflow occurs.
+  </p>
+
+  <p>
+    This is important because clogging is one of the main risks in any filtration system. The turbidity sensor tells us about water clarity, but the ultrasonic sensor gives the system a way to detect a physical failure condition. This makes the prototype safer and more realistic for use without constant supervision.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[KEEP / INSERT PHOTO: Ultrasonic sensor circuit]</strong></p>
+  </div>
+  <p class="caption">
+    Ultrasonic sensor mounted above the filter to monitor water level in real time. If the filter begins to clog or overflow, the system can detect the buildup and alert the user as a safety measure.
+  </p>
+
+  <h2>Hardware Progress: Display Screen</h2>
+
+  <p>
+    The display screen was added to give the user a live turbidity reading during operation. This makes the system easier to understand because the user can directly see how water clarity changes as filtration proceeds. It also reduces the need to rely only on the Arduino serial monitor during demonstrations.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT PHOTO: Display screen]</strong></p>
+  </div>
+  <p class="caption">
+    Display screen provides a live turbidity reading during operation. This allows the user to monitor water clarity in real time and track filtration progress.
+  </p>
+
+  <h2>Activated Carbon Calibration: Standard Curve</h2>
+
+  <p>
+    Before testing filtration performance, we created a standard curve using known activated carbon concentrations. These measurements were taken with no filter, so the purpose was only to relate activated carbon concentration to turbidity sensor output. This gives us a baseline relationship between concentration and reading before filtration is introduced.
+  </p>
+
+  <h3>Standard Curve Data</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Activated Carbon Concentration</th>
+        <th>Turbidity Reading</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>0.015</td><td>-0.02933</td></tr>
+      <tr><td>0.010</td><td>-0.04880</td></tr>
+      <tr><td>0.010</td><td>-0.04399</td></tr>
+      <tr><td>0.005</td><td>-0.06354</td></tr>
+      <tr><td>0.001</td><td>-0.08309</td></tr>
+      <tr><td>0.020</td><td>-0.00489</td></tr>
+      <tr><td>0.025</td><td>-0.00489</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    The best-fit line from the standard curve was:
+  </p>
+
+  <p class="equation">
+    y = 3.4171x - 0.0818
+  </p>
+
+  <p>
+    The standard curve shows that turbidity readings generally increase with activated carbon concentration. The highest concentration points begin to level off, which suggests some sensor saturation or measurement limits at high turbidity. Still, the curve is useful for comparing filtration trials and showing that the sensor responds to activated carbon concentration.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT GRAPH: Standard Curve — No Filter]</strong></p>
+  </div>
+  <p class="caption">
+    Standard curve relating turbidity sensor readings to activated carbon concentration with no filtration. The linear fit is used to convert sensor output into concentration values for analysis.
+  </p>
+
+  <h2>Activated Carbon Filtration Testing</h2>
+
+  <p>
+    After building the standard curve, we tested activated carbon removal through the 20 µm filter. Three initial concentrations were tested: 0.01, 0.02, and 0.03. Each sample was passed through the filter multiple times, and the turbidity sensor reading was recorded after each pass.
+  </p>
+
+  <p>
+    Clean water was measured separately and gave a baseline reading of <strong>-0.09775</strong>. As filtration removes activated carbon, the readings move closer to this clean water value.
+  </p>
+
+  <h3>Clean Water Baseline</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Sample</th>
+        <th>Turbidity Reading</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Clean Water</td>
+        <td>-0.09775</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Activated Carbon Filtration Data — 20 µm Filter</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Initial Concentration</th>
+        <th>0 Pass</th>
+        <th>1 Pass</th>
+        <th>2 Pass</th>
+        <th>3 Pass</th>
+        <th>4 Pass</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0.01</td>
+        <td>-0.04399</td>
+        <td>-0.07820</td>
+        <td>-0.08798</td>
+        <td>-0.08798</td>
+        <td>-0.07820</td>
+      </tr>
+      <tr>
+        <td>0.02</td>
+        <td>-0.00489</td>
+        <td>-0.05376</td>
+        <td>-0.07820</td>
+        <td>-0.08309</td>
+        <td>-0.10240</td>
+      </tr>
+      <tr>
+        <td>0.03</td>
+        <td>-0.00489</td>
+        <td>-0.06843</td>
+        <td>-0.07331</td>
+        <td>-0.08798</td>
+        <td>-0.08798</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Results and Interpretation</h3>
+  <p>
+    The filtration data shows that turbidity decreases with additional filtration passes. For all three initial concentrations, the readings move closer to the clean water baseline after the first pass and continue improving through later passes. Most of the improvement occurs within the first 2–3 passes.
+  </p>
+
+  <p>
+    This trend supports the cake filtration explanation. As activated carbon collects on the filter, the filter becomes more effective at catching additional particles. However, the gains decrease over time as the sample approaches the clean water baseline. The 0.02 trial slightly passed the clean water baseline after four passes, which is likely due to sensor noise, baseline variation, or mixing inconsistency. The 0.01 trial also showed some variability at the fourth pass. These results show that more trials and error bars will be needed for the final report.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT GRAPH: Activated Carbon Filtration Performance — signal vs. passes]</strong></p>
+  </div>
+  <p class="caption">
+    Turbidity decreases with each filtration pass for all initial concentrations. Most improvement occurs within the first 2–3 passes, after which the system approaches the clean water baseline.
+  </p>
+
+  <div class="image-placeholder">
+    <p><strong>[INSERT GRAPH: Activated Carbon Filtration Efficiency — percent removal vs. passes]</strong></p>
+  </div>
+  <p class="caption">
+    Percent removal of activated carbon as a function of filtration passes using a 20 µm filter. Most removal occurs within the first 2–3 passes, with diminishing improvements at higher passes.
+  </p>
+
+  <h2>Testing + Performance Summary</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Method</th>
+        <th>Result</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Activated carbon standard curve</td>
+        <td>Known activated carbon concentrations with no filter</td>
+        <td>Calibration curve obtained</td>
+        <td>Used to relate turbidity readings to activated carbon concentration</td>
+      </tr>
+      <tr>
+        <td>Clean water baseline</td>
+        <td>Sensor reading of clean water</td>
+        <td>-0.09775</td>
+        <td>Reference value for filtration performance</td>
+      </tr>
+      <tr>
+        <td>20 µm filter, 0.01 concentration</td>
+        <td>0–4 filtration passes</td>
+        <td>Strong improvement through 2–3 passes</td>
+        <td>Some variation at fourth pass</td>
+      </tr>
+      <tr>
+        <td>20 µm filter, 0.02 concentration</td>
+        <td>0–4 filtration passes</td>
+        <td>Approached clean water baseline</td>
+        <td>Fourth pass likely affected by noise or baseline variation</td>
+      </tr>
+      <tr>
+        <td>20 µm filter, 0.03 concentration</td>
+        <td>0–4 filtration passes</td>
+        <td>High removal, leveling off after 3 passes</td>
+        <td>Shows diminishing returns clearly</td>
+      </tr>
+      <tr>
+        <td>Ultrasonic sensor</td>
+        <td>Mounted above filter</td>
+        <td>Safety feature added</td>
+        <td>Detects overflow or clogging conditions</td>
+      </tr>
+      <tr>
+        <td>Display screen</td>
+        <td>Live turbidity output</td>
+        <td>User feedback added</td>
+        <td>Lets user monitor filtration progress directly</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Key Finding</h2>
+  <p>
+    The key finding from Demo 3 is that activated carbon can be measurably removed using the 20 µm filter, and most of the removal occurs in the first few passes. This supports the adaptive filtration concept because the system should not run for a fixed time. Instead, it should use turbidity feedback to determine when additional filtration no longer provides meaningful improvement.
+  </p>
+
+  <h2>Project Management + Next Steps</h2>
+
+  <p>
+    Action items before the final demo, in rough priority order.
+  </p>
+
+  <h3>Integration</h3>
+  <p>
+    Finalize physical housing assembly — finish mounting the filter holder, intermediate tank, turbidity sensor, tubing, pump, and electronics into the housing. Perform leak testing and confirm that water is consistently routed toward the sensor.
+  </p>
+
+  <h3>Control</h3>
+  <p>
+    Complete pinch valve automation — connect the turbidity threshold to valve movement so the system can switch between recirculation and clean output automatically.
+  </p>
+
+  <h3>Testing</h3>
+  <p>
+    Repeat activated carbon filtration trials — collect additional runs for each concentration, add error bars, and improve confidence in the filtration efficiency results.
+  </p>
+
+  <h3>Sensor</h3>
+  <p>
+    Refine live turbidity display — improve display formatting so the user can clearly read turbidity values and system status during operation.
+  </p>
+
+  <h3>Safety</h3>
+  <p>
+    Test ultrasonic overflow detection — verify that water buildup above the filter triggers a warning or response before overflow occurs.
+  </p>
+
+  <h3>Future Sensor Expansion</h3>
+  <p>
+    Add pH / TDS sensing if time allows — include a secondary water quality metric alongside turbidity for a more complete system.
+  </p>
+
+  <h2>Timeline + Project Management (Gantt + Milestones)</h2>
+
+  <h3>Milestone Summary</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Milestone</th>
+        <th>Due Date</th>
+        <th>Points</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Preliminary Design Report</td>
+        <td>Week 2</td>
+        <td>100 pts (10%)</td>
+        <td>Complete</td>
+      </tr>
+      <tr>
+        <td>Initial Design Presentation</td>
+        <td>Week 4</td>
+        <td>100 pts (10%)</td>
+        <td>Complete</td>
+      </tr>
+      <tr>
+        <td>Demo 1: Initial Prototype</td>
+        <td>Week 7</td>
+        <td>125 pts (12.5%)</td>
+        <td>Complete</td>
+      </tr>
+      <tr>
+        <td>Demo 2: Intermediate Prototype</td>
+        <td>Week 10</td>
+        <td>125 pts (12.5%)</td>
+        <td>Complete</td>
+      </tr>
+      <tr>
+        <td>Demo 3: Minimum Viable Product</td>
+        <td>Week 13</td>
+        <td>150 pts (15%)</td>
+        <td>Complete / Presented</td>
+      </tr>
+      <tr>
+        <td>Final Report</td>
+        <td>Week 17</td>
+        <td>225 pts (22.5%)</td>
+        <td>Planned</td>
+      </tr>
+      <tr>
+        <td>Final Demonstration</td>
+        <td>Week 17</td>
+        <td>125 pts (12.5%)</td>
+        <td>Planned</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td></td>
+        <td>1000 pts</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Gantt Chart (Semester Plan — update weekly)</h3>
+  <p>
+    This chart reflects completed work through Demo 2 and current Demo 3 progress on activated carbon testing, 20 µm filtration, updated housing, ultrasonic overflow sensing, display screen integration, and final system validation.
+  </p>
+
+  <p>
+    <span class="done">Done</span> &nbsp;
+    <span class="active">Active</span> &nbsp;
+    <span class="planned">Planned</span>
+  </p>
+
+  <table class="gantt">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>W1</th>
+        <th>W2</th>
+        <th>W3</th>
+        <th>W4</th>
+        <th>W5</th>
+        <th>W6</th>
+        <th>W7</th>
+        <th>W8</th>
+        <th>W9</th>
+        <th>W10</th>
+        <th>W11</th>
+        <th>W12</th>
+        <th>W13</th>
+        <th>W14</th>
+        <th>W15</th>
+        <th>W16</th>
+        <th>W17</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Preliminary design report, block diagram, and initial concept selection</td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Initial design presentation, market research, SWOT, and updated irrigation concept</td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Demo 1 sensing and pumping proof of concept: turbidity circuit, pump control, and baseline housing work</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Demo 2 filtration testing: DE testing, mesh comparison, pinch valve design, and standalone housing CAD</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Activated carbon switch: contaminant selection, concentration preparation, and standard curve calibration</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>20 µm filter testing: activated carbon multi-pass data, clean water baseline, and percent removal analysis</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="active"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Housing refinement: overall housing, intermediate tank, filter holder, and turbidity sensor placement</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="done"></td>
+        <td class="active"></td>
+        <td class="active"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Ultrasonic overflow/clogging detection and live display screen integration</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="done"></td>
+        <td class="active"></td>
+        <td class="active"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Final system integration: tubing, sealing, pinch valve automation, leak testing, and threshold-based control</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="active"></td>
+        <td class="active"></td>
+        <td class="planned"></td>
+        <td class="planned"></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Final report, final demo preparation, additional trials, and complete system validation</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="planned"></td>
+        <td class="planned"></td>
+        <td class="planned"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Final Takeaway</h2>
+  <p>
+    Demo 3 shows that Water Works is moving from separate working parts toward a full adaptive filtration prototype. The activated carbon testing gives us usable sensor data, the 20 µm filter shows clear removal over repeated passes, and the updated housing, ultrasonic sensor, and display screen make the system more functional and user-facing. The remaining work is focused on repeatability, final integration, and validating the complete system for the final demonstration.
+  </p>
+</section>
