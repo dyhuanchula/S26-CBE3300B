@@ -1,0 +1,471 @@
+# final-report.html
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Final Report — Water Works™ Adaptive Irrigation Filtration</title>
+<link href="style.css" rel="stylesheet"/>
+
+<style>
+  .gantt-chart {
+    overflow-x: auto;
+    background: #1a1a2e;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .gantt-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .gantt-table th,
+  .gantt-table td {
+    padding: 8px 4px;
+    text-align: center;
+    border: 1px solid #2d2d44;
+  }
+
+  .gantt-table th {
+    background: #2d2d44;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .gantt-table td:first-child {
+    text-align: left;
+    padding-left: 10px;
+    white-space: nowrap;
+    background: #252540;
+    color: #e0e0e0;
+    min-width: 200px;
+  }
+
+  .section-row td {
+    background: #3d3d5c;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  table.gantt {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  table.gantt th,
+  table.gantt td {
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px;
+    text-align: center;
+  }
+
+  table.gantt th:first-child,
+  table.gantt td:first-child {
+    text-align: left;
+  }
+
+  .bar {
+    display: inline-block;
+    width: 100%;
+    height: 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.10);
+  }
+
+  .bar.done {
+    background: rgba(120, 220, 170, 0.65);
+  }
+
+  .bar.active {
+    background: rgba(120, 170, 255, 0.75);
+  }
+
+  .bar.planned {
+    background: rgba(255, 210, 120, 0.70);
+  }
+
+  .legend {
+    display:inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  .legend.done {
+    background: rgba(120, 220, 170, 0.65);
+  }
+
+  .legend.active {
+    background: rgba(120, 170, 255, 0.75);
+  }
+
+  .legend.planned {
+    background: rgba(255, 210, 120, 0.70);
+  }
+</style>
+</head>
+
+<body>
+<header class="wrap">
+<nav>
+<div class="brand">
+<strong>Adaptive Water Purifier</strong>
+<span class="badge">Final Report</span>
+</div>
+
+<div class="navlinks">
+<a href="index.html">Home</a>
+<a href="preliminary.html">Preliminary</a>
+<a href="initial-design.html">Initial Design</a>
+<a href="demos.html">Demos</a>
+<a href="final-report.html">Final Report</a>
+</div>
+</nav>
+
+<h1>Final Report: Water Works™ Adaptive Irrigation Filtration</h1>
+
+<p class="small">
+Water Works™ is an adaptive irrigation filtration system designed to respond to changing water quality conditions in real time. The system monitors turbidity using an optical sensor and recirculates water through a filtration loop until it reaches a target clarity threshold suitable for drip and micro irrigation systems.
+</p>
+</header>
+
+<div class="card">
+<h2>1) Introduction</h2>
+
+<p>
+Agriculture depends heavily on irrigation systems, especially drip and micro irrigation technologies that maximize water efficiency by delivering water directly to plant roots. However, these systems are extremely sensitive to suspended particles and sediment contamination. When turbidity increases, emitters clog, flow distribution becomes uneven, and systems require significant maintenance.
+</p>
+
+<p>
+Water quality conditions in surface water sources such as ponds, rivers, and agricultural runoff are highly variable. Existing irrigation filtration systems generally operate at fixed filtration settings regardless of actual water quality conditions, often forcing farms to oversize systems for worst-case turbidity events.
+</p>
+
+<p>
+Water Works™ addresses this challenge using adaptive filtration. The system continuously measures turbidity and recirculates water through a filtration stage until clarity reaches a predefined threshold. Instead of filtering continuously at maximum intensity, the system filters only as long as needed.
+</p>
+
+<div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:1.5rem;">
+  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
+    <strong>Primary Goals</strong>
+    <ul>
+      <li>Reduce emitter clogging in drip irrigation systems</li>
+      <li>Adapt to changing turbidity conditions automatically</li>
+      <li>Reduce maintenance and downtime</li>
+      <li>Improve irrigation reliability</li>
+    </ul>
+  </div>
+
+  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
+    <strong>Target Application</strong>
+    <ul>
+      <li>Drip and micro irrigation systems</li>
+      <li>Surface-water-fed irrigation systems</li>
+      <li>Precision agriculture environments</li>
+      <li>Operations with high turbidity variability</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h2>2) The Problem: Irrigation and Water Quality</h2>
+
+<p>
+Agriculture accounts for roughly 70% of global freshwater withdrawals, and irrigation systems consume approximately 81 million acre-feet of water annually in the United States alone. Modern drip irrigation systems are highly efficient but rely on extremely small emitter passages that clog easily when suspended particles are present.
+</p>
+
+<ul>
+  <li>Safe drip irrigation operation typically requires turbidity below <strong>10 NTU</strong></li>
+  <li>Runoff events can raise turbidity levels from <strong>20–1000 NTU</strong></li>
+  <li>Clogging causes uneven irrigation and system downtime</li>
+  <li>Maintenance requirements increase significantly under variable water conditions</li>
+</ul>
+
+<p>
+Most existing irrigation filtration systems are designed around worst-case conditions and cannot adapt dynamically to changing water quality. This creates unnecessary energy use, larger filtration systems, and higher operating costs.
+</p>
+</div>
+
+<div class="card">
+<h2>3) Market Research and Strategy</h2>
+
+<h3>Market Overview</h3>
+
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global Market Size</td>
+<td>~$6B global drip irrigation market (2024)</td>
+</tr>
+<tr>
+<td>Projected Growth</td>
+<td>~10–12% CAGR through 2030</td>
+</tr>
+<tr>
+<td>Primary Drivers</td>
+<td>Precision agriculture, automation, water scarcity, smart irrigation systems</td>
+</tr>
+<tr>
+<td>Key Opportunity</td>
+<td>Adaptive turbidity-responsive filtration systems</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Competitor Analysis</h3>
+
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Example</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Screen Filters</td>
+<td>Netafim</td>
+<td>Fixed filtration level</td>
+</tr>
+<tr>
+<td>Sand Filters</td>
+<td>Amiad</td>
+<td>High maintenance requirements</td>
+</tr>
+<tr>
+<td>Disk Filters</td>
+<td>Rain Bird</td>
+<td>Clogging risk under heavy sediment loads</td>
+</tr>
+<tr>
+<td>Chemical Treatment</td>
+<td>Injection systems</td>
+<td>Added operating cost</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Target Market</h3>
+<ul>
+  <li>Farms using drip and micro irrigation</li>
+  <li>Surface-water irrigation systems</li>
+  <li>Precision agriculture users</li>
+  <li>High-value crop operations</li>
+</ul>
+
+<h3>Market Opportunity</h3>
+<p>
+Water Works™ occupies a middle position between inexpensive static filters and expensive industrial-scale adaptive systems. The design emphasizes affordability, adaptability, and integration with existing irrigation infrastructure.
+</p>
+</div>
+
+<div class="card">
+<h2>4) Cost Breakdown</h2>
+
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Estimated Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Arduino Uno</td><td>$20</td></tr>
+<tr><td>Pump</td><td>$25</td></tr>
+<tr><td>Turbidity Sensor Components</td><td>$1.50</td></tr>
+<tr><td>Relay Module</td><td>$7</td></tr>
+<tr><td>Display Screen</td><td>$10</td></tr>
+<tr><td>Ultrasonic Sensor</td><td>$4</td></tr>
+<tr><td>Servo Motor</td><td>$8</td></tr>
+<tr><td>Power Supply</td><td>$7</td></tr>
+<tr><td>Tubing and Plumbing</td><td>$3.50</td></tr>
+<tr><td>Filters</td><td>$10</td></tr>
+<tr><td>PLA and Fabrication</td><td>$5</td></tr>
+<tr>
+<td><strong>Total Prototype Cost</strong></td>
+<td><strong>~$101</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h2>5) System Design and Flow</h2>
+
+<p>
+The Water Works™ system operates using a semi-batch adaptive filtration loop. Water is circulated through a filtration stage while turbidity is continuously monitored. Once the water reaches the target clarity threshold, the system transfers treated water into storage.
+</p>
+
+<h3>Core Components</h3>
+<ul>
+  <li>Arduino Uno microcontroller</li>
+  <li>Optical turbidity sensor (IR LED + phototransistor)</li>
+  <li>Pump circulation system</li>
+  <li>Ultrasonic water level sensing</li>
+  <li>Relay-controlled power switching</li>
+  <li>Display screen for live system feedback</li>
+  <li>Filter module with fine mesh filtration</li>
+</ul>
+
+<h3>Flow Sequence</h3>
+<ol>
+  <li>Water enters the system from the source reservoir</li>
+  <li>The pump circulates water through the filtration loop</li>
+  <li>The turbidity sensor monitors water clarity continuously</li>
+  <li>If turbidity remains above threshold, water continues recirculating</li>
+  <li>Once clarity reaches target conditions, water is transferred to storage</li>
+</ol>
+
+<div style="border:2px dashed #7a7a7a; border-radius:14px; padding:18px; text-align:center; margin-top:1rem;">
+<img class="diagram" src="assets/images/updated_diagram.jpg" alt="Water Works System Diagram">
+<div class="figcap">Adaptive filtration system overview</div>
+</div>
+</div>
+
+<div class="card">
+<h2>6) Engineering Principles</h2>
+
+<h3>Filtration and Particle Removal</h3>
+<ul>
+  <li>Mechanical filtration removes suspended solids through size exclusion</li>
+  <li>Particle size relative to pore size determines removal efficiency</li>
+  <li>Smaller pore sizes improve filtration but reduce flow rate</li>
+</ul>
+
+<h3>Cake Filtration</h3>
+<p>
+As particles accumulate on the filter surface, they form a secondary filtration layer known as a filter cake. This layer improves particle capture efficiency over time and explains why filtration performance improves during repeated recirculation passes.
+</p>
+
+<h3>Feedback Control System</h3>
+<ul>
+  <li>The turbidity sensor measures water clarity</li>
+  <li>The controller compares readings to a threshold</li>
+  <li>The system decides whether to continue recirculation or transfer water</li>
+  <li>This forms a closed-loop adaptive filtration system</li>
+</ul>
+
+<h3>Optical Turbidity Sensing</h3>
+<p>
+Suspended particles scatter and absorb light, reducing transmission through water. Cleaner water allows more light to reach the phototransistor detector, producing a measurable electrical response.
+</p>
+
+<h3>Fluid Flow and Pressure Drop</h3>
+<p>
+Flow through the filter depends on pressure drop, flow resistance, and filter loading. As clogging increases, resistance rises and flow rate decreases. The system design balances filtration effectiveness with usable flow performance.
+</p>
+</div>
+
+<div class="card">
+<h2>7) Design Process and Iteration</h2>
+
+<h3>Early Development</h3>
+<ul>
+  <li>Developed an Arduino-based turbidity sensor</li>
+  <li>Integrated pump control with sensor feedback</li>
+  <li>Built an initial recirculation loop prototype</li>
+  <li>Tested threshold logic for adaptive control</li>
+</ul>
+
+<h3>Filter Testing</h3>
+<p>
+Multiple filter pore sizes were evaluated ranging from 2 µm to 150 µm.
+</p>
+
+<ul>
+  <li>Large filters provided insufficient particle removal</li>
+  <li>Very fine filters restricted flow excessively</li>
+  <li>A ~20 µm coffee filter provided the best balance between filtration and flow rate</li>
+</ul>
+
+<h3>Contaminant Testing</h3>
+<ul>
+  <li>Diatomaceous earth was initially used to simulate suspended sediment</li>
+  <li>Activated carbon produced stronger turbidity contrast and easier testing</li>
+  <li>Multiple recirculation passes demonstrated measurable clarity improvement</li>
+</ul>
+
+<h3>Housing Evolution</h3>
+<p>
+The system enclosure evolved through multiple iterations. Early cylindrical designs were replaced with integrated housings that better supported fluid routing, component organization, and flow stability.
+</p>
+</div>
+
+<div class="card">
+<h2>8) Performance Data and Results</h2>
+
+<p>
+Testing demonstrated that the adaptive filtration concept worked reliably under varying turbidity conditions.
+</p>
+
+<ul>
+  <li>The optical turbidity sensor consistently detected clarity changes</li>
+  <li>The recirculation system successfully improved water clarity over multiple passes</li>
+  <li>The final filter configuration balanced flow performance and particle removal</li>
+  <li>The control system successfully automated pump behavior based on sensor feedback</li>
+</ul>
+
+<p>
+The project validated the feasibility of low-cost adaptive filtration for irrigation applications and demonstrated how feedback control can improve filtration efficiency without requiring industrial-scale infrastructure.
+</p>
+</div>
+
+<div class="card">
+<h2>9) Future Improvements</h2>
+
+<ul>
+  <li>Add conductivity and TDS sensors for broader water quality monitoring</li>
+  <li>Improve data logging and wireless monitoring capabilities</li>
+  <li>Develop replaceable cartridge-based filtration modules</li>
+  <li>Create a weather-resistant enclosure for agricultural environments</li>
+  <li>Scale the system for commercial irrigation flow rates</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>10) Conclusion</h2>
+
+<p>
+Water Works™ demonstrates a practical adaptive irrigation filtration system capable of responding dynamically to changing water quality conditions. By combining turbidity sensing, recirculation-based filtration, and closed-loop control, the system reduces unnecessary filtration while improving irrigation reliability.
+</p>
+
+<p>
+The project successfully integrated sensing, fluid systems, electronics, and control logic into a working prototype while addressing a real agricultural engineering challenge. Future iterations could expand sensing capabilities, improve scalability, and integrate directly into commercial irrigation infrastructure.
+</p>
+</div>
+
+<div class="card">
+<h2>11) References</h2>
+
+<p>University of Maryland Center for Environmental Science — Water Turbidity Resources</p>
+<p>USDA National Agricultural Statistics Service — Irrigation and Water Use Data</p>
+<p>Market Research Intellect — Global Drip Irrigation Market Analysis</p>
+<p>Everfilt — Agricultural Water Filtration Systems</p>
+<p>Netafim — Irrigation Filtration Systems Documentation</p>
+<p>Rain Bird Corporation — Agricultural Irrigation Filtration Manuals</p>
+<p>McCabe, Smith, and Harriott. <em>Unit Operations of Chemical Engineering</em>.</p>
+<p>Perry’s Chemical Engineers’ Handbook.</p>
+</div>
+
+</body>
+</html>
+
