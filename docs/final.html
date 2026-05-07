@@ -1,468 +1,1147 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Final Report — Water Works™ Adaptive Irrigation Filtration</title>
-<link href="style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Works™ — Final Report</title>
+  <link rel="stylesheet" href="style.css" />
 
-<style>
-  .gantt-chart {
-    overflow-x: auto;
-    background: #1a1a2e;
-    border-radius: 8px;
-    padding: 20px;
-  }
+  <style>
+    .card, .card p, .card li, .card td, .card th, .card span, .card div { color:#e5e7eb; }
+    .card h2, .card h3, .card h4, .card strong, table th { color:#f8fafc !important; }
 
-  .gantt-table {
-    width: 100%;
-    min-width: 900px;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
+    .subsection-note, .principle-card p, .steps .step-label, .checklist li span,
+    table td, .plain-list li, .small { color:#cbd5e1 !important; }
 
-  .gantt-table th,
-  .gantt-table td {
-    padding: 8px 4px;
-    text-align: center;
-    border: 1px solid #2d2d44;
-  }
+    .hero-grid, .two-col, .media-grid, .principle-grid, .kpi-grid {
+      display:grid;
+      gap:1rem;
+      margin-top:1rem;
+    }
 
-  .gantt-table th {
-    background: #2d2d44;
-    color: #fff;
-    font-weight: 600;
-  }
+    .hero-grid { grid-template-columns: 1.2fr 0.8fr; }
+    .two-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .media-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .principle-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 
-  .gantt-table td:first-child {
-    text-align: left;
-    padding-left: 10px;
-    white-space: nowrap;
-    background: #252540;
-    color: #e0e0e0;
-    min-width: 200px;
-  }
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
 
-  .section-row td {
-    background: #3d3d5c;
-    color: #fff;
-    font-weight: bold;
-  }
+    .subsection-note {
+      font-size:0.96rem;
+      line-height:1.7;
+    }
 
-  table.gantt {
-    border-collapse: collapse;
-    width: 100%;
-  }
+    .small {
+      font-size:0.86rem;
+      line-height:1.55;
+    }
 
-  table.gantt th,
-  table.gantt td {
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 6px;
-    text-align: center;
-  }
+    .kpi-card, .principle-card, .media-slot, .mini-card {
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:12px;
+      padding:1rem;
+    }
 
-  table.gantt th:first-child,
-  table.gantt td:first-child {
-    text-align: left;
-  }
+    .kpi-card h4, .principle-card h4, .mini-card h4 {
+      margin:0 0 0.45rem;
+      font-size:0.92rem;
+      color:#dbeafe !important;
+    }
 
-  .bar {
-    display: inline-block;
-    width: 100%;
-    height: 14px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.10);
-  }
+    .kpi-card p, .principle-card p, .mini-card p {
+      margin:0;
+      font-size:0.88rem;
+      line-height:1.6;
+    }
 
-  .bar.done {
-    background: rgba(120, 220, 170, 0.65);
-  }
+    .pill-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.5rem;
+      margin:1rem 0;
+    }
 
-  .bar.active {
-    background: rgba(120, 170, 255, 0.75);
-  }
+    .pill, .badge-soft {
+      display:inline-block;
+      border-radius:999px;
+      padding:0.25rem 0.65rem;
+      font-size:0.75rem;
+      font-weight:700;
+      letter-spacing:0.03em;
+    }
 
-  .bar.planned {
-    background: rgba(255, 210, 120, 0.70);
-  }
+    .pill.good { background:rgba(34,197,94,0.16); color:#86efac !important; border:1px solid rgba(34,197,94,0.35); }
+    .pill.warn { background:rgba(251,191,36,0.16); color:#fde68a !important; border:1px solid rgba(251,191,36,0.35); }
+    .pill.info { background:rgba(59,130,246,0.16); color:#bfdbfe !important; border:1px solid rgba(59,130,246,0.35); }
+    .pill.bad { background:rgba(239,68,68,0.16); color:#fecaca !important; border:1px solid rgba(239,68,68,0.35); }
 
-  .legend {
-    display:inline-block;
-    padding: 2px 10px;
-    border-radius: 999px;
-    margin-right: 8px;
-    font-size: 12px;
-  }
+    .plain-list {
+      padding-left:1.2rem;
+      margin-top:0.6rem;
+    }
 
-  .legend.done {
-    background: rgba(120, 220, 170, 0.65);
-  }
+    .plain-list li {
+      margin-bottom:0.5rem;
+      line-height:1.6;
+    }
 
-  .legend.active {
-    background: rgba(120, 170, 255, 0.75);
-  }
+    .checklist {
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
 
-  .legend.planned {
-    background: rgba(255, 210, 120, 0.70);
-  }
-</style>
+    .checklist li {
+      display:flex;
+      align-items:flex-start;
+      gap:0.65rem;
+      padding:0.55rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.12);
+      font-size:0.95rem;
+      line-height:1.55;
+    }
+
+    .checklist li:last-child { border-bottom:none; }
+
+    .checklist .icon {
+      width:1.35rem;
+      flex-shrink:0;
+      font-weight:700;
+      color:#93c5fd;
+      margin-top:0.02rem;
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:0.8rem;
+    }
+
+    table thead th {
+      text-align:left;
+      border-bottom:1px solid rgba(255,255,255,0.18);
+      padding:0.85rem 1rem 0.85rem 0;
+      color:#f8fafc !important;
+      letter-spacing:0.03em;
+      font-size:0.82rem;
+      text-transform:uppercase;
+    }
+
+    table tbody td {
+      border-bottom:1px solid rgba(255,255,255,0.11);
+      padding:0.85rem 1rem 0.85rem 0;
+      vertical-align:top;
+      line-height:1.55;
+    }
+
+    .data-table-scroll {
+      overflow-x:auto;
+      margin-top:0.8rem;
+    }
+
+    .data-table {
+      min-width:680px;
+      font-size:0.88rem;
+    }
+
+    .data-table th, .data-table td {
+      text-align:center;
+      padding:0.65rem 0.55rem;
+    }
+
+    .data-table .row-label {
+      text-align:left;
+      font-weight:700;
+      color:#e5e7eb !important;
+      white-space:nowrap;
+    }
+
+    .avg-col { color:#93c5fd !important; font-weight:700; }
+    .change-positive { color:#4ade80 !important; font-weight:700; }
+    .change-neutral { color:#fbbf24 !important; font-weight:700; }
+    .change-na { color:#94a3b8 !important; }
+
+    .media-slot {
+      text-align:center;
+    }
+
+    .media-slot h4 {
+      margin:0 0 0.65rem;
+      font-size:0.92rem;
+      color:#f8fafc !important;
+    }
+
+    .media-slot img {
+      width:100%;
+      max-width:100%;
+      height:auto;
+      min-height:160px;
+      object-fit:cover;
+      display:block;
+      border-radius:10px;
+      border:1px dashed rgba(255,255,255,0.26);
+      margin:0 auto 0.65rem auto;
+      background:rgba(255,255,255,0.05);
+    }
+
+    .media-slot p {
+      margin:0;
+      font-size:0.84rem;
+      line-height:1.5;
+      color:#cbd5e1 !important;
+    }
+
+    .placeholder-note {
+      border:1px dashed rgba(147,197,253,0.55);
+      background:rgba(59,130,246,0.08);
+      color:#bfdbfe !important;
+      border-radius:10px;
+      padding:0.75rem;
+      font-size:0.84rem;
+      line-height:1.5;
+      margin-top:0.75rem;
+    }
+
+    .callout {
+      background:rgba(249,115,22,0.12);
+      border-left:4px solid #fb923c;
+      border-radius:0 8px 8px 0;
+      padding:0.85rem 1rem;
+      margin:1rem 0;
+      font-size:0.92rem;
+      line-height:1.6;
+      color:#fed7aa !important;
+    }
+
+    .callout-blue {
+      background:rgba(59,130,246,0.12);
+      border-left:4px solid #60a5fa;
+      border-radius:0 8px 8px 0;
+      padding:0.85rem 1rem;
+      margin:1rem 0;
+      font-size:0.92rem;
+      line-height:1.6;
+      color:#bfdbfe !important;
+    }
+
+    .callout-green {
+      background:rgba(34,197,94,0.12);
+      border-left:4px solid #4ade80;
+      border-radius:0 8px 8px 0;
+      padding:0.85rem 1rem;
+      margin:1rem 0;
+      font-size:0.92rem;
+      line-height:1.6;
+      color:#bbf7d0 !important;
+    }
+
+    .callout strong, .callout-blue strong, .callout-green strong {
+      display:block;
+      margin-bottom:0.2rem;
+      color:#f8fafc !important;
+    }
+
+    .filter-spectrum {
+      display:flex;
+      align-items:stretch;
+      margin:1.2rem 0;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.12);
+      font-size:0.82rem;
+    }
+
+    .filter-spectrum .band {
+      flex:1;
+      padding:0.8rem 0.5rem;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:0.25rem;
+    }
+
+    .filter-spectrum .band strong {
+      display:block;
+      font-size:0.78rem;
+      color:#f8fafc !important;
+    }
+
+    .band-100 { background:rgba(239,68,68,0.2); }
+    .band-50 { background:rgba(251,191,36,0.2); }
+    .band-20 { background:rgba(34,197,94,0.2); }
+    .band-2 { background:rgba(59,130,246,0.2); }
+
+    .steps {
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .steps li {
+      display:flex;
+      align-items:flex-start;
+      gap:0.75rem;
+      padding:0.7rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.12);
+    }
+
+    .steps li:last-child { border-bottom:none; }
+
+    .tag {
+      font-size:0.7rem;
+      font-weight:700;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+      padding:0.18rem 0.45rem;
+      border-radius:999px;
+      flex-shrink:0;
+      margin-top:0.1rem;
+    }
+
+    .tag.hardware { background:#78350f; color:#fde68a; }
+    .tag.software { background:#1e3a8a; color:#bfdbfe; }
+    .tag.integration { background:#4c1d95; color:#ddd6fe; }
+    .tag.sensor { background:#064e3b; color:#a7f3d0; }
+    .tag.testing { background:#713f12; color:#fef08a; }
+    .tag.market { background:#164e63; color:#a5f3fc; }
+
+    .references p {
+      font-size:0.84rem;
+      line-height:1.55;
+      margin:0 0 0.65rem;
+      word-break:break-word;
+    }
+
+    .footer div, .footer span { color:#cbd5e1 !important; }
+  </style>
 </head>
 
 <body>
-<header class="wrap">
-<nav>
-<div class="brand">
-<strong>Adaptive Water Purifier</strong>
-<span class="badge">Final Report</span>
-</div>
+  <header class="wrap">
+    <nav>
+      <div class="brand">
+        <strong>Adaptive Water Purifier</strong>
+        <span class="badge">Final Report</span>
+      </div>
+      <div class="navlinks">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="preliminary.html">Preliminary</a>
+        <a data-nav href="initial-design.html">Initial Design</a>
+        <a data-nav href="demos.html">Demos</a>
+        <a data-nav href="final.html">Final</a>
+      </div>
+    </nav>
 
-<div class="navlinks">
-<a href="index.html">Home</a>
-<a href="preliminary.html">Preliminary</a>
-<a href="initial-design.html">Initial Design</a>
-<a href="demos.html">Demos</a>
-<a href="final.html">Final Report</a>
-</div>
-</nav>
+    <h1>Final Report: Water Works™ — Adaptive Filtration for Irrigation Water</h1>
+    <p>
+      A sensor-driven filtration system that responds to real water quality changes, recirculates water only as long as needed, and supports more reliable drip and micro-irrigation.
+    </p>
+  </header>
 
-<h1>Final Report: Water Works™ Adaptive Irrigation Filtration</h1>
+  <main class="wrap">
 
-<p class="small">
-Water Works™ is an adaptive irrigation filtration system designed to respond to changing water quality conditions in real time. The system monitors turbidity using an optical sensor and recirculates water through a filtration loop until it reaches a target clarity threshold suitable for drip and micro irrigation systems.
-</p>
-</header>
+    <div class="card">
+      <h2>1) Executive Summary</h2>
 
-<div class="card">
-<h2>1) Introduction</h2>
+      <div class="hero-grid">
+        <div>
+          <p class="subsection-note">
+            Water Works™ is an adaptive water purification prototype designed for irrigation systems that rely on variable-quality surface water. Drip and micro-irrigation systems are efficient, but they are highly sensitive to suspended particles. When turbidity rises, small emitters can clog, flow can become uneven, and operators may face more downtime and maintenance.
+          </p>
 
-<p>
-Agriculture depends heavily on irrigation systems, especially drip and micro irrigation technologies that maximize water efficiency by delivering water directly to plant roots. However, these systems are extremely sensitive to suspended particles and sediment contamination. When turbidity increases, emitters clog, flow distribution becomes uneven, and systems require significant maintenance.
-</p>
+          <p class="subsection-note">
+            Most filtration systems run at a fixed setting, even when water quality changes throughout the day or after storms. Our system uses a turbidity sensor to monitor water clarity and sends water through a filter repeatedly until the water approaches a target clean-water reading. Once the water is sufficiently filtered, the system can redirect flow toward the clean-water output instead of continuing unnecessary filtration.
+          </p>
 
-<p>
-Water quality conditions in surface water sources such as ponds, rivers, and agricultural runoff are highly variable. Existing irrigation filtration systems generally operate at fixed filtration settings regardless of actual water quality conditions, often forcing farms to oversize systems for worst-case turbidity events.
-</p>
+          <p class="subsection-note">
+            The final prototype combines a low-pressure peristaltic pump, an Arduino-based sensing and control circuit, a 20 µm filter, activated carbon testing, ultrasonic overflow sensing, a display screen for live user feedback, and a housing designed to consolidate the major hardware into a more self-contained device.
+          </p>
+        </div>
 
-<p>
-Water Works™ addresses this challenge using adaptive filtration. The system continuously measures turbidity and recirculates water through a filtration stage until clarity reaches a predefined threshold. Instead of filtering continuously at maximum intensity, the system filters only as long as needed.
-</p>
+        <div class="media-slot">
+          <h4>Final System / Cover Image</h4>
+          <!-- INSERT IMAGE FROM FINAL SLIDES: Water Works cover image or final assembled prototype -->
+          <img src="assets/images/final-cover-or-prototype.jpg" alt="Water Works final prototype or cover image" />
+          <p>Replace this image with the final Water Works™ cover image or a clean photo of the final prototype.</p>
+        </div>
+      </div>
 
-<div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:1.5rem;">
-  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
-    <strong>Primary Goals</strong>
-    <ul>
-      <li>Reduce emitter clogging in drip irrigation systems</li>
-      <li>Adapt to changing turbidity conditions automatically</li>
-      <li>Reduce maintenance and downtime</li>
-      <li>Improve irrigation reliability</li>
-    </ul>
-  </div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h4>Target application</h4>
+          <p>Drip and micro-irrigation systems using surface water, runoff, ponds, rivers, or other variable-quality water sources.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Final filter direction</h4>
+          <p>~20 µm coffee filter selected as the best balance between particle capture and usable flow with a low-pressure pump.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Final test contaminant</h4>
+          <p>Activated carbon, selected because it produced a stronger, darker signal and clearer measurable filtration behavior than diatomaceous earth.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Main result</h4>
+          <p>Activated carbon removal was measurable, with most improvement occurring in the first 2–3 filtration passes.</p>
+        </div>
+      </div>
+    </div>
 
-  <div class="card" style="flex:1; min-width:320px; max-width:440px;">
-    <strong>Target Application</strong>
-    <ul>
-      <li>Drip and micro irrigation systems</li>
-      <li>Surface-water-fed irrigation systems</li>
-      <li>Precision agriculture environments</li>
-      <li>Operations with high turbidity variability</li>
-    </ul>
-  </div>
-</div>
-</div>
+    <div class="card">
+      <h2>2) Problem Definition and Market Need</h2>
 
-<div class="card">
-<h2>2) The Problem: Irrigation and Water Quality</h2>
+      <p class="subsection-note">
+        Irrigation water quality is not constant. Surface water sources such as rivers, ponds, canals, and stormwater runoff can contain suspended solids, organic material, and sediment levels that change quickly after rainfall, erosion, or seasonal shifts. For drip and micro-irrigation, this is a serious issue because the water is delivered through small emitters that can clog when suspended particles enter the system.
+      </p>
 
-<p>
-Agriculture accounts for roughly 70% of global freshwater withdrawals, and irrigation systems consume approximately 81 million acre-feet of water annually in the United States alone. Modern drip irrigation systems are highly efficient but rely on extremely small emitter passages that clog easily when suspended particles are present.
-</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Problem</h4>
+          <p>
+            High turbidity can clog emitters, reduce uniform water distribution, increase maintenance, and create downtime during critical irrigation periods.
+          </p>
+        </div>
 
-<ul>
-  <li>Safe drip irrigation operation typically requires turbidity below <strong>10 NTU</strong></li>
-  <li>Runoff events can raise turbidity levels from <strong>20–1000 NTU</strong></li>
-  <li>Clogging causes uneven irrigation and system downtime</li>
-  <li>Maintenance requirements increase significantly under variable water conditions</li>
-</ul>
+        <div class="mini-card">
+          <h4>Why fixed filtration is limited</h4>
+          <p>
+            Static filters are often designed for worst-case water quality. This can lead to unnecessary pressure drop, wasted energy, more cleaning, and over-filtration when the source water is already relatively clean.
+          </p>
+        </div>
 
-<p>
-Most existing irrigation filtration systems are designed around worst-case conditions and cannot adapt dynamically to changing water quality. This creates unnecessary energy use, larger filtration systems, and higher operating costs.
-</p>
-</div>
+        <div class="mini-card">
+          <h4>Stakeholders</h4>
+          <p>
+            Farmers, greenhouse operators, irrigation installers, precision agriculture companies, and equipment distributors all benefit from more reliable water delivery and lower maintenance burden.
+          </p>
+        </div>
 
-<div class="card">
-<h2>3) Market Research and Strategy</h2>
+        <div class="mini-card">
+          <h4>Design objective</h4>
+          <p>
+            Create a compact adaptive filtration unit that can monitor water clarity, continue filtering while needed, and stop or redirect water once the treated batch is sufficiently clean.
+          </p>
+        </div>
+      </div>
 
-<h3>Market Overview</h3>
+      <div class="callout-blue">
+        <strong>Core value proposition</strong>
+        Water Works™ adds sensing and control to irrigation filtration. Instead of assuming every batch of water needs the same amount of treatment, the system responds to real-time clarity and filters only as long as needed.
+      </div>
+    </div>
 
-<div style="overflow-x:auto;">
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Global Market Size</td>
-<td>~$6B global drip irrigation market (2024)</td>
-</tr>
-<tr>
-<td>Projected Growth</td>
-<td>~10–12% CAGR through 2030</td>
-</tr>
-<tr>
-<td>Primary Drivers</td>
-<td>Precision agriculture, automation, water scarcity, smart irrigation systems</td>
-</tr>
-<tr>
-<td>Key Opportunity</td>
-<td>Adaptive turbidity-responsive filtration systems</td>
-</tr>
-</tbody>
-</table>
-</div>
+    <div class="card">
+      <h2>3) Market Research and Competitive Positioning</h2>
 
-<h3>Competitor Analysis</h3>
+      <p class="subsection-note">
+        The project targets the drip irrigation market because drip systems are efficient but vulnerable to clogging. The global drip irrigation market is estimated around $6 billion and is expected to grow as water scarcity, precision agriculture, and automation increase demand for controlled irrigation systems.
+      </p>
 
-<div style="overflow-x:auto;">
-<table>
-<thead>
-<tr>
-<th>Technology</th>
-<th>Example</th>
-<th>Limitation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Screen Filters</td>
-<td>Netafim</td>
-<td>Fixed filtration level</td>
-</tr>
-<tr>
-<td>Sand Filters</td>
-<td>Amiad</td>
-<td>High maintenance requirements</td>
-</tr>
-<tr>
-<td>Disk Filters</td>
-<td>Rain Bird</td>
-<td>Clogging risk under heavy sediment loads</td>
-</tr>
-<tr>
-<td>Chemical Treatment</td>
-<td>Injection systems</td>
-<td>Added operating cost</td>
-</tr>
-</tbody>
-</table>
-</div>
+      <div class="data-table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Existing Solution</th>
+              <th>Example</th>
+              <th>Main Limitation</th>
+              <th>Water Works™ Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Screen filters</td>
+              <td>Netafim-style irrigation filters</td>
+              <td>Fixed filtration level; can clog under variable sediment loads</td>
+              <td>Uses turbidity sensing to determine when more filtration is needed</td>
+            </tr>
+            <tr>
+              <td>Sand filters</td>
+              <td>Agricultural media filtration</td>
+              <td>High maintenance and cleaning burden</td>
+              <td>Targets smaller-scale adaptive pre-treatment before clogging becomes severe</td>
+            </tr>
+            <tr>
+              <td>Disk filters</td>
+              <td>Rain Bird-style disk systems</td>
+              <td>Still operates as a static filtration barrier</td>
+              <td>Adds feedback control and real-time decision-making</td>
+            </tr>
+            <tr>
+              <td>Chemical treatment</td>
+              <td>Injection systems</td>
+              <td>Added operating cost and chemical handling</td>
+              <td>Focuses on physical particle removal without chemical addition</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-<h3>Target Market</h3>
-<ul>
-  <li>Farms using drip and micro irrigation</li>
-  <li>Surface-water irrigation systems</li>
-  <li>Precision agriculture users</li>
-  <li>High-value crop operations</li>
-</ul>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Target entry market</h4>
+          <ul class="plain-list">
+            <li>Farms using drip or micro-irrigation</li>
+            <li>Operations using surface water sources</li>
+            <li>High-value crops where irrigation reliability matters</li>
+            <li>Precision agriculture users already familiar with sensors and automation</li>
+          </ul>
+        </div>
 
-<h3>Market Opportunity</h3>
-<p>
-Water Works™ occupies a middle position between inexpensive static filters and expensive industrial-scale adaptive systems. The design emphasizes affordability, adaptability, and integration with existing irrigation infrastructure.
-</p>
-</div>
+        <div class="mini-card">
+          <h4>Pricing and go-to-market</h4>
+          <ul class="plain-list">
+            <li>Small-scale prototype target: ~$200–300</li>
+            <li>Scaled commercial unit target: ~$2,000</li>
+            <li>Sell through irrigation distributors and system installers</li>
+            <li>Use pilot programs to validate maintenance savings and reliability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-<h2>4) Cost Breakdown</h2>
+    <div class="card">
+      <h2>4) Final System Design and Flow</h2>
 
-<div style="overflow-x:auto;">
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Estimated Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr><td>Arduino Uno</td><td>$20</td></tr>
-<tr><td>Pump</td><td>$25</td></tr>
-<tr><td>Turbidity Sensor Components</td><td>$1.50</td></tr>
-<tr><td>Relay Module</td><td>$7</td></tr>
-<tr><td>Display Screen</td><td>$10</td></tr>
-<tr><td>Ultrasonic Sensor</td><td>$4</td></tr>
-<tr><td>Servo Motor</td><td>$8</td></tr>
-<tr><td>Power Supply</td><td>$7</td></tr>
-<tr><td>Tubing and Plumbing</td><td>$3.50</td></tr>
-<tr><td>Filters</td><td>$10</td></tr>
-<tr><td>PLA and Fabrication</td><td>$5</td></tr>
-<tr>
-<td><strong>Total Prototype Cost</strong></td>
-<td><strong>~$101</strong></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+      <p class="subsection-note">
+        The final Water Works™ design uses a semi-batch adaptive filtration loop. Source water enters the system, passes through the filter, is measured by the turbidity sensor, and is either recirculated for another filtration pass or sent toward the clean-water output once the target clarity condition is met.
+      </p>
 
-<div class="card">
-<h2>5) System Design and Flow</h2>
+      <div class="media-slot">
+        <h4>Updated System Flow Diagram</h4>
+        <!-- INSERT IMAGE FROM FINAL SLIDES: updated system flow diagram -->
+        <img src="assets/images/final-system-flow-diagram.jpg" alt="Updated Water Works system flow diagram" />
+        <p>
+          Insert the final system flow diagram from the slideshow. This should show the source water, filter, turbidity sensor/display, pump, valve logic, recirculation path, clean tank, and output to farm.
+        </p>
+      </div>
 
-<p>
-The Water Works™ system operates using a semi-batch adaptive filtration loop. Water is circulated through a filtration stage while turbidity is continuously monitored. Once the water reaches the target clarity threshold, the system transfers treated water into storage.
-</p>
+      <h3>Operating Sequence</h3>
+      <ul class="checklist">
+        <li><span class="icon">1.</span><span><strong>Fill:</strong> Source water enters the treatment chamber or filter section.</span></li>
+        <li><span class="icon">2.</span><span><strong>Filter:</strong> The pump drives water through the 20 µm filter.</span></li>
+        <li><span class="icon">3.</span><span><strong>Measure:</strong> The turbidity sensor reads the filtered water clarity.</span></li>
+        <li><span class="icon">4.</span><span><strong>Decide:</strong> Arduino compares the reading to a threshold or clean-water baseline.</span></li>
+        <li><span class="icon">5.</span><span><strong>Recirculate or transfer:</strong> If still turbid, water is sent through another pass. If clean enough, it moves toward the clean output path.</span></li>
+        <li><span class="icon">6.</span><span><strong>Display:</strong> The screen shows live turbidity/system status so the user can monitor progress.</span></li>
+        <li><span class="icon">7.</span><span><strong>Safety:</strong> The ultrasonic sensor detects high water level or overflow/clogging risk.</span></li>
+      </ul>
+    </div>
 
-<h3>Core Components</h3>
-<ul>
-  <li>Arduino Uno microcontroller</li>
-  <li>Optical turbidity sensor (IR LED + phototransistor)</li>
-  <li>Pump circulation system</li>
-  <li>Ultrasonic water level sensing</li>
-  <li>Relay-controlled power switching</li>
-  <li>Display screen for live system feedback</li>
-  <li>Filter module with fine mesh filtration</li>
-</ul>
+    <div class="card">
+      <h2>5) Circuit Design and Control Logic</h2>
 
-<h3>Flow Sequence</h3>
-<ol>
-  <li>Water enters the system from the source reservoir</li>
-  <li>The pump circulates water through the filtration loop</li>
-  <li>The turbidity sensor monitors water clarity continuously</li>
-  <li>If turbidity remains above threshold, water continues recirculating</li>
-  <li>Once clarity reaches target conditions, water is transferred to storage</li>
-</ol>
+      <p class="subsection-note">
+        The circuit is built around an Arduino-style microcontroller. The turbidity sensor provides the main process signal, while the ultrasonic sensor adds a safety measurement for water level. The pump and valve logic are controlled based on the sensor readings, and the display gives the user real-time system feedback.
+      </p>
 
-<div style="border:2px dashed #7a7a7a; border-radius:14px; padding:18px; text-align:center; margin-top:1rem;">
-<img class="diagram" src="assets/images/updated_diagram.jpg" alt="Water Works System Diagram">
-<div class="figcap">Adaptive filtration system overview</div>
-</div>
-</div>
+      <div class="media-slot">
+        <h4>Final Circuit Diagram</h4>
+        <!-- INSERT IMAGE FROM FINAL SLIDES: circuit design -->
+        <img src="assets/images/final-circuit-diagram.jpg" alt="Final circuit diagram for Water Works" />
+        <p>
+          Insert the final circuit diagram from the slideshow. Label the Arduino, turbidity sensor, ultrasonic sensor, relay, pump, display screen, and power supply.
+        </p>
+      </div>
 
-<div class="card">
-<h2>6) Engineering Principles</h2>
+      <div class="principle-grid">
+        <div class="principle-card">
+          <h4>Microcontroller</h4>
+          <p>Reads sensor values, compares turbidity to the threshold, controls pump/valve states, and sends values to the display.</p>
+        </div>
 
-<h3>Filtration and Particle Removal</h3>
-<ul>
-  <li>Mechanical filtration removes suspended solids through size exclusion</li>
-  <li>Particle size relative to pore size determines removal efficiency</li>
-  <li>Smaller pore sizes improve filtration but reduce flow rate</li>
-</ul>
+        <div class="principle-card">
+          <h4>Turbidity Sensor</h4>
+          <p>Uses an LED and phototransistor/photoresistor-style detector to estimate clarity from transmitted light intensity.</p>
+        </div>
 
-<h3>Cake Filtration</h3>
-<p>
-As particles accumulate on the filter surface, they form a secondary filtration layer known as a filter cake. This layer improves particle capture efficiency over time and explains why filtration performance improves during repeated recirculation passes.
-</p>
+        <div class="principle-card">
+          <h4>Ultrasonic Sensor</h4>
+          <p>Measures water level above the filter or tank to identify overflow or clogging conditions.</p>
+        </div>
 
-<h3>Feedback Control System</h3>
-<ul>
-  <li>The turbidity sensor measures water clarity</li>
-  <li>The controller compares readings to a threshold</li>
-  <li>The system decides whether to continue recirculation or transfer water</li>
-  <li>This forms a closed-loop adaptive filtration system</li>
-</ul>
+        <div class="principle-card">
+          <h4>Relay / Pump</h4>
+          <p>The relay safely switches the higher-power pump from low-voltage Arduino control logic.</p>
+        </div>
 
-<h3>Optical Turbidity Sensing</h3>
-<p>
-Suspended particles scatter and absorb light, reducing transmission through water. Cleaner water allows more light to reach the phototransistor detector, producing a measurable electrical response.
-</p>
+        <div class="principle-card">
+          <h4>Display Screen</h4>
+          <p>Shows real-time turbidity readings and system status, making the prototype easier to understand and operate.</p>
+        </div>
 
-<h3>Fluid Flow and Pressure Drop</h3>
-<p>
-Flow through the filter depends on pressure drop, flow resistance, and filter loading. As clogging increases, resistance rises and flow rate decreases. The system design balances filtration effectiveness with usable flow performance.
-</p>
-</div>
+        <div class="principle-card">
+          <h4>Control Logic</h4>
+          <p>Dirty water triggers continued recirculation. Cleaner water triggers output/stop behavior, depending on the final valve path.</p>
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-<h2>7) Design Process and Iteration</h2>
+    <div class="card">
+      <h2>6) Final Materials and Cost Breakdown</h2>
 
-<h3>Early Development</h3>
-<ul>
-  <li>Developed an Arduino-based turbidity sensor</li>
-  <li>Integrated pump control with sensor feedback</li>
-  <li>Built an initial recirculation loop prototype</li>
-  <li>Tested threshold logic for adaptive control</li>
-</ul>
+      <p class="subsection-note">
+        The final prototype was designed to stay low-cost and buildable with accessible components. Many components are standard Arduino-compatible parts, and the housing/valve pieces are designed for 3D printing.
+      </p>
 
-<h3>Filter Testing</h3>
-<p>
-Multiple filter pore sizes were evaluated ranging from 2 µm to 150 µm.
-</p>
+      <div class="data-table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Purpose</th>
+              <th>Approx. Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>3D printed pinch valve</td><td>Redirects tubing path for recirculation/output control</td><td>Included in PLA / print cost</td></tr>
+            <tr><td>Servo motor</td><td>Actuates valve movement</td><td>$8</td></tr>
+            <tr><td>Tubing</td><td>Connects source, pump, filter, sensor, and clean output</td><td>$3.50</td></tr>
+            <tr><td>Ultrasonic sensor</td><td>Detects water level / overflow risk</td><td>$4</td></tr>
+            <tr><td>Peristaltic pump</td><td>Drives recirculation and filtration flow</td><td>$25</td></tr>
+            <tr><td>Display screen</td><td>Shows live turbidity and system status</td><td>$10</td></tr>
+            <tr><td>PLA</td><td>Housing, supports, and printed structural pieces</td><td>$5</td></tr>
+            <tr><td>Power supply</td><td>Provides required voltage to pump/control system</td><td>$7</td></tr>
+            <tr><td>Microcontroller</td><td>Arduino/control board</td><td>$20</td></tr>
+            <tr><td>Relay module</td><td>Switches pump safely</td><td>$7</td></tr>
+            <tr><td>Filters</td><td>20 µm filtration media and test filters</td><td>$10</td></tr>
+            <tr><td>Turbidity sensor</td><td>LED + detector clarity measurement</td><td>$1.50</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>Approximate prototype cost</strong></td><td><strong>$101</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-<ul>
-  <li>Large filters provided insufficient particle removal</li>
-  <li>Very fine filters restricted flow excessively</li>
-  <li>A ~20 µm coffee filter provided the best balance between filtration and flow rate</li>
-</ul>
+      <div class="media-slot">
+        <h4>Cost Breakdown Graphic</h4>
+        <!-- INSERT IMAGE FROM FINAL SLIDES: cost breakdown slide -->
+        <img src="assets/images/final-cost-breakdown.jpg" alt="Water Works cost breakdown slide" />
+        <p>Insert the cost breakdown slide graphic here if you want the page to match the presentation visually.</p>
+      </div>
+    </div>
 
-<h3>Contaminant Testing</h3>
-<ul>
-  <li>Diatomaceous earth was initially used to simulate suspended sediment</li>
-  <li>Activated carbon produced stronger turbidity contrast and easier testing</li>
-  <li>Multiple recirculation passes demonstrated measurable clarity improvement</li>
-</ul>
+    <div class="card">
+      <h2>7) Chemical Engineering Principles</h2>
 
-<h3>Housing Evolution</h3>
-<p>
-The system enclosure evolved through multiple iterations. Early cylindrical designs were replaced with integrated housings that better supported fluid routing, component organization, and flow stability.
-</p>
-</div>
+      <p class="subsection-note">
+        The final design applies core chemical engineering concepts including particle separation, filter pore size selection, cake filtration, optical sensing, pressure drop, and feedback control.
+      </p>
 
-<div class="card">
-<h2>8) Performance Data and Results</h2>
+      <div class="principle-grid">
+        <div class="principle-card">
+          <h4>Filtration and Particle Removal</h4>
+          <p>
+            The filter removes suspended solids through size exclusion and interception. Particles larger than the effective pore size are physically retained, while smaller particles may pass through unless captured by the developing cake layer.
+          </p>
+        </div>
 
-<p>
-Testing demonstrated that the adaptive filtration concept worked reliably under varying turbidity conditions.
-</p>
+        <div class="principle-card">
+          <h4>Filter Pore Size Tradeoff</h4>
+          <p>
+            Smaller pores improve particle capture but increase flow resistance. Testing showed that very fine filters can stop flow entirely at low pressure, while coarse filters allow too many particles through.
+          </p>
+        </div>
 
-<ul>
-  <li>The optical turbidity sensor consistently detected clarity changes</li>
-  <li>The recirculation system successfully improved water clarity over multiple passes</li>
-  <li>The final filter configuration balanced flow performance and particle removal</li>
-  <li>The control system successfully automated pump behavior based on sensor feedback</li>
-</ul>
+        <div class="principle-card">
+          <h4>Cake Filtration</h4>
+          <p>
+            As particles build up on the filter surface, the deposited layer acts as a secondary filter. This explains why repeated passes can improve turbidity reduction even when the original filter pore size is not extremely small.
+          </p>
+        </div>
 
-<p>
-The project validated the feasibility of low-cost adaptive filtration for irrigation applications and demonstrated how feedback control can improve filtration efficiency without requiring industrial-scale infrastructure.
-</p>
-</div>
+        <div class="principle-card">
+          <h4>Darcy’s Law and Pressure Drop</h4>
+          <p>
+            Flow through the filter depends on pressure drop, filter permeability, viscosity, and thickness. As the filter becomes finer or more clogged, resistance increases and flow rate decreases.
+          </p>
+        </div>
 
-<div class="card">
-<h2>9) Future Improvements</h2>
+        <div class="principle-card">
+          <h4>Optical Turbidity Sensing</h4>
+          <p>
+            Suspended particles scatter and absorb light. More turbid water transmits less light to the detector, while cleaner water produces a reading closer to the clean-water baseline.
+          </p>
+        </div>
 
-<ul>
-  <li>Add conductivity and TDS sensors for broader water quality monitoring</li>
-  <li>Improve data logging and wireless monitoring capabilities</li>
-  <li>Develop replaceable cartridge-based filtration modules</li>
-  <li>Create a weather-resistant enclosure for agricultural environments</li>
-  <li>Scale the system for commercial irrigation flow rates</li>
-</ul>
-</div>
+        <div class="principle-card">
+          <h4>Feedback Control</h4>
+          <p>
+            The system uses turbidity as the controlled variable. The Arduino compares each reading to a threshold and determines whether to keep filtering or stop/transfer the water.
+          </p>
+        </div>
+      </div>
 
-<div class="card">
-<h2>10) Conclusion</h2>
+      <div class="filter-spectrum">
+        <div class="band band-100">
+          <strong>100–150 µm</strong>
+          <span>Too coarse; little removal</span>
+        </div>
+        <div class="band band-50">
+          <strong>50 µm</strong>
+          <span>Partial capture; weak at low concentration</span>
+        </div>
+        <div class="band band-20">
+          <strong>~20 µm</strong>
+          <span>Best final balance</span>
+        </div>
+        <div class="band band-2">
+          <strong>≤5 µm</strong>
+          <span>Too restrictive; poor/no flow</span>
+        </div>
+      </div>
+    </div>
 
-<p>
-Water Works™ demonstrates a practical adaptive irrigation filtration system capable of responding dynamically to changing water quality conditions. By combining turbidity sensing, recirculation-based filtration, and closed-loop control, the system reduces unnecessary filtration while improving irrigation reliability.
-</p>
+    <div class="card">
+      <h2>8) Design Process and Major Iterations</h2>
 
-<p>
-The project successfully integrated sensing, fluid systems, electronics, and control logic into a working prototype while addressing a real agricultural engineering challenge. Future iterations could expand sensing capabilities, improve scalability, and integrate directly into commercial irrigation infrastructure.
-</p>
-</div>
+      <h3>Early Prototype</h3>
+      <p class="subsection-note">
+        The project began with a simple turbidity sensor and Arduino feedback loop. The first working system measured water clarity, interpreted the reading, and controlled a pump based on a threshold. This proved that a low-cost optical sensor could detect meaningful clarity changes and that pump control could be automated.
+      </p>
 
-<div class="card">
-<h2>11) References</h2>
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Early Turbidity Sensor</h4>
+          <!-- INSERT IMAGE FROM FINAL SLIDES: first turbidity sensor -->
+          <img src="assets/images/early-turbidity-sensor.jpg" alt="Early turbidity sensor prototype" />
+          <p>Insert the early turbidity sensor image from the design process slide.</p>
+        </div>
 
-<p>University of Maryland Center for Environmental Science — Water Turbidity Resources</p>
-<p>USDA National Agricultural Statistics Service — Irrigation and Water Use Data</p>
-<p>Market Research Intellect — Global Drip Irrigation Market Analysis</p>
-<p>Everfilt — Agricultural Water Filtration Systems</p>
-<p>Netafim — Irrigation Filtration Systems Documentation</p>
-<p>Rain Bird Corporation — Agricultural Irrigation Filtration Manuals</p>
-<p>McCabe, Smith, and Harriott. <em>Unit Operations of Chemical Engineering</em>.</p>
-<p>Perry’s Chemical Engineers’ Handbook.</p>
-</div>
+        <div class="media-slot">
+          <h4>Pump + Sensor Setup</h4>
+          <!-- INSERT IMAGE: pump and tubing setup -->
+          <img src="assets/images/pump-sensor-setup.jpg" alt="Pump and turbidity sensor setup" />
+          <p>Insert a photo of the pump, Arduino, tubing, and sensor setup.</p>
+        </div>
+      </div>
 
+      <h3>Filter Selection</h3>
+      <p class="subsection-note">
+        Filter testing began with diatomaceous earth as a model sediment. Large meshes around 100–150 µm produced little to no removal, while very fine filters around 2–5 µm blocked flow at the low pressure available from the pump. The 20 µm coffee filter became the final selection because it captured a meaningful portion of particles while still maintaining usable flow.
+      </p>
+
+      <div class="callout">
+        <strong>Important design decision</strong>
+        Diatomaceous earth was useful for learning about particle size and filter behavior, but it often contained particles too fine for the filter cutoff. The team shifted to activated carbon because it produced a darker, stronger turbidity signal and a clearer visible difference between filtered and unfiltered water.
+      </div>
+
+      <h3>Housing Evolution</h3>
+      <p class="subsection-note">
+        The housing evolved from an initial loose setup into a more integrated structure. Later designs focused on supporting the filter, pump, tubing, sensors, and electronics in one contained system while improving flow routing and usability.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Housing Phase 1</h4>
+          <!-- INSERT IMAGE FROM FINAL SLIDES: housing phase 1 -->
+          <img src="assets/images/housing-phase-1.jpg" alt="Housing phase 1" />
+          <p>Insert the first housing concept image.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Housing Phase 2 / 3</h4>
+          <!-- INSERT IMAGE FROM FINAL SLIDES: housing phase 2 or 3 -->
+          <img src="assets/images/housing-phase-2.jpg" alt="Housing phase 2 or 3" />
+          <p>Insert the intermediate housing design image.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Final Housing</h4>
+          <!-- INSERT IMAGE FROM FINAL SLIDES: final housing -->
+          <img src="assets/images/final-housing.jpg" alt="Final Water Works housing" />
+          <p>Insert the final housing / final prototype image.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>9) Activated Carbon Calibration: Standard Curve</h2>
+
+      <p class="subsection-note">
+        Before measuring filtration performance, we created a standard curve using known activated carbon concentrations with no filter. This confirmed that the turbidity sensor responds to changes in activated carbon concentration and provided a way to interpret sensor output during filtration tests.
+      </p>
+
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Activated Carbon Concentration</th>
+              <th>Turbidity Reading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="row-label">0.015</td><td>-0.02933</td></tr>
+            <tr><td class="row-label">0.010</td><td>-0.04880</td></tr>
+            <tr><td class="row-label">0.010</td><td>-0.04399</td></tr>
+            <tr><td class="row-label">0.005</td><td>-0.06354</td></tr>
+            <tr><td class="row-label">0.001</td><td>-0.08309</td></tr>
+            <tr><td class="row-label">0.020</td><td>-0.00489</td></tr>
+            <tr><td class="row-label">0.025</td><td>-0.00489</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-blue">
+        <strong>Best-fit line</strong>
+        y = 3.4171x - 0.0818. The highest concentration readings begin to level off, suggesting sensor saturation or measurement limits at high turbidity.
+      </div>
+
+      <div class="media-slot">
+        <h4>Standard Curve — No Filter</h4>
+        <!-- INSERT GRAPH FROM FINAL SLIDES: standard curve -->
+        <img src="assets/images/standard-curve-no-filter.jpg" alt="Activated carbon standard curve with no filter" />
+        <p>
+          Insert the graph showing activated carbon concentration vs. turbidity sensor reading with the best-fit line.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10) Activated Carbon Filtration Performance</h2>
+
+      <p class="subsection-note">
+        After building the standard curve, we tested activated carbon removal using the final 20 µm filter. Three initial concentrations were tested: 0.01, 0.02, and 0.03. Each sample was passed through the filter multiple times, and turbidity sensor readings were recorded after 0, 1, 2, 3, and 4 passes.
+      </p>
+
+      <div class="callout-green">
+        <strong>Clean water baseline</strong>
+        Clean water produced a turbidity reading of -0.09775. As activated carbon was removed, the sensor readings moved closer to this clean-water value.
+      </div>
+
+      <h3>Activated Carbon Filtration Data — 20 µm Filter</h3>
+      <div class="data-table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Initial Concentration</th>
+              <th>0 Pass</th>
+              <th>1 Pass</th>
+              <th>2 Pass</th>
+              <th>3 Pass</th>
+              <th>4 Pass</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">0.01</td>
+              <td>-0.04399</td>
+              <td>-0.07820</td>
+              <td>-0.08798</td>
+              <td>-0.08798</td>
+              <td>-0.07820</td>
+            </tr>
+            <tr>
+              <td class="row-label">0.02</td>
+              <td>-0.00489</td>
+              <td>-0.05376</td>
+              <td>-0.07820</td>
+              <td>-0.08309</td>
+              <td>-0.10240</td>
+            </tr>
+            <tr>
+              <td class="row-label">0.03</td>
+              <td>-0.00489</td>
+              <td>-0.06843</td>
+              <td>-0.07331</td>
+              <td>-0.08798</td>
+              <td>-0.08798</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="subsection-note">
+        The data shows that turbidity decreases with additional filtration passes. For all three initial concentrations, the readings move closer to the clean-water baseline after filtration. The largest improvement occurs in the first 2–3 passes, suggesting that the filter removes most of the suspended activated carbon early in the cycle.
+      </p>
+
+      <p class="subsection-note">
+        After 2–3 passes, the improvement begins to level off. This supports the adaptive design because the system should not continue running once additional passes produce only small improvements. Some variability appears in the data, especially when the 0.02 concentration passed slightly beyond the clean-water baseline after four passes. That result is likely due to sensor noise, baseline drift, or mixing differences rather than physically “cleaner than clean” water.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Signal vs. Filtration Passes</h4>
+          <!-- INSERT GRAPH FROM FINAL SLIDES -->
+          <img src="assets/images/activated-carbon-signal-vs-passes.jpg" alt="Activated carbon filtration signal versus passes" />
+          <p>Turbidity readings move toward the clean-water baseline over repeated passes.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Percent Removal vs. Passes</h4>
+          <!-- INSERT GRAPH FROM FINAL SLIDES -->
+          <img src="assets/images/activated-carbon-percent-removal.jpg" alt="Activated carbon percent removal versus passes" />
+          <p>Most removal occurs in the first 2–3 passes, followed by diminishing returns.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Key final finding</strong>
+        Activated carbon can be measurably removed using the 20 µm filter, and most of the removal occurs within the first few passes. This directly supports the adaptive filtration idea: the system should use sensor feedback to determine when filtration is complete instead of relying on a fixed run time.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>11) Testing and Performance Summary</h2>
+
+      <div class="data-table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>Method</th>
+              <th>Result</th>
+              <th>Design Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Activated carbon standard curve</td>
+              <td>Known activated carbon concentrations with no filter</td>
+              <td>Calibration curve obtained</td>
+              <td>Confirmed sensor responds to concentration changes</td>
+            </tr>
+            <tr>
+              <td>Clean water baseline</td>
+              <td>Sensor reading of clean water</td>
+              <td>-0.09775</td>
+              <td>Provided reference point for “clean” water</td>
+            </tr>
+            <tr>
+              <td>20 µm filter, 0.01 concentration</td>
+              <td>0–4 filtration passes</td>
+              <td>Strong improvement through 2–3 passes</td>
+              <td>Shows low-concentration removal can be detected</td>
+            </tr>
+            <tr>
+              <td>20 µm filter, 0.02 concentration</td>
+              <td>0–4 filtration passes</td>
+              <td>Approached / passed clean-water baseline</td>
+              <td>Strong removal, but final reading likely affected by noise or drift</td>
+            </tr>
+            <tr>
+              <td>20 µm filter, 0.03 concentration</td>
+              <td>0–4 filtration passes</td>
+              <td>High removal, leveling off after ~3 passes</td>
+              <td>Clear evidence of diminishing returns</td>
+            </tr>
+            <tr>
+              <td>Ultrasonic sensor</td>
+              <td>Mounted above filter / tank area</td>
+              <td>Safety feature added</td>
+              <td>Can detect overflow or clogging conditions</td>
+            </tr>
+            <tr>
+              <td>Display screen</td>
+              <td>Live turbidity output</td>
+              <td>User feedback added</td>
+              <td>Makes system status visible to operator</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>12) Final Prototype Images</h2>
+
+      <p class="subsection-note">
+        Add the clearest photos from the final slideshow here. Try to use a mix of CAD, final physical prototype, circuit close-up, filtration testing, and before/after water clarity images.
+      </p>
+
+      <div class="media-grid">
+        <div class="media-slot">
+          <h4>Final Prototype Assembly</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/final-prototype-assembly.jpg" alt="Final Water Works prototype assembly" />
+          <p>Final assembled system showing housing, pump, tubing, and sensor integration.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Filter and Housing</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/final-filter-housing.jpg" alt="Final filter and housing" />
+          <p>Final filter/housing design used to hold filtration media and route water through the system.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Activated Carbon Filter Test</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/activated-carbon-filter-test.jpg" alt="Activated carbon filtration test" />
+          <p>Filter after activated carbon testing, showing visible captured material.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Before / After Water Samples</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/before-after-water-samples.jpg" alt="Before and after water samples" />
+          <p>Comparison between unfiltered and filtered activated carbon suspensions.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Display Screen</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/display-screen-live-output.jpg" alt="Display screen showing live turbidity output" />
+          <p>Display showing live turbidity reading and system status.</p>
+        </div>
+
+        <div class="media-slot">
+          <h4>Ultrasonic Sensor Mount</h4>
+          <!-- INSERT IMAGE -->
+          <img src="assets/images/ultrasonic-sensor-mount.jpg" alt="Ultrasonic sensor mounted above filter" />
+          <p>Ultrasonic sensor positioned to detect water level and overflow/clogging risk.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>13) Final Evaluation</h2>
+
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>What worked well</h4>
+          <ul class="plain-list">
+            <li>The turbidity sensor detected changes in activated carbon concentration.</li>
+            <li>The 20 µm filter provided a workable balance between capture and flow.</li>
+            <li>Most filtration improvement occurred in the first 2–3 passes.</li>
+            <li>The display made the system easier to interpret during operation.</li>
+            <li>The ultrasonic sensor added a practical safety feature.</li>
+          </ul>
+        </div>
+
+        <div class="mini-card">
+          <h4>Remaining limitations</h4>
+          <ul class="plain-list">
+            <li>Sensor noise and baseline drift affected some readings.</li>
+            <li>Additional trials are needed for error bars and stronger statistical confidence.</li>
+            <li>The prototype is still small-scale and not yet validated with real irrigation water.</li>
+            <li>Long-term clogging behavior and filter replacement frequency need more testing.</li>
+            <li>The housing could be improved for leak resistance and field durability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-blue">
+        <strong>Final conclusion</strong>
+        Water Works™ successfully demonstrates the central concept of adaptive filtration. The prototype can measure water clarity, filter a model contaminant, show improvement over repeated passes, and support the idea that filtration should continue only until the water reaches a target clarity range.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>14) Future Improvements</h2>
+
+      <ul class="steps">
+        <li>
+          <span class="tag testing">Testing</span>
+          <span class="step-label">
+            <strong>Repeat activated carbon tests with more trials</strong> — collect replicates, error bars, and repeated calibration curves to quantify uncertainty.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Improve turbidity sensor stability</strong> — use better light shielding, fixed sensor geometry, and smoother filtering/averaging in code.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag hardware">Hardware</span>
+          <span class="step-label">
+            <strong>Refine filter cartridge design</strong> — make the filter replaceable, sealed, and easier to clean or swap during operation.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag integration">Integration</span>
+          <span class="step-label">
+            <strong>Improve housing durability</strong> — reduce leaks, protect electronics, and design for field conditions such as dust, water splash, and vibration.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag sensor">Sensor</span>
+          <span class="step-label">
+            <strong>Add pH or TDS sensing</strong> — include a secondary water quality metric to give users more information beyond turbidity.
+          </span>
+        </li>
+
+        <li>
+          <span class="tag market">Market</span>
+          <span class="step-label">
+            <strong>Test with real irrigation water</strong> — validate performance using pond, runoff, or canal water to better match the target customer environment.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>15) Timeline and Project Management</h2>
+
+      <h3>Milestone Summary</h3>
+      <div class="data-table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Milestone</th>
+              <th>Due Date</th>
+              <th>Points</th>
+              <th>Final Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Preliminary Design Report</td><td>Week 2</td><td>100 pts (10%)</td><td>Complete</td></tr>
+            <tr><td>Initial Design Presentation</td><td>Week 4</td><td>100 pts (10%)</td><td>Complete</td></tr>
+            <tr><td>Demo 1: Initial Prototype</td><td>Week 7</td><td>125 pts (12.5%)</td><td>Complete</td></tr>
+            <tr><td>Demo 2: Intermediate Prototype</td><td>Week 10</td><td>125 pts (12.5%)</td><td>Complete</td></tr>
+            <tr><td>Demo 3: MVP</td><td>Week 13</td><td>150 pts (15%)</td><td>Complete</td></tr>
+            <tr><td>Final Report</td><td>Week 17</td><td>225 pts (22.5%)</td><td>Complete</td></tr>
+            <tr><td>Final Demonstration</td><td>Week 17</td><td>125 pts (12.5%)</td><td>Complete</td></tr>
+            <tr><td><strong>Total</strong></td><td></td><td><strong>1000 pts</strong></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="placeholder-note">
+        Optional: insert your final Gantt chart image below if you already have one from the previous pages or final slides.
+      </div>
+
+      <div class="media-slot">
+        <h4>Final Gantt Chart</h4>
+        <!-- INSERT IMAGE: final Gantt chart if desired -->
+        <img src="assets/images/final-gantt-chart.jpg" alt="Final project Gantt chart" />
+        <p>Insert the final Gantt chart or remove this image block if you do not need it.</p>
+      </div>
+    </div>
+
+    <div class="card references">
+      <h2>References</h2>
+
+      <p>U.S. Geological Survey (USGS). “Turbidity and Water.” Available at: https://www.usgs.gov/water-science-school/science/turbidity-and-water</p>
+      <p>California State Water Resources Control Board. “Guidance for Continuous Water Quality Monitoring.” Available at: https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/cwt/guidance/3150en.pdf</p>
+      <p>International Water Association Publishing. “Setting Water Quality Criteria for Agricultural Water Reuse.” Available at: https://iwaponline.com/jwrd/article/7/2/121/28751/Setting-water-quality-criteria-for-agricultural</p>
+      <p>United States Department of Agriculture (USDA), National Agricultural Statistics Service (NASS). “Irrigation and Water Management Survey News Release (2024).” Available at: https://www.nass.usda.gov/Newsroom/archive/2024/10-31-2024.php</p>
+      <p>Stellar Market Research. “Drip Irrigation Systems Market Report.” Available at: https://www.stellarmr.com/report/Drip-Irrigation-Systems-Market/1397</p>
+      <p>DripWorks. “What Are the Different Types of Filters for Your Irrigation System?” Available at: https://www.dripworks.com/blog/what-are-the-different-types-of-filters-for-your-irrigation-system</p>
+      <p>Netafim. “Agricultural Filtration Systems Documentation.” Available at: https://www.netafim.com</p>
+      <p>Rain Bird Corporation. “Agricultural Irrigation Filtration Manuals.” Available at: https://www.rainbird.com</p>
+      <p>McCabe, W. L., Smith, J. C., and Harriott, P. <em>Unit Operations of Chemical Engineering.</em> McGraw-Hill Education.</p>
+      <p>Perry, R. H., and Green, D. W., editors. <em>Perry’s Chemical Engineers’ Handbook.</em> McGraw-Hill Education.</p>
+      <p>Centers for Disease Control and Prevention (CDC). “Drinking Water Facts and Statistics.” Available at: https://www.cdc.gov/drinking-water/data-research/facts-stats/index.html</p>
+      <p>Culligan of Houston. “Problems with pH in Drinking Water.” Available at: https://houstonculligan.com/problems/ph-problems/</p>
+      <p>Arduino Forum. “pH Sensor Detection Circuit Design.” Available at: https://forum.arduino.cc/t/ph-sensor-detection-circuit-design/478631</p>
+    </div>
+
+    <div class="footer">
+      <hr />
+      <div>&copy; <span id="year"></span> Water Works™</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
